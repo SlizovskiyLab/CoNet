@@ -1,0 +1,1 @@
+/* Traverse the graph based on earliest colocalizations */
