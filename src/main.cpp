@@ -1,11 +1,39 @@
 #include <iostream>
+#include <filesystem>
+#include "../include/Timepoint.h"
+#include "../include/graph.h"
+#include "../include/parser.h"
+#include "../include/id_maps.h"
 
 /* Main entry point: parse arguments, load data, call functions */
 
+namespace fs = std::filesystem;
+
+fs::path data_file = "/Users/suhashidesilva/Documents/Projects/colocnet/data/patientwise_colocalization_by_timepoint.csv";
+
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+    Graph g;
+    parseData(data_file, g);
+    // addTemporalEdges(g);  // ← Add this
+
+
+    std::unordered_map<Node, std::unordered_set<Node>> adjacency;
+    buildAdjacency(g, adjacency);
+
+    std::cout << "Graph constructed with " << g.nodes.size() << " nodes and " << g.edges.size() << " edges.\n";
+    std::cout << "Adjacency list size: " << adjacency.size() << " nodes.\n";
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
 
 /*
 int main() {

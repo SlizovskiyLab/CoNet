@@ -1,45 +1,31 @@
 #include <iostream>
-#include <string>
-#include <unordered_map>
-#include <set>
-#include <vector>
+#include "../include/graph.h"
 
-/* Define the graph data structure and utilities (e.g., adding nodes/edges) */
+void buildAdjacency(const Graph& g, std::unordered_map<Node, std::unordered_set<Node>>& adj) {
+    std::unordered_map<int, std::vector<Node>> nodesById;
 
-// Timepoint enum
-enum class Timepoint {
-    Donor = -1,
-    Pre = 0,
-    Day4 = 4,
-    Day7 = 7,
-    Day14 = 14
-};
-
-// Node definition
-struct Node {
-    bool isARG;        			          // True for ARG, false for MGE
-    Timepoint timepoint;         		  // -1, 0, 4, 7, 14
-    int id;				                  // Unique identifier
-    bool requiresSNPConfirmation;
-
-    // Define operator< for use in std::set
-    bool operator<(const Node& other) const {
-        return id < other.id;
+    for (const Node& node : g.nodes) {
+        nodesById[node.id].push_back(node);
     }
-};
 
+    for (const Edge& edge : g.edges) {
+        const Node& src = edge.source;
+        const Node& tgt = edge.target;
 
-// Edge definition
-struct Edge {
-    bool isColoc;                     // True for "colocalization", false for "temporal"
-    std::set<int> individuals;       // For colocalization edges
-    int weight = 0;                  // For temporal edges
+        adj[src].insert(tgt);
+        adj[tgt].insert(src);
+    }
 
-};
-
-
-// Graph definition
-struct Graph {
-    std::set<Node> nodes;
-    std::set<Edge> edges;
-};
+    for (const auto& [id, nodeGroup] : nodesById) {
+        for (size_t i = 0; i < nodeGroup.size(); ++i) {
+            for (size_t j = i + 1; j < nodeGroup.size(); ++j) {
+                const Node& nodeA = nodeGroup[i];
+                const Node& nodeB = nodeGroup[j];
+                if (nodeA.timepoint != nodeB.timepoint) {
+                    adj[nodeA].insert(nodeB);
+                    adj[nodeB].insert(nodeA);
+                }
+            }
+        }
+    }
+}
