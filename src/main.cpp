@@ -14,7 +14,7 @@ fs::path data_file = "/Users/suhashidesilva/Documents/Projects/colocnet/data/pat
 int main() {
     Graph g;
     parseData(data_file, g);
-    // addTemporalEdges(g);  // ← Add this
+    addTemporalEdges(g);  
 
 
     std::unordered_map<Node, std::unordered_set<Node>> adjacency;
@@ -22,6 +22,29 @@ int main() {
 
     std::cout << "Graph constructed with " << g.nodes.size() << " nodes and " << g.edges.size() << " edges.\n";
     std::cout << "Adjacency list size: " << adjacency.size() << " nodes.\n";
+
+    // Printing of Adjacency List
+    std::cout << "Adjacency list" << "\n";
+    for (const auto& i : adjacency) {
+        std::cout << i.first << " -> ";
+        for (const auto& neighbor : i.second) {
+            std::cout << neighbor <<  " ";
+        }
+        std::cout << "\n";
+    }
+
+    // std::cout << "print nodes" << "\n";
+    // for (const auto& node : g.nodes) {
+    //     std::cout << node << "\n";
+    // }
+    // std::cout << "print edges" << "\n";
+    // for (const auto& edge : g.edges) {
+    //     std::cout << "Edge from " << edge.source << " to " << edge.target 
+    //               << " | isColo: " << edge.isColo 
+    //               << " | weight: " << edge.weight 
+    //               << "\n";
+    // }
+
     return 0;
 }
 

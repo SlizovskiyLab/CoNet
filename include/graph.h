@@ -9,6 +9,7 @@
 #include <set>
 #include <vector>
 #include <tuple>
+#include <ostream>
 #include "Timepoint.h"
 
 // ------------------ Node ------------------
@@ -25,6 +26,12 @@ struct Node {
 
     bool operator==(const Node& other) const {
         return id == other.id && isARG == other.isARG && timepoint == other.timepoint;
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const Node& node) {
+        // Print relevant Node info, e.g.:
+        os << "Node(" << node.id << ")";
+        return os;
     }
 };
 
@@ -58,6 +65,7 @@ struct Edge {
                isColo == other.isColo &&
                weight == other.weight;
     }
+
 };
 
 // ------------------ Graph ------------------

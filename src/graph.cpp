@@ -16,16 +16,16 @@ void buildAdjacency(const Graph& g, std::unordered_map<Node, std::unordered_set<
         adj[tgt].insert(src);
     }
 
-    for (const auto& [id, nodeGroup] : nodesById) {
-        for (size_t i = 0; i < nodeGroup.size(); ++i) {
-            for (size_t j = i + 1; j < nodeGroup.size(); ++j) {
-                const Node& nodeA = nodeGroup[i];
-                const Node& nodeB = nodeGroup[j];
-                if (nodeA.timepoint != nodeB.timepoint) {
-                    adj[nodeA].insert(nodeB);
-                    adj[nodeB].insert(nodeA);
-                }
-            }
-        }
-    }
+    // for (const auto& [id, nodeGroup] : nodesById) {
+    //     for (size_t i = 0; i < nodeGroup.size(); ++i) {
+    //         for (size_t j = i + 1; j < nodeGroup.size(); ++j) {
+    //             const Node& nodeA = nodeGroup[i];
+    //             const Node& nodeB = nodeGroup[j];
+    //             if (nodeA.timepoint != nodeB.timepoint) {
+    //                 adj[nodeA].insert(nodeB);
+    //                 adj[nodeB].insert(nodeA);
+    //             }
+    //         }
+    //     }
+    // }
 }

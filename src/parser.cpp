@@ -78,6 +78,26 @@ void parseData(const std::string& filename, Graph& graph) {
     }
 }
 
+void addTemporalEdges(Graph& graph) {
+    std::unordered_map<std::pair<int, bool>, std::vector<Node>> groupedNodes;
+
+    for (const Node& node : graph.nodes) {
+        groupedNodes[{node.id, node.isARG}].push_back(node);
+    }
+
+    for (const auto& [key, nodeGroup] : groupedNodes) {
+        for (size_t i = 0; i < nodeGroup.size(); ++i) {
+            for (size_t j = i + 1; j < nodeGroup.size(); ++j) {
+                const Node& a = nodeGroup[i];
+                const Node& b = nodeGroup[j];
+                if (a.timepoint != b.timepoint) {
+                    graph.edges.insert({a, b, false});
+                }
+            }
+        }
+    }
+}
+
 
 
 
