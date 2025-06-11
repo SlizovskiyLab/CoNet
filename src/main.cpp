@@ -9,7 +9,7 @@
 
 namespace fs = std::filesystem;
 
-fs::path data_file = "/Users/suhashidesilva/Documents/Projects/colocnet/data/patientwise_colocalization_by_timepoint.csv";
+fs::path data_file = "/Users/suhas/Documents/Projects/CoNet/data/patientwise_colocalization_by_timepoint.csv";
 
 int main() {
     Graph g;

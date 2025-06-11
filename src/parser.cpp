@@ -2,6 +2,7 @@
 #include "../include/id_maps.h"
 #include <fstream>
 #include <sstream>
+#include <filesystem>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
@@ -9,15 +10,15 @@
 
 /* Read input files (CSV), extract (individual, ARG, MGE, timepoint) data */
 
-void parseData(const std::string& filename, Graph& graph) {
-    std::ifstream file(filename);
+void parseData(const std::filesystem::path& filename, Graph& graph) {
+    std::ifstream infile(filename);
     std::string line;
     std::vector<std::string> headers;
     bool isHeader = true;
 
     std::unordered_map<std::string, Timepoint> columnToTimepoint;
 
-    while (std::getline(file, line)) {
+    while (std::getline(infile, line)) {
         std::stringstream ss(line);
         std::string token;
         std::vector<std::string> tokens;
