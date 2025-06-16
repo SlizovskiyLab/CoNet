@@ -7,6 +7,7 @@
 #include <unordered_set>
 #include <vector>
 #include <set>
+#include <algorithm>
 
 /* Read input files (CSV), extract (individual, ARG, MGE, timepoint) data */
 

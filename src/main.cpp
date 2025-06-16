@@ -4,12 +4,13 @@
 #include "../include/graph.h"
 #include "../include/parser.h"
 #include "../include/id_maps.h"
+#include "../include/export.h"
 
 /* Main entry point: parse arguments, load data, call functions */
 
 namespace fs = std::filesystem;
 
-fs::path data_file = "/Users/suhas/Documents/Projects/CoNet/data/patientwise_colocalization_by_timepoint.csv";
+fs::path data_file = "C:/Users/asake/OneDrive/Desktop/Homework/FMT/CoNet/data/patientwise_colocalization_by_timepoint.csv";
 
 int main() {
     Graph g;
@@ -32,6 +33,7 @@ int main() {
         }
         std::cout << "\n";
     }
+    exportToDot(g, "graph_output.dot", 200, 500);
 
     // std::cout << "print nodes" << "\n";
     // for (const auto& node : g.nodes) {
