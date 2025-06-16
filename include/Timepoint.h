@@ -1,5 +1,7 @@
 #pragma once
-
+#include <string>
+#include <iostream>
+#include <ostream>
 // enum class Timepoint {
 //     Donor = -1,
 //     Pre = 0,
@@ -63,3 +65,61 @@ enum class Timepoint {
     PostFMT_408 = 408,
     PostFMT_730 = 730,
 };
+
+inline std::string toString(Timepoint tp) {
+    switch (tp) {
+        case Timepoint::Donor: return "donor";
+        case Timepoint::PreFMT: return "pre";
+        case Timepoint::PostFMT_001: return "post_001";
+        case Timepoint::PostFMT_002: return "post_002";
+        case Timepoint::PostFMT_003: return "post_003";
+        case Timepoint::PostFMT_006: return "post_006";
+        case Timepoint::PostFMT_007: return "post_007";
+        case Timepoint::PostFMT_012: return "post_012";
+        case Timepoint::PostFMT_013: return "post_013";
+        case Timepoint::PostFMT_014: return "post_014";
+        case Timepoint::PostFMT_015: return "post_015";
+        case Timepoint::PostFMT_016: return "post_016";
+        case Timepoint::PostFMT_020: return "post_020";
+        case Timepoint::PostFMT_021: return "post_021";
+        case Timepoint::PostFMT_028: return "post_028";
+        case Timepoint::PostFMT_029: return "post_029";
+        case Timepoint::PostFMT_030: return "post_030";
+        case Timepoint::PostFMT_031: return "post_031";
+        case Timepoint::PostFMT_035: return "post_035";
+        case Timepoint::PostFMT_036: return "post_036";
+        case Timepoint::PostFMT_040: return "post_040";
+        case Timepoint::PostFMT_041: return "post_041";
+        case Timepoint::PostFMT_042: return "post_042";
+        case Timepoint::PostFMT_044: return "post_044";
+        case Timepoint::PostFMT_054: return "post_054";
+        case Timepoint::PostFMT_056: return "post_056";
+        case Timepoint::PostFMT_059: return "post_059";
+        case Timepoint::PostFMT_061: return "post_061";
+        case Timepoint::PostFMT_063: return "post_063";
+        case Timepoint::PostFMT_064: return "post_064";
+        case Timepoint::PostFMT_065: return "post_065";
+        case Timepoint::PostFMT_068: return "post_068";
+        case Timepoint::PostFMT_081: return "post_081";
+        case Timepoint::PostFMT_084: return "post_084";
+        case Timepoint::PostFMT_090: return "post_090";
+        case Timepoint::PostFMT_094: return "post_094";
+        case Timepoint::PostFMT_095: return "post_095";
+        case Timepoint::PostFMT_097: return "post_097";
+        case Timepoint::PostFMT_098: return "post_098";
+        case Timepoint::PostFMT_111: return "post_111";
+        case Timepoint::PostFMT_112: return "post_112";
+        case Timepoint::PostFMT_120: return "post_120";
+        case Timepoint::PostFMT_135: return "post_135";
+        case Timepoint::PostFMT_140: return "post_140";
+        case Timepoint::PostFMT_150: return "post_150";
+        case Timepoint::PostFMT_179: return "post_179";
+        case Timepoint::PostFMT_180: return "post_180";
+        case Timepoint::PostFMT_195: return "post_195";
+        case Timepoint::PostFMT_365: return "post_365";
+        case Timepoint::PostFMT_384: return "post_384";
+        case Timepoint::PostFMT_408: return "post_408";
+        case Timepoint::PostFMT_730: return "post_730";
+        default: return "unknown";
+    }
+}
