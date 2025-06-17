@@ -47,6 +47,8 @@ void traverseGraph(const Graph& graph,
     }
 }
 
+
+
 /********************************************  Traverse by Time 1 ******************************************/
 void findFirstOccurrence(const Graph& graph, std::unordered_map<Node, std::unordered_set<Node>>& adjacency,
                      std::map<std::pair<int, int>, Node>& firstOccurrence){
@@ -102,11 +104,13 @@ void traverseTempGraph(const Graph& graph, std::unordered_map<Node, std::unorder
     }
 }
 
+
+
 /************************************************  Traverse by Time 2  **********************************************/
 void findFirstOccurrenceByInd(
     const Graph& graph,
     std::unordered_map<Node, std::unordered_set<Node>>& adjacency,
-    std::map<std::tuple<int, int, int>, Node>& firstOccurrenceByInd
+    std::map<std::tuple<int, int, int>, Node>& firstOccurrenceByInd // store the first occurrence of the ARG-MGE pair for the individual (e.g{[key], srcNode(ARG)})
 ) {
     for (const auto& edge : graph.edges) {
         if (!edge.isColo) continue;
@@ -127,8 +131,7 @@ void findFirstOccurrenceByInd(
             }
         }
     }
-    // std::cout << "First occurrences by individual found: " << firstOccurrenceByInd.size() << "\n";
-
+    std::cout << "First occurrences by individual found: " << firstOccurrenceByInd.size() << "\n";
 }
 
 void bfsTemporalByInd(
@@ -149,33 +152,33 @@ void bfsTemporalByInd(
         q.pop();
 
         for (const Node& neighbor : adjacency.at(curr)) {
-            if (neighbor.timepoint < curr.timepoint) continue;  // enforce forward-in-time traversal
+            //  only forward-in-time traversal
+            if (neighbor.timepoint < curr.timepoint) continue;
             if (visited.count(neighbor)) continue;
 
-            // Check if this edge exists and is a valid colocalization edge for the individual
-            auto it = edgeMap.find({curr, neighbor});
-            if (it == edgeMap.end()) continue;
+            auto iterator = edgeMap.find({curr, neighbor});
+            if (iterator == edgeMap.end()) continue;
 
-            bool validColo = false;
-            for (const Edge& edge : it->second) {
-                if (edge.isColo && edge.individuals.count(ind)) {
-                    validColo = true;
-                    break;
+            bool validStep = false;
+
+            for (const Edge& edge : iterator->second) {
+                if (!edge.individuals.count(ind)) continue;
+
+                validStep = true; // Individual is involved in this edge
+
+                if (edge.isColo && curr.isARG != neighbor.isARG) {
+                    int arg = curr.isARG ? curr.id : neighbor.id;
+                    int mge = curr.isARG ? neighbor.id : curr.id;
+                    colocalizationTimelineByInd[{ind, arg, mge}].insert(neighbor.timepoint);
                 }
+
+                break; // One valid edge is enough
             }
 
-            if (!validColo) continue;
+            if (!validStep) continue;
 
             visited.insert(neighbor);
             q.push(neighbor);
-
-            // Record ARG-MGE pair by individual and timepoint
-            if (curr.isARG != neighbor.isARG) {
-                int arg = curr.isARG ? curr.id : neighbor.id;
-                int mge = curr.isARG ? neighbor.id : curr.id;
-
-                colocalizationTimelineByInd[{ind, arg, mge}].insert(neighbor.timepoint);
-            }
         }
     }
 }
