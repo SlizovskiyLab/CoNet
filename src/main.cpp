@@ -33,7 +33,7 @@ int main() {
         }
         std::cout << "\n";
     }
-    exportToDot(g, "graph_output.dot", 200, 500);
+    exportToDot(g, "graph_output.dot", 700, 11000);
 
     // std::cout << "print nodes" << "\n";
     // for (const auto& node : g.nodes) {

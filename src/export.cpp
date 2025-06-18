@@ -1,112 +1,82 @@
-#include <fstream>  // For file output
-#include <string>   // For string manipulation
-#include "graph.h"   
-#include "id_maps.h" 
+#include <fstream>
+#include <string>
+#include <unordered_set>
+#include "graph.h"
+#include "id_maps.h"
 
-// Generates a Graphviz node name string for internal use
+// Generates a unique node identifier for Graphviz from node properties
 std::string getNodeName(const Node& node) {
     std::string name = "N_" + std::to_string(node.id);
-    if (node.isARG) {
-        name += "_ARG_";
-    } else {
-        name += "_MGE_";
-    }
+    name += node.isARG ? "_ARG_" : "_MGE_";
     name += std::to_string(static_cast<int>(node.timepoint));
     return name;
 }
 
-// Returns a human-readable label for a given node based on its ID and type
-std::string getNodeLabel(const Node& node) {
-    std::string label;
-    if (node.isARG) {
-        if (argIdMap.find(node.id) != argIdMap.end()) {
-            label = argIdMap.at(node.id);
-        } else {
-            label = std::to_string(node.id);
-        }
-    } else {
-        if (mgeIdMap.find(node.id) != mgeIdMap.end()) {
-            label = mgeIdMap.at(node.id);
-        } else {
-            label = std::to_string(node.id);
-        }
-    }
-    label += " (" + std::to_string(static_cast<int>(node.timepoint)) + ")";
-    return label;
-}
-
-// Returns a color string for a node based on its timepoint
+// Determines the color used to fill the node based on its timepoint
 std::string getTimepointColor(const Timepoint& tp) {
     int timeValue = static_cast<int>(tp);
-    if (timeValue == -1) {
-        return "yellow"; // Donor
-    } else if (timeValue == 0) {
-        return "blue"; // PreFMT
-    } else {
-        return "green"; // PostFMT
-    }
+    if (timeValue == -1) return "yellow";   // Donor
+    if (timeValue == 0)  return "blue";     // PreFMT
+    return "green";                          // PostFMT
 }
 
-// Checks if an edge is temporal (same ARG or MGE)
+// Determines whether an edge is a temporal edge between same ARG/MGE across timepoints
 bool isTemporalEdge(const Edge& edge) {
-    return edge.source.id == edge.target.id && edge.source.isARG == edge.target.isARG;
+    return edge.source.id == edge.target.id &&
+           edge.source.isARG == edge.target.isARG &&
+           edge.source.timepoint != edge.target.timepoint;
 }
 
-// Writes the graph to a .dot file for Graphviz
-void exportToDot(const Graph& g, const std::string& filename, int max_nodes = 200, int max_edges = 500) {
+// Main export function to write the graph structure into a .dot file
+void exportToDot(const Graph& g, const std::string& filename, int max_nodes, int max_edges) {
     std::ofstream file(filename);
-    file << "graph G {\n";        // undirected
-    file << "  layout=circo;\n";  // circular layout
+    file << "graph G {\n";
+    file << "  layout=circo;\n";
+    file << "  node [style=filled];\n";
 
     int node_count = 0;
+    std::unordered_set<Node> included_nodes;
     for (const Node& node : g.nodes) {
-        if (node_count++ >= max_nodes) break;  // limit nodes
+        if (node_count++ >= max_nodes) break;
 
         std::string nodeName = getNodeName(node);
-        std::string nodeLabel = getNodeLabel(node);
+        included_nodes.insert(node);
         std::string color = getTimepointColor(node.timepoint);
 
-        if (node.isARG) {
-            // Draw ARGs as true circles
-            file << "  " << nodeName
-                 << " [label=\"" << nodeLabel << "\", shape=circle, fixedsize=true, width=0.5, fillcolor=" << color << "]\n";
-        } else {
-            // Draw MGEs as true squares
-            file << "  " << nodeName
-                 << " [label=\"" << nodeLabel << "\", shape=square, fixedsize=true, width=0.5, fillcolor=" << color << "]\n";
-        }
+        std::string shape = node.isARG ? "circle" : "box";
+
+        file << "  " << nodeName
+             << " [label=\"\", shape=" << shape
+             << ", fixedsize=true, width=0.5, height=0.5, fillcolor=" << color << "]\n";
     }
 
     int edge_count = 0;
     for (const Edge& edge : g.edges) {
-        if (edge_count++ >= max_edges) break;  // limit edges
+        if (edge_count++ >= max_edges) break;
+
+        if (included_nodes.count(edge.source) == 0 || included_nodes.count(edge.target) == 0) continue;
 
         std::string sourceName = getNodeName(edge.source);
         std::string targetName = getNodeName(edge.target);
+
+        std::string color;
         std::string style;
 
-        // edge is temporal or colocalization
         if (isTemporalEdge(edge)) {
-            style = "dotted";
-        } else {
-            style = "bold";
-        }
-
-        // Determine color
-        std::string color;
-        if (edge.isColo) {
-            color = "black";
+            color = "red";
+            style = "dashed";
+        } else if (edge.isColo) {
+            color = "blue";
+            style = "solid";
         } else {
             color = "gray";
+            style = "solid";
         }
 
-        // edge definition in DOT format without label
         file << "  " << sourceName
              << " -- " << targetName
-             << " [style=" << style
-             << ", color=" << color
-             << "]\n";
+             << " [style=" << style << ", color=" << color << "]\n";
     }
 
-    file << "}\n"; // Close DOT graph
+    file << "}\n";
 }
