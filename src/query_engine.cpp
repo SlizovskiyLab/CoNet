@@ -43,6 +43,14 @@ void getColocalizationsByIndPostFMTOnly(const Graph& graph, std::map<std::tuple<
         }
     }
     std::cout << "Colocalizations Post-FMT Only size: " << colocalizationsPostFMTOnly.size() << "\n";
+    // std::cout << "Colocalizations Post-FMT Only: " << "\n";
+    // for (const auto& [tuple, tps] : colocalizationsPostFMTOnly) {
+    //     std::cout << "IND " << std::get<0>(tuple) << ", ARG " << std::get<1>(tuple) << ", MGE " << std::get<2>(tuple) << ": ";
+    //     for (const auto& tp : tps) {
+    //         std::cout << toString(tp) << " ";
+    //     }
+    //     std::cout << "\n";
+    // }
 }
 
 /***************************************** PreFMT Only *********************************************/
@@ -78,7 +86,14 @@ void getColocalizationsByIndPreFMTOnly(const Graph& graph, std::map<std::tuple<i
         }
     }
     std::cout << "Colocalizations Pre-FMT Only size: " << colocalizationsPreFMTOnly.size() << "\n";
-
+    // std::cout << "Colocalizations Pre-FMT Only: " << "\n";
+    // for (const auto& [tuple, tps] : colocalizationsPreFMTOnly) {
+    //     std::cout << "IND " << std::get<0>(tuple) << ", ARG " << std::get<1>(tuple) << ", MGE " << std::get<2>(tuple) << ": ";
+    //     for (const auto& tp : tps) {
+    //         std::cout << toString(tp) << " ";
+    //     }
+    //     std::cout << "\n";
+    // }
 }
 
 

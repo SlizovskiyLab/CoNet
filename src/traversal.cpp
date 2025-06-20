@@ -1,13 +1,15 @@
 /* Traverse the graph based on earliest colocalizations */
+#include "../include/traversal.h"
+#include "../include/graph.h"
+#include "../include/Timepoint.h"
 #include <map>
 #include <tuple>
 #include <set>
-#include "traversal.h"
-#include <queue>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
 #include <algorithm>
+#include <queue>
 
 void traverseAdjacency(const Graph& graph, const std::unordered_map<Node, std::unordered_set<Node>>& adjacency, 
     std::map<std::pair<int, int>, std::set<Timepoint>>& colocalizationTimeline) {
@@ -110,7 +112,7 @@ void traverseTempGraph(const Graph& graph, std::unordered_map<Node, std::unorder
 void findFirstOccurrenceByInd(
     const Graph& graph,
     std::unordered_map<Node, std::unordered_set<Node>>& adjacency,
-    std::map<std::tuple<int, int, int>, Node>& firstOccurrenceByInd // store the first occurrence of the ARG-MGE pair for the individual (e.g{[key], srcNode(ARG)})
+    std::map<std::tuple<int, int, int>, Node>& firstOccurrenceByInd // This will store the first occurrence of the ARG-MGE pair for the individual (e.g{[key], srcNode(ARG)} )
 ) {
     for (const auto& edge : graph.edges) {
         if (!edge.isColo) continue;
@@ -134,6 +136,8 @@ void findFirstOccurrenceByInd(
     std::cout << "First occurrences by individual found: " << firstOccurrenceByInd.size() << "\n";
 }
 
+
+
 void bfsTemporalByInd(
     const Node& start,
     const std::unordered_map<Node, std::unordered_set<Node>>& adjacency,
@@ -152,7 +156,7 @@ void bfsTemporalByInd(
         q.pop();
 
         for (const Node& neighbor : adjacency.at(curr)) {
-            //  only forward-in-time traversal
+            // Enforce forward-in-time traversal
             if (neighbor.timepoint < curr.timepoint) continue;
             if (visited.count(neighbor)) continue;
 
@@ -182,6 +186,8 @@ void bfsTemporalByInd(
         }
     }
 }
+
+
 
 void traverseGraphByInd(const Graph& graph, std::unordered_map<Node, std::unordered_set<Node>>& adjacency, const std::set<Edge>& edges,
                      std::map<std::tuple<int, int, int>, Node>& firstOccurrenceByInd, std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationTimelineByInd) {

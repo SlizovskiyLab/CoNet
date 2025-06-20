@@ -54,7 +54,7 @@ void parseData(const std::string& filename, Graph& graph) {
 
         for (size_t i = 4; i < tokens.size(); ++i) {
             std::string colName = headers[i];
-            if (columnToTimepoint.count(colName) && tokens[i] == "1") {
+            if (columnToTimepoint.count(colName) && ((tokens[i] == "1")||(tokens[i] == "2"))) {
                 Timepoint tp = columnToTimepoint[colName];
 
                 Node argNode = {argID, true, tp, false};
