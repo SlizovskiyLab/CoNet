@@ -6,6 +6,7 @@
 #include "../include/id_maps.h"
 #include "../include/traversal.h"
 #include "../include/query_engine.h"
+#include "../include/export.h"
 
 /* Main entry point: parse arguments, load data, call functions */
 
@@ -21,18 +22,19 @@ int main() {
     std::unordered_map<Node, std::unordered_set<Node>> adjacency;
     buildAdjacency(g, adjacency);
 
-    /************************* Printing of Adjacency List, graph  ******************************/ 
-    // std::cout << "Graph constructed with " << g.nodes.size() << " nodes and " << g.edges.size() << " edges.\n";
-    // std::cout << "Adjacency list size: " << adjacency.size() << " nodes.\n";
+    std::cout << "Graph constructed with " << g.nodes.size() << " nodes and " << g.edges.size() << " edges.\n";
+    std::cout << "Adjacency list size: " << adjacency.size() << " nodes.\n";
 
-    // std::cout << "Adjacency list" << "\n";
-    // for (const auto& i : adjacency) {
-    //     std::cout << i.first << " -> ";
-    //     for (const auto& neighbor : i.second) {
-    //         std::cout << neighbor <<  " ";
-    //     }
-    //     std::cout << "\n";
-    // }
+    // Printing of Adjacency List
+    std::cout << "Adjacency list" << "\n";
+    for (const auto& i : adjacency) {
+        std::cout << i.first << " -> ";
+        for (const auto& neighbor : i.second) {
+            std::cout << neighbor <<  " ";
+        }
+        std::cout << "\n";
+    }
+    exportToDot(g, "graph_output.dot", 700, 11000);
 
     // std::cout << "print nodes" << "\n";
     // for (const auto& node : g.nodes) {

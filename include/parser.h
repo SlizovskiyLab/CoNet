@@ -2,6 +2,7 @@
 #define PARSER_H
 
 #include <string>
+#include <filesystem>
 #include "graph.h"
 
 namespace std {
@@ -15,7 +16,7 @@ namespace std {
 
 
 // Declares the function that will be defined in parser.cpp
-void parseData(const std::string& filename, Graph& graph);
+void parseData(const std::filesystem::path& filename, Graph& graph);
 void addTemporalEdges(Graph& graph);
 
 #endif // PARSER_H
