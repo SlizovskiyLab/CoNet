@@ -12,7 +12,7 @@
 
 namespace fs = std::filesystem;
 
-fs::path data_file = "/Users/suhashidesilva/Documents/Projects/CoNet/data/patientwise_colocalization_by_timepoint.csv";
+fs::path data_file = "C:/Users/asake/OneDrive/Desktop/Homework/FMT/CoNet/data/patientwise_colocalization_by_timepoint.csv";
 
 int main() {
     Graph g;
@@ -34,7 +34,7 @@ int main() {
         }
         std::cout << "\n";
     }
-    exportToDot(g, "graph_output.dot", 700, 11000);
+    exportToDot(g, "graph_output.dot");
 
     // std::cout << "print nodes" << "\n";
     // for (const auto& node : g.nodes) {

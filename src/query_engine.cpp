@@ -8,6 +8,7 @@
 #include "graph.h"
 #include "Timepoint.h"
 #include "query_engine.h"
+#include <algorithm>
 
 /*************************************** PostFMT Only *************************************/
 bool isPostFMT(Timepoint tp) {
