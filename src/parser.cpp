@@ -31,6 +31,8 @@ void addEdge(Graph& graph, const Node& src, const Node& tgt, bool isColo, int pa
     }
 }
 
+// This function reads a CSV file containing patient data and constructs a graph.
+// It extracts ARG and MGE labels, maps them to IDs, and creates nodes and edges
 void parseData(const std::filesystem::path& filename, Graph& graph) {
     std::ifstream infile(filename);
     std::string line;
@@ -103,7 +105,8 @@ void parseData(const std::filesystem::path& filename, Graph& graph) {
 
 
 
-
+// This function adds temporal edges between nodes based on their timepoints.
+// It creates directed edges from earlier timepoints to later ones within the same ARG or MGE
 void addTemporalEdges(Graph& graph) {
     std::unordered_map<std::pair<int, bool>, std::vector<Node>> groupedNodes;
 
@@ -127,7 +130,6 @@ void addTemporalEdges(Graph& graph) {
     }
 }
 
-// {{1, True}: [121, 122, 123], {2, False}: [124, 125, 126]}
 
 
 

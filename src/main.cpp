@@ -12,7 +12,8 @@
 
 namespace fs = std::filesystem;
 
-fs::path data_file = "C:/Users/asake/OneDrive/Desktop/Homework/FMT/CoNet/data/patientwise_colocalization_by_timepoint.csv";
+fs::path data_file = "/Users/suhashidesilva/Documents/Projects/CoNet/data/patientwise_colocalization_by_timepoint.csv";
+
 
 int main() {
     Graph g;
@@ -51,15 +52,15 @@ int main() {
     /******************************** Traversal of Graph  ************************************/
     std::map<std::tuple<int, int, int>, std::set<Timepoint>> colocalizationByIndividual;
     traverseGraph(g, colocalizationByIndividual);
-    std::cout << "individual timeline" << "\n";
-    for (const auto& entry : colocalizationByIndividual) {
-        std::cout << "Individual ID: " << std::get<0>(entry.first)
-                  << ", ARG ID: " << std::get<1>(entry.first)
-                  << ", MGE ID: " << std::get<2>(entry.first) << "\n";
-        for (const auto& tp : entry.second) {
-            std::cout << "  - " << tp << "\n";
-        }
-    }
+    // std::cout << "individual timeline" << "\n";
+    // for (const auto& entry : colocalizationByIndividual) {
+    //     std::cout << "Individual ID: " << std::get<0>(entry.first)
+    //               << ", ARG ID: " << std::get<1>(entry.first)
+    //               << ", MGE ID: " << std::get<2>(entry.first) << "\n";
+    //     for (const auto& tp : entry.second) {
+    //         std::cout << "  - " << tp << "\n";
+    //     }
+    // }
 
     // /******************************** Query Engine  ************************************/
     std::cout << "Query Engine Results:\n";
