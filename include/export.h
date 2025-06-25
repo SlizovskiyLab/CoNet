@@ -4,7 +4,7 @@
 #include <string>
 #include "graph.h"
 
-void exportToDot(const Graph& g, const std::string& filename, int max_nodes = 200, int max_edges = 500);
+void exportToDot(const Graph& g, const std::string& filename);
 
 
 #endif

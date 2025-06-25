@@ -4,7 +4,6 @@
 #include "graph.h"
 #include "id_maps.h"
 
-// Generates a unique node identifier for Graphviz from node properties
 std::string getNodeName(const Node& node) {
     std::string name = "N_" + std::to_string(node.id);
     name += node.isARG ? "_ARG_" : "_MGE_";
@@ -12,7 +11,6 @@ std::string getNodeName(const Node& node) {
     return name;
 }
 
-// Determines the color used to fill the node based on its timepoint
 std::string getTimepointColor(const Timepoint& tp) {
     int timeValue = static_cast<int>(tp);
     if (timeValue == -1) return "yellow";   // Donor
@@ -20,29 +18,23 @@ std::string getTimepointColor(const Timepoint& tp) {
     return "green";                          // PostFMT
 }
 
-// Determines whether an edge is a temporal edge between same ARG/MGE across timepoints
 bool isTemporalEdge(const Edge& edge) {
     return edge.source.id == edge.target.id &&
            edge.source.isARG == edge.target.isARG &&
            edge.source.timepoint != edge.target.timepoint;
 }
 
-// Main export function to write the graph structure into a .dot file
-void exportToDot(const Graph& g, const std::string& filename, int max_nodes, int max_edges) {
+void exportToDot(const Graph& g, const std::string& filename) {
     std::ofstream file(filename);
-    file << "graph G {\n";
-    file << "  layout=circo;\n";
+    file << "digraph G {\n";
+    file << "  layout=sfdp;\n";  // 🆕 use sfdp layout
     file << "  node [style=filled];\n";
 
-    int node_count = 0;
     std::unordered_set<Node> included_nodes;
     for (const Node& node : g.nodes) {
-        if (node_count++ >= max_nodes) break;
-
         std::string nodeName = getNodeName(node);
         included_nodes.insert(node);
         std::string color = getTimepointColor(node.timepoint);
-
         std::string shape = node.isARG ? "circle" : "box";
 
         file << "  " << nodeName
@@ -50,10 +42,7 @@ void exportToDot(const Graph& g, const std::string& filename, int max_nodes, int
              << ", fixedsize=true, width=0.5, height=0.5, fillcolor=" << color << "]\n";
     }
 
-    int edge_count = 0;
     for (const Edge& edge : g.edges) {
-        if (edge_count++ >= max_edges) break;
-
         if (included_nodes.count(edge.source) == 0 || included_nodes.count(edge.target) == 0) continue;
 
         std::string sourceName = getNodeName(edge.source);
@@ -61,6 +50,7 @@ void exportToDot(const Graph& g, const std::string& filename, int max_nodes, int
 
         std::string color;
         std::string style;
+        std::string extraAttributes;
 
         if (isTemporalEdge(edge)) {
             color = "red";
@@ -68,14 +58,20 @@ void exportToDot(const Graph& g, const std::string& filename, int max_nodes, int
         } else if (edge.isColo) {
             color = "blue";
             style = "solid";
+            extraAttributes = "dir=both";  // bidirectional
         } else {
             color = "gray";
             style = "solid";
         }
 
-        file << "  " << sourceName
-             << " -- " << targetName
-             << " [style=" << style << ", color=" << color << "]\n";
+        file << "  " << sourceName << " -> " << targetName
+             << " [style=" << style << ", color=" << color;
+
+        if (!extraAttributes.empty()) {
+            file << ", " << extraAttributes;
+        }
+
+        file << "]\n";
     }
 
     file << "}\n";
