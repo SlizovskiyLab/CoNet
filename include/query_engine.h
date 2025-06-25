@@ -14,5 +14,7 @@ bool isPreFMT(const std::string& tp);
 void getColocalizationsPreFMTOnly(const Graph& graph, std::map<std::pair<int, int>, std::set<Timepoint>>& colocalizationByTimepoint);
 void getColocalizationsByIndPreFMTOnly(const Graph& graph, std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual);
 
+void getColocalizationsByIndDonorAndPostFMT(const Graph& graph, std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual);
+void getColocalizationsByIndPreFMTAndPostFMT(const Graph& graph, std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual);
 
 #endif

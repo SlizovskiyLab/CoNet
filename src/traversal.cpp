@@ -11,6 +11,8 @@
 #include <algorithm>
 #include <queue>
 
+// This function traverses the graph and collects colocalization timepoints for each ARG and MGE pair.
+// It uses an adjacency map to represent the graph structure, allowing for efficient traversal of nodes and their neighbors based on the defined edges.
 void traverseAdjacency(const Graph& graph, const std::unordered_map<Node, std::unordered_set<Node>>& adjacency, 
     std::map<std::pair<int, int>, std::set<Timepoint>>& colocalizationTimeline) {
     for (const auto& node : graph.nodes) {
@@ -31,6 +33,9 @@ void traverseAdjacency(const Graph& graph, const std::unordered_map<Node, std::u
     }
 }
 
+
+// The function builds a timeline of colocalizations for each individual, ARG, and MGE pair, allowing for further analysis of colocalization patterns over time.
+// This allows for efficient tracking of colocalization events for each individual across different ARG and MGE pairs.
 void traverseGraph(const Graph& graph, 
     std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual) {
     // std::unordered_map<Node, std::unordered_set<Node>> adjacency;
@@ -51,7 +56,9 @@ void traverseGraph(const Graph& graph,
 
 
 
-/********************************************  Traverse by Time 1 ******************************************/
+/********************************************  Traverse by Time 1 (not considering patients) ******************************************/
+// This version considers only the first occurrence of colocalization between ARG and MGE
+// It builds a timeline of colocalizations for each ARG and MGE pair, without individual
 void findFirstOccurrence(const Graph& graph, std::unordered_map<Node, std::unordered_set<Node>>& adjacency,
                      std::map<std::pair<int, int>, Node>& firstOccurrence){
     for (const auto& edge : graph.edges) {
@@ -70,6 +77,8 @@ void findFirstOccurrence(const Graph& graph, std::unordered_map<Node, std::unord
 }
 
 
+// This function performs a BFS-like traversal starting from the first occurrence node
+// It explores the graph in a forward-in-time manner, collecting colocalization timepoints for the ARG and MGE pair.
 void bfsTemporal(const Node& start, const std::unordered_map<Node, std::unordered_set<Node>>& adjacency, std::map<std::pair<int, int>, std::set<Timepoint>>& colocalizationTimeline){
     std::queue<Node> q;
     std::unordered_set<Node> visited;
@@ -98,6 +107,8 @@ void bfsTemporal(const Node& start, const std::unordered_map<Node, std::unordere
     }
 }
 
+// This function builds a timeline of colocalizations for each ARG and MGE pair
+// It first finds the first occurrence of colocalization between ARG and MGE, then performs a BFS traversal starting from each first occurrence node to collect all colocalization timepoints.
 void traverseTempGraph(const Graph& graph, std::unordered_map<Node, std::unordered_set<Node>>& adjacency,
                      std::map<std::pair<int, int>, Node>& firstOccurrence, std::map<std::pair<int, int>, std::set<Timepoint>>& colocalizationsByTime){
     findFirstOccurrence(graph, adjacency, firstOccurrence);
@@ -109,6 +120,8 @@ void traverseTempGraph(const Graph& graph, std::unordered_map<Node, std::unorder
 
 
 /************************************************  Traverse by Time 2  **********************************************/
+// This version considers individuals and their first occurrence of colocalization
+// It builds a timeline of colocalizations for each individual, ARG, and MGE pair
 void findFirstOccurrenceByInd(
     const Graph& graph,
     std::unordered_map<Node, std::unordered_set<Node>>& adjacency,
@@ -138,11 +151,13 @@ void findFirstOccurrenceByInd(
 
 
 
-void bfsTemporalByInd(
+// This function performs a BFS-like traversal starting from the first occurrence node
+// It explores the graph in a forward-in-time manner, collecting colocalization timepoints for the specified individual, ARG, and MGE pair.
+void temporalTimelineTraversal(
     const Node& start,
     const std::unordered_map<Node, std::unordered_set<Node>>& adjacency,
     const std::map<std::pair<Node, Node>, std::vector<Edge>>& edgeMap,
-    int ind,
+    int ind, int arg, int mge,
     std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationTimelineByInd
 ) {
     std::queue<Node> q;
@@ -151,55 +166,53 @@ void bfsTemporalByInd(
     q.push(start);
     visited.insert(start);
 
+    auto key = std::make_tuple(ind, arg, mge);
+    colocalizationTimelineByInd[key].insert(start.timepoint);
+
     while (!q.empty()) {
         Node curr = q.front();
         q.pop();
 
         for (const Node& neighbor : adjacency.at(curr)) {
-            // Enforce forward-in-time traversal
             if (neighbor.timepoint < curr.timepoint) continue;
             if (visited.count(neighbor)) continue;
 
-            auto iterator = edgeMap.find({curr, neighbor});
-            if (iterator == edgeMap.end()) continue;
+            auto it = edgeMap.find({curr, neighbor});
+            if (it == edgeMap.end()) continue;
 
-            bool validStep = false;
+            for (const Edge& edge : it->second) {
+                if (!edge.isColo || !edge.individuals.count(ind)) continue;
 
-            for (const Edge& edge : iterator->second) {
-                if (!edge.individuals.count(ind)) continue;
+                int this_arg = curr.isARG ? curr.id : neighbor.id;
+                int this_mge = curr.isARG ? neighbor.id : curr.id;
 
-                validStep = true; // Individual is involved in this edge
-
-                if (edge.isColo && curr.isARG != neighbor.isARG) {
-                    int arg = curr.isARG ? curr.id : neighbor.id;
-                    int mge = curr.isARG ? neighbor.id : curr.id;
-                    colocalizationTimelineByInd[{ind, arg, mge}].insert(neighbor.timepoint);
+                if (this_arg == arg && this_mge == mge) {
+                    colocalizationTimelineByInd[key].insert(neighbor.timepoint);
+                    visited.insert(neighbor);
+                    q.push(neighbor);
+                    break; // one valid edge is enough
                 }
-
-                break; // One valid edge is enough
             }
-
-            if (!validStep) continue;
-
-            visited.insert(neighbor);
-            q.push(neighbor);
         }
     }
 }
 
-
-
+// Builds an edge map for efficient lookup of edges between nodes.
+// The adjacency map is used to represent the graph structure, allowing for efficient traversal of nodes and their neighbors based on the defined edges.
+// The function iterates over the first occurrences of each ARG-MGE pair and performs a BFS traversal starting from each first occurrence node. During the traversal, it collects colocalization timepoints for the specified individual, ARG, and MGE pair, ensuring that only valid colocalizations are recorded.
 void traverseGraphByInd(const Graph& graph, std::unordered_map<Node, std::unordered_set<Node>>& adjacency, const std::set<Edge>& edges,
                      std::map<std::tuple<int, int, int>, Node>& firstOccurrenceByInd, std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationTimelineByInd) {
     findFirstOccurrenceByInd(graph, adjacency, firstOccurrenceByInd);
     std::map<std::pair<Node, Node>, std::vector<Edge>> edgeMap;
+    
     for (const auto& edge : graph.edges) {
         edgeMap[{edge.source, edge.target}].push_back(edge);
         edgeMap[{edge.target, edge.source}].push_back(edge); // undirected lookup
     }
+
     for (const auto& [key, startNode] : firstOccurrenceByInd) {
         auto [ind, arg, mge] = key;
-        bfsTemporalByInd(startNode, adjacency, edgeMap, ind, colocalizationTimelineByInd);
+        temporalTimelineTraversal(startNode, adjacency, edgeMap, ind, arg, mge, colocalizationTimelineByInd);
     }
 }
 

@@ -53,7 +53,6 @@ struct Edge {
     bool isColo;
     std::set<int> individuals;
     int weight = 0;
-    std::unordered_map<int, std::unordered_set<int>> argToIndividuals;
 
     bool operator<(const Edge& other) const {
         return std::tie(source, target, isColo, weight) < std::tie(other.source, other.target, other.isColo, other.weight);

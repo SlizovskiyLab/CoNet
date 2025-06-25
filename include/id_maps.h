@@ -6,5 +6,6 @@
 
 extern const std::unordered_map<int, std::string> argIdMap;
 extern const std::unordered_map<int, std::string> mgeIdMap;
+extern const std::unordered_map<int, std::string> argGroupMap;
 
 #endif // ID_MAPS_H

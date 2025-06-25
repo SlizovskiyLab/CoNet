@@ -11,6 +11,26 @@
 
 /* Read input files (CSV), extract (individual, ARG, MGE, timepoint) data */
 
+void addEdge(Graph& graph, const Node& src, const Node& tgt, bool isColo, int patientID) {
+    Edge edge = {src, tgt, isColo};
+    if (isColo && patientID != -1) {
+        edge.individuals.insert(patientID);
+    }
+
+    auto it = graph.edges.find(edge);
+    if (it != graph.edges.end() && isColo && patientID != -1) {
+        const_cast<Edge&>(*it).individuals.insert(patientID);
+    } else {
+        graph.edges.insert(edge);
+        if (isColo) {
+            // Ensure reverse edge is also inserted for bidirectional colocalization
+            Edge reverseEdge = {tgt, src, true};
+            if (patientID != -1) reverseEdge.individuals.insert(patientID);
+            graph.edges.insert(reverseEdge);
+        }
+    }
+}
+
 void parseData(const std::filesystem::path& filename, Graph& graph) {
     std::ifstream infile(filename);
     std::string line;
@@ -65,20 +85,24 @@ void parseData(const std::filesystem::path& filename, Graph& graph) {
                 graph.nodes.insert(argNode);
                 graph.nodes.insert(mgeNode);
 
-                auto existing = std::find_if(graph.edges.begin(), graph.edges.end(), [&](const Edge& e) {
-                    return e.isColo && e.source == argNode && e.target == mgeNode;
-                });
+                addEdge(graph, argNode, mgeNode, true, patientID);
+                // auto existing = std::find_if(graph.edges.begin(), graph.edges.end(), [&](const Edge& e) {
+                //     return e.isColo && e.source == argNode && e.target == mgeNode;
+                // });
 
-                if (existing != graph.edges.end()) {
-                    const_cast<Edge&>(*existing).individuals.insert(patientID);
-                } else {
-                    Edge edge = {argNode, mgeNode, true, {patientID}};
-                    graph.edges.insert(edge);
-                }
+                // if (existing != graph.edges.end()) {
+                //     const_cast<Edge&>(*existing).individuals.insert(patientID);
+                // } else {
+                //     Edge edge = {argNode, mgeNode, true, {patientID}};
+                //     graph.edges.insert(edge);
+                // }
             }
         }
     }
 }
+
+
+
 
 void addTemporalEdges(Graph& graph) {
     std::unordered_map<std::pair<int, bool>, std::vector<Node>> groupedNodes;
@@ -88,17 +112,22 @@ void addTemporalEdges(Graph& graph) {
     }
 
     for (const auto& [key, nodeGroup] : groupedNodes) {
-        for (size_t i = 0; i < nodeGroup.size(); ++i) {
-            for (size_t j = i + 1; j < nodeGroup.size(); ++j) {
-                const Node& a = nodeGroup[i];
-                const Node& b = nodeGroup[j];
-                if (a.timepoint != b.timepoint) {
-                    graph.edges.insert({a, b, false});
+        const auto& nodes = nodeGroup;
+        for (size_t i = 0; i < nodes.size(); ++i) {
+            for (size_t j = 0; j < nodes.size(); ++j) {
+                if (i == j) continue;
+                const Node& a = nodes[i];
+                const Node& b = nodes[j];
+
+                if (a.timepoint < b.timepoint) {
+                    addEdge(graph, a, b, false);  // directional temporal edge from earlier to later
                 }
             }
         }
     }
 }
+
+// {{1, True}: [121, 122, 123], {2, False}: [124, 125, 126]}
 
 
 

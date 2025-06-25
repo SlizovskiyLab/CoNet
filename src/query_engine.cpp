@@ -98,5 +98,40 @@ void getColocalizationsByIndPreFMTOnly(const Graph& graph, std::map<std::tuple<i
 
 
 
+/***************************************** PreFMT & PostFMT both *********************************************/
+void getColocalizationsByIndPreFMTAndPostFMT(const Graph& graph, std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual) {
+    std::map<std::tuple<int, int, int>, std::set<Timepoint>> colocalizationsByIndPreFMTAndPostFMT;
+    for (const auto& [tuple, tps] : colocalizationByIndividual) {
+        // Check if timepoints contain both pre-FMT and post-FMT
+        bool hasPreFMT = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) {
+            return isPreFMT(tp);
+        });
+        bool hasPostFMT = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) {
+            return isPostFMT(tp);
+        });
 
-/*********************** Donor Only ***********************/
+        if (hasPreFMT && hasPostFMT) {
+            colocalizationsByIndPreFMTAndPostFMT.insert({tuple, tps});
+        }
+    }
+    std::cout << "Colocalizations Pre-FMT & Post-FMT size: " << colocalizationsByIndPreFMTAndPostFMT.size() << "\n";
+}
+
+/***************************************** Donor & PostFMT both *********************************************/
+void getColocalizationsByIndDonorAndPostFMT(const Graph& graph, std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual) {
+    std::map<std::tuple<int, int, int>, std::set<Timepoint>> colocalizationsByIndDonorAndPostFMT;
+    for (const auto& [tuple, tps] : colocalizationByIndividual) {
+        // Check if timepoints contain donor and post-FMT
+        bool hasDonor = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) {
+            return tp == Timepoint::Donor;
+        });
+        bool hasPostFMT = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) {
+            return isPostFMT(tp);
+        });
+
+        if (hasDonor && hasPostFMT) {
+            colocalizationsByIndDonorAndPostFMT.insert({tuple, tps});
+        }
+    }
+    std::cout << "Colocalizations Donor & Post-FMT size: " << colocalizationsByIndDonorAndPostFMT.size() << "\n";
+}

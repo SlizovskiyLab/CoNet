@@ -16,24 +16,14 @@ void buildAdjacency(const Graph& g, std::unordered_map<Node, std::unordered_set<
             adj[src].insert(tgt);
             adj[tgt].insert(src);
         } else {
-            // Directional temporal edge
-            if (static_cast<int>(src.timepoint) < static_cast<int>(tgt.timepoint)) {
-                adj[src].insert(tgt); // temporal forward
-            }else if (static_cast<int>(src.timepoint) > static_cast<int>(tgt.timepoint)) {
-                adj[tgt].insert(src);
-            }
+            // Directional temporal edge (already ensured during edge creation)
+            adj[src].insert(tgt);
+            // // Directional temporal edge
+            // if (static_cast<int>(src.timepoint) < static_cast<int>(tgt.timepoint)) {
+            //     adj[src].insert(tgt); // temporal forward
+            // }else if (static_cast<int>(src.timepoint) > static_cast<int>(tgt.timepoint)) {
+            //     adj[tgt].insert(src);
+            // }
         }
     }
-    // for (const auto& [id, nodeGroup] : nodesById) {
-    //     for (size_t i = 0; i < nodeGroup.size(); ++i) {
-    //         for (size_t j = i + 1; j < nodeGroup.size(); ++j) {
-    //             const Node& nodeA = nodeGroup[i];
-    //             const Node& nodeB = nodeGroup[j];
-    //             if (nodeA.timepoint != nodeB.timepoint) {
-    //                 adj[nodeA].insert(nodeB);
-    //                 adj[nodeB].insert(nodeA);
-    //             }
-    //         }
-    //     }
-    // }
 }

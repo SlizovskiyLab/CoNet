@@ -28,12 +28,19 @@ void traverseTempGraph(const Graph& graph, std::unordered_map<Node, std::unorder
 void findFirstOccurrenceByInd(const Graph& graph, std::unordered_map<Node, std::unordered_set<Node>>& adjacency,
     std::map<std::tuple<int, int, int>, Node>& firstOccurrenceByInd);
     
-void bfsTemporalByInd(const Node& start, const std::unordered_map<Node, std::unordered_set<Node>>& adjacency, const std::set<Edge>& edges, int ind,
-    std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationTimelineByInd);
+// void bfsTemporalByInd(const Node& start, const std::unordered_map<Node, std::unordered_set<Node>>& adjacency, const std::set<Edge>& edges, int ind,
+//     std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationTimelineByInd);
 
 void traverseGraphByInd(const Graph& graph, std::unordered_map<Node, std::unordered_set<Node>>& adjacency, const std::set<Edge>& edges,
                      std::map<std::tuple<int, int, int>, Node>& firstOccurrenceByInd, std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationTimelineByInd);
 
+void temporalTimelineTraversal(
+    const Node& start,
+    const std::unordered_map<Node, std::unordered_set<Node>>& adjacency,
+    const std::map<std::pair<Node, Node>, std::vector<Edge>>& edgeMap,
+    int ind, int arg, int mge,
+    std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationTimelineByInd
+);
 
 
 inline std::ostream& operator<<(std::ostream& os, const Timepoint& tp) {

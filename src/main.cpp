@@ -26,15 +26,15 @@ int main() {
     std::cout << "Adjacency list size: " << adjacency.size() << " nodes.\n";
 
     // Printing of Adjacency List
-    std::cout << "Adjacency list" << "\n";
-    for (const auto& i : adjacency) {
-        std::cout << i.first << " -> ";
-        for (const auto& neighbor : i.second) {
-            std::cout << neighbor <<  " ";
-        }
-        std::cout << "\n";
-    }
-    exportToDot(g, "graph_output.dot", 700, 11000);
+    // std::cout << "Adjacency list" << "\n";
+    // for (const auto& i : adjacency) {
+    //     std::cout << i.first << " -> ";
+    //     for (const auto& neighbor : i.second) {
+    //         std::cout << neighbor <<  " ";
+    //     }
+    //     std::cout << "\n";
+    // }
+    exportToDot(g, "graph_output.dot", 6000, 15000);
 
     // std::cout << "print nodes" << "\n";
     // for (const auto& node : g.nodes) {
@@ -48,6 +48,44 @@ int main() {
     //               << "\n";
     // }
     
+    /******************************** Traversal of Graph  ************************************/
+    std::map<std::tuple<int, int, int>, std::set<Timepoint>> colocalizationByIndividual;
+    traverseGraph(g, colocalizationByIndividual);
+    std::cout << "individual timeline" << "\n";
+    for (const auto& entry : colocalizationByIndividual) {
+        std::cout << "Individual ID: " << std::get<0>(entry.first)
+                  << ", ARG ID: " << std::get<1>(entry.first)
+                  << ", MGE ID: " << std::get<2>(entry.first) << "\n";
+        for (const auto& tp : entry.second) {
+            std::cout << "  - " << tp << "\n";
+        }
+    }
+
+    // /******************************** Query Engine  ************************************/
+    std::cout << "Query Engine Results:\n";
+
+    getColocalizationsByIndPostFMTOnly(g, colocalizationByIndividual);
+    getColocalizationsByIndPreFMTOnly(g, colocalizationByIndividual);
+    getColocalizationsByIndDonorAndPostFMT(g, colocalizationByIndividual);
+    getColocalizationsByIndPreFMTAndPostFMT(g, colocalizationByIndividual);
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     /******************************** Traversal based on time - approach 1 ************************************/
@@ -75,10 +113,10 @@ int main() {
 
 
     /******************************** Traversal based on time - approach2 ************************************/
-    std::map<std::tuple<int, int, int>, Node> firstOccurrenceByInd;
-    std::map<std::tuple<int, int, int>, std::set<Timepoint>> colocalizationsTimelineByInd;
+    // std::map<std::tuple<int, int, int>, Node> firstOccurrenceByInd;
+    // std::map<std::tuple<int, int, int>, std::set<Timepoint>> colocalizationsTimelineByInd;
 
-    traverseGraphByInd(g, adjacency, g.edges, firstOccurrenceByInd, colocalizationsTimelineByInd);
+    // traverseGraphByInd(g, adjacency, g.edges, firstOccurrenceByInd, colocalizationsTimelineByInd);
 
     // for (const auto& entry : colocalizationsByTime) {
     //     int argId = entry.first.first;
@@ -96,20 +134,6 @@ int main() {
     //     std::cout << "ARG ID: " << argId << ", MGE ID: " << mgeId << "\n";
     //     std::cout << "  - " << entry.second.timepoint << "\n";
     // }
-
-
-    // /******************************** Query Engine  ************************************/
-    std::cout << "Query Engine Results:\n";
-    // getColocalizationsPostFMTOnly(g, colocalizationsByTime);
-    // getColocalizationsPreFMTOnly(g, colocalizationTimeline);
-
-    getColocalizationsByIndPostFMTOnly(g, colocalizationsTimelineByInd);
-    getColocalizationsByIndPreFMTOnly(g, colocalizationsTimelineByInd);
-
-    return 0;
-}
-
-
 
 
 
