@@ -1,10 +1,46 @@
 #include "../include/id_maps.h"
 
 
-// const std::unordered_map<int, std::string> argIdMap = {
-//     {1, "Beta-lactamase gene"},
-//     {2, "Macrolide resistance gene"},
-// };
+std::string getARGName(int id) {
+    auto it = argIdMap.find(id);
+    return it != argIdMap.end() ? it->second : "Unknown ARG";
+}
+
+std::string getMGEName(int id) {
+    auto it = mgeIdMap.find(id);
+    return it != mgeIdMap.end() ? it->second : "Unknown MGE";
+}
+
+std::string getARGGroupName(int id) {
+    auto it = argGroupMap.find(id);
+    return it != argGroupMap.end() ? it->second : "Unknown ARG Group";
+}
+
+
+int getARGId(const std::string& name) {
+    for (const auto& [id, argName] : argIdMap) {
+        if (argName == name)
+            return id;
+    }
+    return -1; // Not found
+}
+
+int getMGEId(const std::string& name) {
+    for (const auto& [id, mgeName] : mgeIdMap) {
+        if (mgeName == name)
+            return id;
+    }
+    return -1; // Not found
+}
+
+int getARGGroupId(const std::string& name) {
+    for (const auto& [id, groupName] : argGroupMap) {
+        if (groupName == name)
+            return id;
+    }
+    return -1; // Not found
+}
+
 
 
 const std::unordered_map<int, std::string> argIdMap = {

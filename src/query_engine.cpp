@@ -8,6 +8,7 @@
 #include "graph.h"
 #include "Timepoint.h"
 #include "query_engine.h"
+#include "id_maps.h"
 #include <algorithm>
 
 /*************************************** PostFMT Only *************************************/
@@ -135,4 +136,26 @@ void getColocalizationsByIndDonorAndPostFMT(const Graph& graph, std::map<std::tu
         }
     }
     std::cout << "Colocalizations Donor & Post-FMT size: " << colocalizationsByIndDonorAndPostFMT.size() << "\n";
+}
+
+
+/***************************************** Connected MGEs *********************************************/
+void printConnectedMGEs(const Graph& graph, int argID) {
+    std::unordered_set<int> connectedMGEs;
+
+    for (const Edge& edge : graph.edges) {
+        if (!edge.isColo) continue;
+        if (edge.source.isARG && edge.source.id == argID && !edge.target.isARG) {
+            connectedMGEs.insert(edge.target.id);
+        } else if (edge.target.isARG && edge.target.id == argID && !edge.source.isARG) {
+            connectedMGEs.insert(edge.source.id);
+        }
+    }
+
+    std::cout << "ARG ID " << argID << " is connected to MGE IDs:\n";
+    for (int mge : connectedMGEs) {
+        std::cout << "  - MGE " << mge;
+        if (mgeIdMap.count(mge)) std::cout << " (" << mgeIdMap.at(mge) << ")";
+        std::cout << "\n";
+    }
 }

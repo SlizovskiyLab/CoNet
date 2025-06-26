@@ -42,6 +42,11 @@ void temporalTimelineTraversal(
     std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationTimelineByInd
 );
 
+std::vector<std::pair<int, int>> getTopKEntities(const Graph& graph, bool isARG, int K);
+
+void getTimelineForARG(const Graph& graph, const std::string& argName);
+void getTimelineForMGE(const Graph& graph, const std::string& mgeName);
+
 
 inline std::ostream& operator<<(std::ostream& os, const Timepoint& tp) {
     switch (tp) {

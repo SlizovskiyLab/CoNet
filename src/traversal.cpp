@@ -2,6 +2,7 @@
 #include "../include/traversal.h"
 #include "../include/graph.h"
 #include "../include/Timepoint.h"
+#include "../include/id_maps.h"
 #include <map>
 #include <tuple>
 #include <set>
@@ -218,3 +219,87 @@ void traverseGraphByInd(const Graph& graph, std::unordered_map<Node, std::unorde
 
 
 
+
+/************************************************   **********************************************/
+// This function retrieves the top K entities (ARGs or MGEs) based on their frequency of occurrence in the graph
+std::vector<std::pair<int, int>> getTopKEntities(const Graph& graph, bool isARG, int K) {
+    std::unordered_map<int, int> countMap;
+
+    for (const Edge& edge : graph.edges) {
+        if (!edge.isColo) continue;
+
+        const Node& node = edge.source;
+        if (node.isARG == isARG) {
+            countMap[node.id]++;
+        }
+    }
+
+    std::vector<std::pair<int, int>> freqList(countMap.begin(), countMap.end());
+    std::sort(freqList.begin(), freqList.end(), [](auto& a, auto& b) {
+        return a.second > b.second;
+    });
+
+    if (K < freqList.size())
+        freqList.resize(K);
+    
+    return freqList;
+}
+
+// Retrieve the timeline of a specific ARG and all MGEs it colocalizes with over time
+void getTimelineForARG(const Graph& graph, const std::string& argName) {
+    std::map<int, std::set<Timepoint>> timeline;
+    int count = 0;
+    int argID = getARGId(argName);
+    if (argID == -1) {
+        std::cerr << "ARG with name '" << argName << "' not found.\n";
+        return;
+    }
+    for (const Edge& edge: graph.edges){
+        if (!edge.isColo) continue;
+
+        if (edge.source.id == argID || edge.target.id == argID) {
+            int mgeID = edge.source.id == argID ? edge.target.id : edge.source.id;
+            timeline[mgeID].insert(edge.source.timepoint);
+        }
+    }
+    std::cout << "Timeline for ARG ID " << argID << ":\n";
+    for (const auto& [mgeID, timepoints] : timeline) {
+        std::cout << "  MGE ID: " << getMGEName(mgeID) << ", Timepoints: ";
+        for (const auto& tp : timepoints) {
+            count++;
+            std::cout << tp << " ";
+        }
+        std::cout << "\n";
+    }
+    std::cout << "Total MGEs colocalized with ARG " << argName << ": " << timeline.size() << "\n";
+    std::cout << "Total number of Timepoints for ARG " << argName << ": " << count << "\n";
+}
+
+// Retrieve the timeline of specific MGE and all ARGs it colocalizes with over time
+void getTimelineForMGE(const Graph& graph, const std::string& mgeName) {
+    std::map<int, std::set<Timepoint>> timeline;
+    int count = 0;
+    int mgeID = getMGEId(mgeName);
+    if (mgeID == -1) {
+        std::cerr << "MGE with name '" << mgeName << "' not found.\n";
+        return;
+    }
+    for (const Edge& edge: graph.edges){
+        if (!edge.isColo) continue;
+        if (edge.source.id == mgeID || edge.target.id == mgeID) {
+            int argID = edge.source.id == mgeID ? edge.target.id : edge.source.id;
+            timeline[argID].insert(edge.source.timepoint);
+        }
+    }
+    std::cout << "Timeline for MGE " << mgeName << ":\n";
+    for (const auto& [argID, timepoints] : timeline) {
+        std::cout << "  ARG ID: " << getARGName(argID) << ", Timepoints: ";
+        for (const auto& tp : timepoints) {
+            count++;
+            std::cout << tp << " ";
+        }
+        std::cout << "\n";
+    }
+    std::cout << "Total ARGs colocalized with MGE " << mgeName << ": " << timeline.size() << "\n";
+    std::cout << "Total number of Timepoints for MGE " << mgeName << ": " << count << "\n";
+}

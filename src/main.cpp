@@ -65,11 +65,29 @@ int main() {
     // /******************************** Query Engine  ************************************/
     std::cout << "Query Engine Results:\n";
 
-    getColocalizationsByIndPostFMTOnly(g, colocalizationByIndividual);
-    getColocalizationsByIndPreFMTOnly(g, colocalizationByIndividual);
-    getColocalizationsByIndDonorAndPostFMT(g, colocalizationByIndividual);
-    getColocalizationsByIndPreFMTAndPostFMT(g, colocalizationByIndividual);
+    // getColocalizationsByIndPostFMTOnly(g, colocalizationByIndividual);
+    // getColocalizationsByIndPreFMTOnly(g, colocalizationByIndividual);
+    // getColocalizationsByIndDonorAndPostFMT(g, colocalizationByIndividual);
+    // getColocalizationsByIndPreFMTAndPostFMT(g, colocalizationByIndividual);
+
+    std::vector<std::pair<int, int>> topARGs = getTopKEntities(g, true, 5); // Top 5 ARGs
+    std::cout << "Top ARGs:\n";
+    for (const auto& [id, count] : topARGs) {
+        std::cout << "ARG: " << getARGName(id) << " (" << getARGGroupName(id) << "), Count: " << count << "\n";
+    }
+    std::vector<std::pair<int, int>> topMGEs = getTopKEntities(g, false, 5); // Top 5 MGEs
+    std::cout << "Top MGEs:\n";
+    for (const auto& [id, count] : topMGEs) {
+        std::cout << "MGE: " << getMGEName(id) << ", Count: " << count << "\n";
+    }   
+
+
+    getTimelineForARG(g, "A16S"); // Example ARG ID
+    getTimelineForMGE(g, "gene:plasmid:139560");
+
+
     return 0;
+
 }
 
 

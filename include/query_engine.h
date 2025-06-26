@@ -17,4 +17,5 @@ void getColocalizationsByIndPreFMTOnly(const Graph& graph, std::map<std::tuple<i
 void getColocalizationsByIndDonorAndPostFMT(const Graph& graph, std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual);
 void getColocalizationsByIndPreFMTAndPostFMT(const Graph& graph, std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual);
 
+void printConnectedMGE(const Graph& graph, const std::set<Edge>& edges, int mgeId, const std::string& mgeName);
 #endif
