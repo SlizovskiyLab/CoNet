@@ -7,12 +7,13 @@
 #include "../include/traversal.h"
 #include "../include/query_engine.h"
 #include "../include/export.h"
+#include "../include/graph_utils.h"
 
 /* Main entry point: parse arguments, load data, call functions */
 
 namespace fs = std::filesystem;
 
-fs::path data_file = "/Users/suhashidesilva/Documents/Projects/CoNet/data/patientwise_colocalization_by_timepoint.csv";
+fs::path data_file = "data//patientwise_colocalization_by_timepoint.csv";
 
 
 int main() {
@@ -36,6 +37,8 @@ int main() {
     //     std::cout << "\n";
     // }
     exportToDot(g, "graph_output.dot");
+    Graph sub = filterGraphByARGName(g, "A16S");
+    exportToDot(sub, "A16S_subgraph.dot");
 
     // std::cout << "print nodes" << "\n";
     // for (const auto& node : g.nodes) {
@@ -70,12 +73,12 @@ int main() {
     // getColocalizationsByIndDonorAndPostFMT(g, colocalizationByIndividual);
     // getColocalizationsByIndPreFMTAndPostFMT(g, colocalizationByIndividual);
 
-    std::vector<std::pair<int, int>> topARGs = getTopKEntities(g, true, 5); // Top 5 ARGs
+    std::vector<std::pair<int, int>> topARGs = getTopKEntities(g, true, static_cast<unsigned int>(5)); // Top 5 ARGs
     std::cout << "Top ARGs:\n";
     for (const auto& [id, count] : topARGs) {
         std::cout << "ARG: " << getARGName(id) << " (" << getARGGroupName(id) << "), Count: " << count << "\n";
     }
-    std::vector<std::pair<int, int>> topMGEs = getTopKEntities(g, false, 5); // Top 5 MGEs
+    std::vector<std::pair<int, int>> topMGEs = getTopKEntities(g, false, static_cast<unsigned int>(5)); // Top 5 MGEs
     std::cout << "Top MGEs:\n";
     for (const auto& [id, count] : topMGEs) {
         std::cout << "MGE: " << getMGEName(id) << ", Count: " << count << "\n";

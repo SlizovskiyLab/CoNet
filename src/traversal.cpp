@@ -222,7 +222,7 @@ void traverseGraphByInd(const Graph& graph, std::unordered_map<Node, std::unorde
 
 /************************************************   **********************************************/
 // This function retrieves the top K entities (ARGs or MGEs) based on their frequency of occurrence in the graph
-std::vector<std::pair<int, int>> getTopKEntities(const Graph& graph, bool isARG, int K) {
+std::vector<std::pair<int, int>> getTopKEntities(const Graph& graph, bool isARG, unsigned int K) {
     std::unordered_map<int, int> countMap;
 
     for (const Edge& edge : graph.edges) {
