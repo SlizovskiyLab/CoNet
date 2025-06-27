@@ -11,6 +11,12 @@ std::string getNodeName(const Node& node) {
     return name;
 }
 
+std::string getNodeLabel(const Node& node) {
+    std::string label = node.isARG ? getARGName(node.id) : getMGEName(node.id);
+    label += "\\n" + toString(node.timepoint);  // \n becomes actual newline in Graphviz
+    return label;
+}
+
 std::string getTimepointColor(const Timepoint& tp) {
     int timeValue = static_cast<int>(tp);
     if (timeValue == -1) return "yellow";   // Donor
@@ -27,24 +33,28 @@ bool isTemporalEdge(const Edge& edge) {
 void exportToDot(const Graph& g, const std::string& filename) {
     std::ofstream file(filename);
     file << "digraph G {\n";
-    file << "  layout=sfdp;\n";  // 🆕 use sfdp layout
+    file << "  layout=sfdp;\n";
     file << "  node [style=filled];\n";
 
-    std::unordered_set<Node> included_nodes;
-    for (const Node& node : g.nodes) {
+    // Get all nodes referenced in edges
+    std::unordered_set<Node> active_nodes;
+    for (const Edge& edge : g.edges) {
+        active_nodes.insert(edge.source);
+        active_nodes.insert(edge.target);
+    }
+
+    for (const Node& node : active_nodes) {
         std::string nodeName = getNodeName(node);
-        included_nodes.insert(node);
+        std::string label = getNodeLabel(node);
         std::string color = getTimepointColor(node.timepoint);
         std::string shape = node.isARG ? "circle" : "box";
 
         file << "  " << nodeName
-             << " [label=\"\", shape=" << shape
+             << " [label=\"" << label << "\", shape=" << shape
              << ", fixedsize=true, width=0.5, height=0.5, fillcolor=" << color << "]\n";
     }
 
     for (const Edge& edge : g.edges) {
-        if (included_nodes.count(edge.source) == 0 || included_nodes.count(edge.target) == 0) continue;
-
         std::string sourceName = getNodeName(edge.source);
         std::string targetName = getNodeName(edge.target);
 
@@ -58,14 +68,16 @@ void exportToDot(const Graph& g, const std::string& filename) {
         } else if (edge.isColo) {
             color = "blue";
             style = "solid";
-            extraAttributes = "dir=both";  // bidirectional
+            extraAttributes = "dir=both";
         } else {
             color = "gray";
             style = "solid";
         }
 
         file << "  " << sourceName << " -> " << targetName
-             << " [style=" << style << ", color=" << color;
+             << " [style=" << style
+             << ", color=" << color
+             << ", arrowsize=0.3";
 
         if (!extraAttributes.empty()) {
             file << ", " << extraAttributes;
