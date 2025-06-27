@@ -6,5 +6,4 @@
 
 void exportToDot(const Graph& g, const std::string& filename);
 
-
 #endif

@@ -82,10 +82,9 @@ int main() {
     }   
 
 
-    getTimelineForARG(g, "A16S"); // Example ARG ID
+    getTimelineForARG(g, "A16S"); 
     getTimelineForMGE(g, "gene:plasmid:139560");
-
-
+    
     return 0;
 
 }
