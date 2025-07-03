@@ -19,8 +19,8 @@ std::string getNodeLabel(const Node& node) {
 
 std::string getTimepointColor(const Timepoint& tp) {
     int timeValue = static_cast<int>(tp);
-    if (timeValue == -1) return "yellow";   // Donor
-    if (timeValue == 0)  return "blue";     // PreFMT
+    if (timeValue == 1000) return "yellow";  // Donor
+    if (timeValue == 0)  return "blue";      // PreFMT
     return "green";                          // PostFMT
 }
 
