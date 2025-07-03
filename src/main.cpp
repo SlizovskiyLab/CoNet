@@ -36,9 +36,9 @@ int main() {
     //     }
     //     std::cout << "\n";
     // }
-    exportToDot(g, "graph_output.dot");
-    Graph sub = filterGraphByARGName(g, "A16S");
-    exportToDot(sub, "A16S_subgraph.dot");
+    // exportToDot(g, "graph_output.dot");
+    // Graph sub = filterGraphByARGName(g, "A16S");
+    // exportToDot(sub, "A16S_subgraph.dot");
 
     // std::cout << "print nodes" << "\n";
     // for (const auto& node : g.nodes) {
@@ -52,42 +52,59 @@ int main() {
     //               << "\n";
     // }
     
+     /******************************** Traversal of Graph  ************************************/
+    std::map<std::pair<int, int>, std::set<Timepoint>> colocalizationTimeline;
+    traverseAdjacency(g, adjacency, colocalizationTimeline);
+
+
     /******************************** Traversal of Graph  ************************************/
     std::map<std::tuple<int, int, int>, std::set<Timepoint>> colocalizationByIndividual;
     traverseGraph(g, colocalizationByIndividual);
-    // std::cout << "individual timeline" << "\n";
-    // for (const auto& entry : colocalizationByIndividual) {
-    //     std::cout << "Individual ID: " << std::get<0>(entry.first)
-    //               << ", ARG ID: " << std::get<1>(entry.first)
-    //               << ", MGE ID: " << std::get<2>(entry.first) << "\n";
-    //     for (const auto& tp : entry.second) {
-    //         std::cout << "  - " << tp << "\n";
-    //     }
-    // }
+
+
 
     // /******************************** Query Engine  ************************************/
     std::cout << "Query Engine Results:\n";
 
-    // getColocalizationsByIndPostFMTOnly(g, colocalizationByIndividual);
-    // getColocalizationsByIndPreFMTOnly(g, colocalizationByIndividual);
-    // getColocalizationsByIndDonorAndPostFMT(g, colocalizationByIndividual);
-    // getColocalizationsByIndPreFMTAndPostFMT(g, colocalizationByIndividual);
+    getPatientwiseColocalizationsByPattern(g, colocalizationByIndividual, Presence::Absent, Presence::Absent, Presence::Present, "Testing PostFMT Only");
+    getPatientwiseColocalizationsByPattern(g, colocalizationByIndividual, Presence::Absent, Presence::Present, Presence::Absent, "Testing PreFMT Only");
+    getPatientwiseColocalizationsByPattern(g, colocalizationByIndividual, Presence::Present, Presence::Absent, Presence::Present, "Testing PostFMT & Donor Only");
+    getPatientwiseColocalizationsByPattern(g, colocalizationByIndividual, Presence::Absent, Presence::Present, Presence::Present, "Testing PreFMT & PostFMT Only");
 
-    std::vector<std::pair<int, int>> topARGs = getTopKEntities(g, true, static_cast<unsigned int>(5)); // Top 5 ARGs
+    getColocalizationsByPattern(g, colocalizationTimeline, Presence::Absent, Presence::Absent, Presence::Present, "Testing PostFMT Only");
+    getColocalizationsByPattern(g, colocalizationTimeline, Presence::Absent, Presence::Present, Presence::Absent, "Testing PreFMT Only");
+    getColocalizationsByPattern(g, colocalizationTimeline, Presence::Present, Presence::Absent, Presence::Present, "Testing PostFMT & Donor Only");
+    getColocalizationsByPattern(g, colocalizationTimeline, Presence::Absent, Presence::Present, Presence::Present, "Testing PreFMT & PostFMT Only");
+
+
+
+    std::vector<std::pair<int, int>> topARGs = getTopKEntities(g, true, static_cast<unsigned int>(10)); // Top 10 ARGs
     std::cout << "Top ARGs:\n";
     for (const auto& [id, count] : topARGs) {
         std::cout << "ARG: " << getARGName(id) << " (" << getARGGroupName(id) << "), Count: " << count << "\n";
     }
-    std::vector<std::pair<int, int>> topMGEs = getTopKEntities(g, false, static_cast<unsigned int>(5)); // Top 5 MGEs
+    std::vector<std::pair<int, int>> topMGEs = getTopKEntities(g, false, static_cast<unsigned int>(10)); // Top 5 MGEs
     std::cout << "Top MGEs:\n";
     for (const auto& [id, count] : topMGEs) {
         std::cout << "MGE: " << getMGEName(id) << ", Count: " << count << "\n";
-    }   
+    }  
+
+    Graph sub = filterGraphByARGName(g, "A16S");
+    exportToDot(sub, "A16S_subgraph.dot"); 
 
 
     getTimelineForARG(g, "A16S"); 
     getTimelineForMGE(g, "gene:plasmid:139560");
-    
+
+
+    // Globally how an ARG/MGE was distributed over time related to a patient. not the below function
+
+    // auto argDegree = computeNodeDegreeOverTime(g, true, "A16S");
+    // std::cout << "Node degree over time for ARG A16S:\n";
+    // for (const auto& [tp, deg] : argDegree) {
+    //     std::cout << "Timepoint " << static_cast<int>(tp) << ": Degree = " << deg << "\n";
+    // }
+
     return 0;
 
 }
