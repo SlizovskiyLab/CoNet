@@ -40,19 +40,23 @@ void traverseAdjacency(const Graph& graph, const std::unordered_map<Node, std::u
 void traverseGraph(const Graph& graph, 
     std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual) {
     // std::unordered_map<Node, std::unordered_set<Node>> adjacency;
-
+    int count = 0;
+    int cnt = 0;
     for (const auto& edge : graph.edges) {
         if (!edge.isColo) continue;
-
+        cnt++;
         int arg_id = edge.source.isARG ? edge.source.id : edge.target.id;
         int mge_id = edge.source.isARG ? edge.target.id : edge.source.id;
         Timepoint tp = edge.source.timepoint; // or target.timepoint
 
         for (int ind_id : edge.individuals) {
+            count++;
             auto key = std::make_tuple(ind_id, arg_id, mge_id);
             colocalizationByIndividual[key].insert(tp);
         }
     }
+    std::cout << "Total colocalization edges processed: " << count << "\n";
+    std::cout << "Number of unique colocalizations (ARG-MGE pairs): " << cnt << "\n";
 }
 
 
@@ -230,7 +234,10 @@ std::vector<std::pair<int, int>> getTopKEntities(const Graph& graph, bool isARG,
 
         const Node& node = edge.source;
         if (node.isARG == isARG) {
-            countMap[node.id]++;
+            for (size_t i = 0; i < edge.individuals.size(); ++i) {
+                // Count occurrences of ARG or MGE by individual
+                countMap[node.id]++;
+            }
         }
     }
 
@@ -259,9 +266,13 @@ void getTimelineForARG(const Graph& graph, const std::string& argName) {
 
         if (edge.source.id == argID || edge.target.id == argID) {
             int mgeID = edge.source.id == argID ? edge.target.id : edge.source.id;
-            timeline[mgeID].insert(edge.source.timepoint);
+            for (size_t i = 0; i < edge.individuals.size(); ++i) {
+                timeline[mgeID].insert(edge.source.timepoint);
+            }
+            
         }
     }
+    
     std::cout << "Timeline for ARG ID " << argID << ":\n";
     for (const auto& [mgeID, timepoints] : timeline) {
         std::cout << "  MGE ID: " << getMGEName(mgeID) << ", Timepoints: ";
@@ -288,7 +299,10 @@ void getTimelineForMGE(const Graph& graph, const std::string& mgeName) {
         if (!edge.isColo) continue;
         if (edge.source.id == mgeID || edge.target.id == mgeID) {
             int argID = edge.source.id == mgeID ? edge.target.id : edge.source.id;
-            timeline[argID].insert(edge.source.timepoint);
+            for (size_t i = 0; i < edge.individuals.size(); ++i) {
+                // Insert the timepoint for the ARG-MGE colocalization
+                timeline[argID].insert(edge.source.timepoint);
+            }
         }
     }
     std::cout << "Timeline for MGE " << mgeName << ":\n";
@@ -302,4 +316,27 @@ void getTimelineForMGE(const Graph& graph, const std::string& mgeName) {
     }
     std::cout << "Total ARGs colocalized with MGE " << mgeName << ": " << timeline.size() << "\n";
     std::cout << "Total number of Timepoints for MGE " << mgeName << ": " << count << "\n";
+}
+
+
+std::map<Timepoint, int> computeNodeDegreeOverTime(const Graph& graph, bool isARG, const std::string& name) {
+    std::map<Timepoint, int> degreeOverTime;
+
+    int nodeID = isARG ? getARGId(name) : getMGEId(name);
+    if (nodeID == -1) {
+        std::cerr << "Node with name '" << name << "' not found.\n";
+        return degreeOverTime;
+    }
+
+    for (const Edge& e : graph.edges) {
+        if (!e.isColo) continue; // Only count colocalization edges
+
+        if (e.source.id == nodeID && e.source.isARG == isARG) {
+            degreeOverTime[e.source.timepoint]++;
+        } else if (e.target.id == nodeID && e.target.isARG == isARG) {
+            degreeOverTime[e.target.timepoint]++;
+        }
+    }
+
+    return degreeOverTime;
 }

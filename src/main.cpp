@@ -13,12 +13,13 @@
 
 namespace fs = std::filesystem;
 
-fs::path data_file = "data//patientwise_colocalization_by_timepoint.csv";
+fs::path data_file = "data/patientwise_colocalization_by_timepoint.csv";
 
 
 int main() {
     Graph g;
-    parseData(data_file, g);
+    // parse the data file and construct the graph (true to exclude ARGs requiring SNP confirmation, true to exclude metals)
+    parseData(data_file, g, true, true); 
     addTemporalEdges(g);  
 
     std::unordered_map<Node, std::unordered_set<Node>> adjacency;
@@ -63,19 +64,24 @@ int main() {
 
 
 
-    // /******************************** Query Engine  ************************************/
-    std::cout << "Query Engine Results:\n";
+    /*********************************** Query Engine  **************************************/
+    std::cout << "Colocalization dynamics over time:\n";
 
-    getPatientwiseColocalizationsByPattern(g, colocalizationByIndividual, Presence::Absent, Presence::Absent, Presence::Present, "Testing PostFMT Only");
-    getPatientwiseColocalizationsByPattern(g, colocalizationByIndividual, Presence::Absent, Presence::Present, Presence::Absent, "Testing PreFMT Only");
-    getPatientwiseColocalizationsByPattern(g, colocalizationByIndividual, Presence::Present, Presence::Absent, Presence::Present, "Testing PostFMT & Donor Only");
-    getPatientwiseColocalizationsByPattern(g, colocalizationByIndividual, Presence::Absent, Presence::Present, Presence::Present, "Testing PreFMT & PostFMT Only");
+    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, Presence::Absent, Presence::Absent, Presence::Present, "PostFMT Only");
+    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, Presence::Absent, Presence::Present, Presence::Absent, "PreFMT Only");
+    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, Presence::Present, Presence::Absent, Presence::Present, "PostFMT & Donor Only");
+    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, Presence::Absent, Presence::Present, Presence::Present, "PreFMT & PostFMT Only");
+    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, Presence::Present, Presence::Absent, Presence::Absent, "Donor Only");
+    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, Presence::Present, Presence::Present, Presence::Absent, "PreFMT & Donor Only");
+    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, Presence::Present, Presence::Present, Presence::Present, "PreFMT, Donor & PostFMT");
 
-    getColocalizationsByPattern(g, colocalizationTimeline, Presence::Absent, Presence::Absent, Presence::Present, "Testing PostFMT Only");
-    getColocalizationsByPattern(g, colocalizationTimeline, Presence::Absent, Presence::Present, Presence::Absent, "Testing PreFMT Only");
-    getColocalizationsByPattern(g, colocalizationTimeline, Presence::Present, Presence::Absent, Presence::Present, "Testing PostFMT & Donor Only");
-    getColocalizationsByPattern(g, colocalizationTimeline, Presence::Absent, Presence::Present, Presence::Present, "Testing PreFMT & PostFMT Only");
-
+    getColocalizationsByCriteria(g, colocalizationTimeline, Presence::Absent, Presence::Absent, Presence::Present, "PostFMT Only");
+    getColocalizationsByCriteria(g, colocalizationTimeline, Presence::Absent, Presence::Present, Presence::Absent, "PreFMT Only");
+    getColocalizationsByCriteria(g, colocalizationTimeline, Presence::Present, Presence::Absent, Presence::Present, "PostFMT & Donor Only");
+    getColocalizationsByCriteria(g, colocalizationTimeline, Presence::Absent, Presence::Present, Presence::Present, "PreFMT & PostFMT Only");
+    getColocalizationsByCriteria(g, colocalizationTimeline, Presence::Present, Presence::Absent, Presence::Absent, "Donor Only");
+    getColocalizationsByCriteria(g, colocalizationTimeline, Presence::Present, Presence::Present, Presence::Absent, "PreFMT & Donor Only");
+    getColocalizationsByCriteria(g, colocalizationTimeline, Presence::Present, Presence::Present, Presence::Present, "PreFMT, Donor & PostFMT");
 
 
     std::vector<std::pair<int, int>> topARGs = getTopKEntities(g, true, static_cast<unsigned int>(10)); // Top 10 ARGs
@@ -89,21 +95,13 @@ int main() {
         std::cout << "MGE: " << getMGEName(id) << ", Count: " << count << "\n";
     }  
 
-    Graph sub = filterGraphByARGName(g, "A16S");
-    exportToDot(sub, "A16S_subgraph.dot"); 
+    getTopARGMGEPairsByFrequency(colocalizationByIndividual, 10); // Top 10 ARG-MGE pairs by frequency
 
+    Graph sub = filterGraphByARGName(g, "ANT3-DPRIME");
+    exportToDot(sub, "ANT3-DPRIME_subgraph.dot");
 
-    getTimelineForARG(g, "A16S"); 
-    getTimelineForMGE(g, "gene:plasmid:139560");
-
-
-    // Globally how an ARG/MGE was distributed over time related to a patient. not the below function
-
-    // auto argDegree = computeNodeDegreeOverTime(g, true, "A16S");
-    // std::cout << "Node degree over time for ARG A16S:\n";
-    // for (const auto& [tp, deg] : argDegree) {
-    //     std::cout << "Timepoint " << static_cast<int>(tp) << ": Degree = " << deg << "\n";
-    // }
+    // getTimelineForARG(g, "CTX");
+    // getTimelineForMGE(g, "gene:plasmid:141426");
 
     return 0;
 

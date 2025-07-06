@@ -12,7 +12,7 @@ bool isPostFMT(const std::string& tp);
 bool isPreFMT(const std::string& tp);
 bool isDonor(const std::string& tp);
 
-void getPatientwiseColocalizationsByPattern(
+void getPatientwiseColocalizationsByCriteria(
     const Graph& graph,
     const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual,
     Presence donorStatus,
@@ -20,7 +20,7 @@ void getPatientwiseColocalizationsByPattern(
     Presence postFMTStatus,
     const std::string& label
 );
-void getColocalizationsByPattern(
+void getColocalizationsByCriteria(
     const Graph& graph,
     const std::map<std::pair<int, int>, std::set<Timepoint>>& colocalizationByTimepoint,
     Presence donorStatus,

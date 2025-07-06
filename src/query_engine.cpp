@@ -24,8 +24,8 @@ bool isDonor(Timepoint tp) {
     return toString(tp).find("donor") != std::string::npos;
 }
 
-/************************************ Patientwise Colocalizations ********************************/
-void getPatientwiseColocalizationsByPattern(
+/********************************* Patientwise Colocalizations ********************************/
+void getPatientwiseColocalizationsByCriteria(
     const Graph& graph,
     const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual,
     Presence donorStatus,
@@ -54,12 +54,12 @@ void getPatientwiseColocalizationsByPattern(
         }
     }
 
-    std::cout << "Colocalizations (" << label << ") size: " << filteredColocs.size() << "\n";
+    std::cout << "Colocalizations (" << label << "): " << filteredColocs.size() << "\n";
     getTopARGMGEPairsByFrequency(filteredColocs, 10);
 }
 
 /***************************************** Colocalizations ****************************************/
-void getColocalizationsByPattern(
+void getColocalizationsByCriteria(
     const Graph& graph,
     const std::map<std::pair<int, int>, std::set<Timepoint>>& colocalizationByTimepoint,
     Presence donorStatus,
@@ -88,12 +88,15 @@ void getColocalizationsByPattern(
         }
     }
 
-    std::cout << "Colocalizations (" << label << ") size: " << filteredColocs.size() << "\n";
+    std::cout << "Colocalizations (" << label << "): " << filteredColocs.size() << "\n";
     getTopARGMGEPairsByFrequencyGlobally(filteredColocs, 10);
 }
 
 
 /********************************* Prominent Colocalizations by Frequency ********************************/
+
+// exclude donor timepoints - handle through a boolean parameter
+
 void getTopARGMGEPairsByFrequencyGlobally(
     const std::map<std::pair<int, int>, std::set<Timepoint>>& colocalizations,int topN) {
     std::map<std::pair<int, int>, int> countMap;

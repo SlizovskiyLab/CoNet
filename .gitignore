@@ -1,6 +1,7 @@
 # Ignore build directory
 build/
 archive/
+graphs/
 
 # Ignore .exe files
 *.exe
