@@ -12,7 +12,7 @@
 
 
 enum class Timepoint {
-    Donor = -1,
+    Donor = 1000,
     PreFMT = 0,
     PostFMT_001 = 1,
     PostFMT_002 = 2,

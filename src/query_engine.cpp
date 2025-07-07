@@ -11,100 +11,34 @@
 #include "id_maps.h"
 #include <algorithm>
 
-/*************************************** PostFMT Only *************************************/
+/************************************************************************************************/
 bool isPostFMT(Timepoint tp) {
     return toString(tp).find("post") != std::string::npos;
 }
 
-void getColocalizationsPostFMTOnly(const Graph& graph, std::map<std::pair<int, int>, std::set<Timepoint>>& colocalizationByTimepoint) {
-    std::map<std::pair<int, int>, std::set<Timepoint>> colocalizationsPostFMTOnly;
-    for (const auto& [pair, tps] : colocalizationByTimepoint) {
-        bool onlyPostFMT = std::all_of(tps.begin(), tps.end(), [](const Timepoint& tp) {
-            return isPostFMT(tp);
-        });
-
-        if (onlyPostFMT) {
-            colocalizationsPostFMTOnly.insert({pair, tps});
-            // std::cout << "ARG " << pair.first << ", MGE " << pair.second << " only in Post-FMT\n";
-        }
-    }
-    std::cout << "Colocalizations Post-FMT Only size: " << colocalizationsPostFMTOnly.size() << "\n";
-}
-
-
-void getColocalizationsByIndPostFMTOnly(const Graph& graph, std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual) {
-    std::map<std::tuple<int, int, int>, std::set<Timepoint>> colocalizationsPostFMTOnly;
-    for (const auto& [tuple, tps] : colocalizationByIndividual) {
-        // Check if all timepoints are post-FMT
-        bool onlyPostFMT = std::all_of(tps.begin(), tps.end(), [](const Timepoint& tp) {
-            return isPostFMT(tp);
-        });
-        if (onlyPostFMT) {
-            colocalizationsPostFMTOnly.insert({tuple, tps});
-            // std::cout << "IND " << std::get<0>(tuple) << ", ARG " << std::get<1>(tuple) << ", MGE " << std::get<2>(tuple) << " only in Post-FMT\n";
-        }
-    }
-    std::cout << "Colocalizations Post-FMT Only size: " << colocalizationsPostFMTOnly.size() << "\n";
-    // std::cout << "Colocalizations Post-FMT Only: " << "\n";
-    // for (const auto& [tuple, tps] : colocalizationsPostFMTOnly) {
-    //     std::cout << "IND " << std::get<0>(tuple) << ", ARG " << std::get<1>(tuple) << ", MGE " << std::get<2>(tuple) << ": ";
-    //     for (const auto& tp : tps) {
-    //         std::cout << toString(tp) << " ";
-    //     }
-    //     std::cout << "\n";
-    // }
-}
-
-/***************************************** PreFMT Only *********************************************/
 bool isPreFMT(Timepoint tp) {
     return toString(tp).find("pre") != std::string::npos;
 }
 
-void getColocalizationsPreFMTOnly(const Graph& graph, std::map<std::pair<int, int>, std::set<Timepoint>>& colocalizationByTimepoint) {
-    std::map<std::pair<int, int>, std::set<Timepoint>> colocalizationsPreFMTOnly;
-    for (const auto& [pair, tps] : colocalizationByTimepoint) {
-        // Check if all timepoints are pre-FMT
-        bool onlyPreFMT = std::all_of(tps.begin(), tps.end(), [](const Timepoint& tp) {
-            return isPreFMT(tp);
-        });
-        if (onlyPreFMT) {
-            colocalizationsPreFMTOnly.insert({pair, tps});
-            // std::cout << "ARG " << pair.first << ", MGE " << pair.second << " only in Pre-FMT\n";
-        }
-    }
-    std::cout << "Colocalizations Pre-FMT Only size: " << colocalizationsPreFMTOnly.size() << "\n";
+bool isDonor(Timepoint tp) {
+    return toString(tp).find("donor") != std::string::npos;
 }
 
-void getColocalizationsByIndPreFMTOnly(const Graph& graph, std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual) {
-    std::map<std::tuple<int, int, int>, std::set<Timepoint>> colocalizationsPreFMTOnly;
+/********************************* Patientwise Colocalizations ********************************/
+void getPatientwiseColocalizationsByCriteria(
+    const Graph& graph,
+    const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual,
+    Presence donorStatus,
+    Presence preFMTStatus,
+    Presence postFMTStatus,
+    const std::string& label
+) {
+    std::map<std::tuple<int, int, int>, std::set<Timepoint>> filteredColocs;
+
     for (const auto& [tuple, tps] : colocalizationByIndividual) {
-        // Check if all timepoints are pre-FMT
-        bool onlyPreFMT = std::all_of(tps.begin(), tps.end(), [](const Timepoint& tp) {
-            return isPreFMT(tp);
+        bool hasDonor = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) {
+            return tp == Timepoint::Donor;
         });
-        if (onlyPreFMT) {
-            colocalizationsPreFMTOnly.insert({tuple, tps});
-            // std::cout << "IND " << std::get<0>(tuple) << "ARG " << std::get<1>(tuple) << ", MGE " << std::get<2>(tuple) << " only in Pre-FMT\n";
-        }
-    }
-    std::cout << "Colocalizations Pre-FMT Only size: " << colocalizationsPreFMTOnly.size() << "\n";
-    // std::cout << "Colocalizations Pre-FMT Only: " << "\n";
-    // for (const auto& [tuple, tps] : colocalizationsPreFMTOnly) {
-    //     std::cout << "IND " << std::get<0>(tuple) << ", ARG " << std::get<1>(tuple) << ", MGE " << std::get<2>(tuple) << ": ";
-    //     for (const auto& tp : tps) {
-    //         std::cout << toString(tp) << " ";
-    //     }
-    //     std::cout << "\n";
-    // }
-}
-
-
-
-/***************************************** PreFMT & PostFMT both *********************************************/
-void getColocalizationsByIndPreFMTAndPostFMT(const Graph& graph, std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual) {
-    std::map<std::tuple<int, int, int>, std::set<Timepoint>> colocalizationsByIndPreFMTAndPostFMT;
-    for (const auto& [tuple, tps] : colocalizationByIndividual) {
-        // Check if timepoints contain both pre-FMT and post-FMT
         bool hasPreFMT = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) {
             return isPreFMT(tp);
         });
@@ -112,35 +46,135 @@ void getColocalizationsByIndPreFMTAndPostFMT(const Graph& graph, std::map<std::t
             return isPostFMT(tp);
         });
 
-        if (hasPreFMT && hasPostFMT) {
-            colocalizationsByIndPreFMTAndPostFMT.insert({tuple, tps});
+        // Match against provided pattern
+        if ((donorStatus == Presence::Any || (hasDonor == (donorStatus == Presence::Present))) &&
+            (preFMTStatus == Presence::Any || (hasPreFMT == (preFMTStatus == Presence::Present))) &&
+            (postFMTStatus == Presence::Any || (hasPostFMT == (postFMTStatus == Presence::Present)))) {
+            filteredColocs.insert({tuple, tps});
         }
     }
-    std::cout << "Colocalizations Pre-FMT & Post-FMT size: " << colocalizationsByIndPreFMTAndPostFMT.size() << "\n";
+
+    std::cout << "Colocalizations (" << label << "): " << filteredColocs.size() << "\n";
+    getTopARGMGEPairsByFrequency(filteredColocs, 10);
 }
 
-/***************************************** Donor & PostFMT both *********************************************/
-void getColocalizationsByIndDonorAndPostFMT(const Graph& graph, std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual) {
-    std::map<std::tuple<int, int, int>, std::set<Timepoint>> colocalizationsByIndDonorAndPostFMT;
-    for (const auto& [tuple, tps] : colocalizationByIndividual) {
-        // Check if timepoints contain donor and post-FMT
+/***************************************** Colocalizations ****************************************/
+void getColocalizationsByCriteria(
+    const Graph& graph,
+    const std::map<std::pair<int, int>, std::set<Timepoint>>& colocalizationByTimepoint,
+    Presence donorStatus,
+    Presence preFMTStatus,
+    Presence postFMTStatus,
+    const std::string& label
+) {
+    std::map<std::pair<int, int>, std::set<Timepoint>> filteredColocs;
+
+    for (const auto& [pair, tps] : colocalizationByTimepoint) {
         bool hasDonor = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) {
-            return tp == Timepoint::Donor;
+            return isDonor(tp);
+        });
+        bool hasPreFMT = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) {
+            return isPreFMT(tp);
         });
         bool hasPostFMT = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) {
             return isPostFMT(tp);
         });
 
-        if (hasDonor && hasPostFMT) {
-            colocalizationsByIndDonorAndPostFMT.insert({tuple, tps});
+        // Match against provided pattern
+        if ((donorStatus == Presence::Any || (hasDonor == (donorStatus == Presence::Present))) &&
+            (preFMTStatus == Presence::Any || (hasPreFMT == (preFMTStatus == Presence::Present))) &&
+            (postFMTStatus == Presence::Any || (hasPostFMT == (postFMTStatus == Presence::Present)))) {
+            filteredColocs.insert({pair, tps});
         }
     }
-    std::cout << "Colocalizations Donor & Post-FMT size: " << colocalizationsByIndDonorAndPostFMT.size() << "\n";
+
+    std::cout << "Colocalizations (" << label << "): " << filteredColocs.size() << "\n";
+    getTopARGMGEPairsByFrequencyGlobally(filteredColocs, 10);
+}
+
+
+/********************************* Prominent Colocalizations by Frequency ********************************/
+
+// exclude donor timepoints - handle through a boolean parameter
+
+void getTopARGMGEPairsByFrequencyGlobally(
+    const std::map<std::pair<int, int>, std::set<Timepoint>>& colocalizations,int topN) {
+    std::map<std::pair<int, int>, int> countMap;
+    // Count frequency of each (ARG, MGE) pair
+    for (const auto& [pair, tps] : colocalizations) {
+        for (const Timepoint& tp : tps) {
+            // Only count post-FMT timepoints
+                countMap[pair]++;
+            }
+        }
+    // Convert map to vector for sorting
+    std::vector<std::pair<std::pair<int, int>, int>> freqList(countMap.begin(), countMap.end());
+    std::sort(freqList.begin(), freqList.end(), [](const auto& a, const auto& b) {
+        return a.second > b.second;
+    });
+    std::cout << "Top ARG–MGE pairs by frequency:\n";
+    int countPrinted = 0;
+    for (const auto& [pair, count] : freqList) {
+        if (countPrinted >= topN) break;
+
+        int argID = pair.first;
+        int mgeID = pair.second;
+
+        std::cout << "ARG: ";
+        if (argIdMap.count(argID))
+            std::cout << getARGName(argID) << " (" << getARGGroupName(argID) << ")";
+        else
+            std::cout << "Unknown ARG ID " << argID;
+        std::cout << ", MGE: ";
+        if (mgeIdMap.count(mgeID))
+            std::cout << getMGEName(mgeID);
+        else
+            std::cout << "Unknown MGE ID " << mgeID;
+        std::cout << ", Count: " << count << "\n";
+        countPrinted++;
+    }
+
+    std::cout << "Total unique ARG–MGE pairs: " << freqList.size() << "\n";
+}
+
+
+void getTopARGMGEPairsByFrequency(
+    const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizations, int topN) {
+    std::map<std::pair<int, int>, int> countMap;
+
+    for (const auto& [tuple, tps] : colocalizations) {
+        int argID = std::get<1>(tuple);
+        int mgeID = std::get<2>(tuple);
+        countMap[{argID, mgeID}]++;
+    }
+
+    std::vector<std::pair<std::pair<int, int>, int>> freqList(countMap.begin(), countMap.end());
+    std::sort(freqList.begin(), freqList.end(), [](const auto& a, const auto& b) {
+        return a.second > b.second;
+    });
+
+    std::cout << "Top ARG–MGE pairs by frequency:\n";
+    int countPrinted = 0;
+    for (const auto& [pair, count] : freqList) {
+        if (countPrinted >= topN) break;
+        int argID = pair.first;
+        int mgeID = pair.second;
+        std::cout << "ARG: " ;
+        if (argIdMap.count(argID)) std::cout <<  getARGName(argID) << " (" << getARGGroupName(argID) << ")";
+        else std::cout << "Unknown ARG ID " << argID;
+        std::cout << ", MGE: " ;
+        if (mgeIdMap.count(mgeID)) std::cout << getMGEName(mgeID);
+        else std::cout << "Unknown MGE ID " << mgeID;
+        std::cout << ", Count: " << count << "\n";
+        countPrinted++;
+    }
+
+    std::cout << "Total unique ARG–MGE pairs: " << freqList.size() << "\n";
 }
 
 
 /***************************************** Connected MGEs *********************************************/
-void printConnectedMGEs(const Graph& graph, int argID) {
+void getConnectedMGEs(const Graph& graph, int argID) {
     std::unordered_set<int> connectedMGEs;
 
     for (const Edge& edge : graph.edges) {

@@ -16,7 +16,7 @@ namespace std {
 
 
 // Declares the function that will be defined in parser.cpp
-void parseData(const std::filesystem::path& filename, Graph& graph);
+void parseData(const std::filesystem::path& filename, Graph& graph, bool includeSNPConfirmationARGs, bool excludeMetals);
 void addEdge(Graph& graph, const Node& src, const Node& tgt, bool isColo, int patientID = -1);
 void addTemporalEdges(Graph& graph);
 

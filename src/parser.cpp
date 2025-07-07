@@ -33,7 +33,7 @@ void addEdge(Graph& graph, const Node& src, const Node& tgt, bool isColo, int pa
 
 // This function reads a CSV file containing patient data and constructs a graph.
 // It extracts ARG and MGE labels, maps them to IDs, and creates nodes and edges
-void parseData(const std::filesystem::path& filename, Graph& graph) {
+void parseData(const std::filesystem::path& filename, Graph& graph, bool includeSNPConfirmationARGs, bool excludeMetals) {
     std::ifstream infile(filename);
     std::string line;
     std::vector<std::string> headers;
@@ -81,7 +81,29 @@ void parseData(const std::filesystem::path& filename, Graph& graph) {
             if (columnToTimepoint.count(colName) && ((tokens[i] == "1")||(tokens[i] == "2"))) {
                 Timepoint tp = columnToTimepoint[colName];
 
-                Node argNode = {argID, true, tp, false};
+                bool requiresSNPConfirmation = false;
+
+                // Check if this ARG is marked as requiring SNP confirmation
+                auto it = argIDSNPConfirmation.find(argID);
+                if (it != argIDSNPConfirmation.end()) {
+                    requiresSNPConfirmation = it->second;
+                }
+                std::string argResistance = "Drugs";
+                // If user wants to EXCLUDE SNP-confirmed ARGs, skip them
+                if (includeSNPConfirmationARGs && requiresSNPConfirmation)
+                    continue;
+                
+                // Determine ARG resistance type (e.g., Drugs, Metals, Biocides)
+                auto resistanceIt = argResistanceMap.find(argID);
+                if (resistanceIt != argResistanceMap.end()) {
+                    argResistance = resistanceIt->second;
+                }
+                // Skip metals and biocides if requested
+                if (excludeMetals && argResistance != "Drugs") {
+                    continue;
+                }
+
+                Node argNode = {argID, true, tp, requiresSNPConfirmation};
                 Node mgeNode = {mgeID, false, tp, false};
 
                 graph.nodes.insert(argNode);

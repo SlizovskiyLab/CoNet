@@ -47,6 +47,8 @@ std::vector<std::pair<int, int>> getTopKEntities(const Graph& graph, bool isARG,
 void getTimelineForARG(const Graph& graph, const std::string& argName);
 void getTimelineForMGE(const Graph& graph, const std::string& mgeName);
 
+std::map<Timepoint, int> computeNodeDegreeOverTime(const Graph& graph, bool isARG, const std::string& name);
+
 
 inline std::ostream& operator<<(std::ostream& os, const Timepoint& tp) {
     switch (tp) {
