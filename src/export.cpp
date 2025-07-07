@@ -62,15 +62,16 @@ void exportToDot(const Graph& g, const std::string& filename) {
         std::string style;
         std::string extraAttributes;
 
+        // ✅ MODIFIED: Switched edge colors to hex codes.
         if (isTemporalEdge(edge)) {
-            color = "red";
+            color = "\"#FF0000\""; // Red
             style = "dashed";
         } else if (edge.isColo) {
-            color = "blue";
+            color = "\"#0000FF\""; // Blue
             style = "solid";
             extraAttributes = "dir=both";
         } else {
-            color = "gray";
+            color = "\"#808080\""; // Gray
             style = "solid";
         }
 
