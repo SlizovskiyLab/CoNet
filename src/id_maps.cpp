@@ -16,6 +16,11 @@ std::string getARGGroupName(int id) {
     return it != argGroupMap.end() ? it->second : "Unknown ARG Group";
 }
 
+std::string getMGEGroupName(int id) {
+    auto it = mgeGroupMap.find(id);
+    return it != mgeGroupMap.end() ? it->second : "Unknown MGE Group";
+}
+
 
 int getARGId(const std::string& name) {
     for (const auto& [id, argName] : argIdMap) {
