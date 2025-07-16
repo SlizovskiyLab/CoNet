@@ -10,7 +10,7 @@
 
 // std::map<std::pair<int, int>, std::set<Timepoint>> colocalizationTimeline;
 void traverseAdjacency(const Graph& graph, const std::unordered_map<Node, std::unordered_set<Node>>& adjacency, 
-    std::map<std::pair<int, int>, std::set<Timepoint>>& colocalizationTimeline);
+    std::map<std::pair<int, int>, std::multiset<Timepoint>>& colocalizationTimeline);
 
 void traverseGraph(const Graph& graph, 
     std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual);

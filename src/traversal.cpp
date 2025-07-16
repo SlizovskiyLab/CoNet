@@ -15,7 +15,7 @@
 // This function traverses the graph and collects colocalization timepoints for each ARG and MGE pair.
 // It uses an adjacency map to represent the graph structure, allowing for efficient traversal of nodes and their neighbors based on the defined edges.
 void traverseAdjacency(const Graph& graph, const std::unordered_map<Node, std::unordered_set<Node>>& adjacency, 
-    std::map<std::pair<int, int>, std::set<Timepoint>>& colocalizationTimeline) {
+    std::map<std::pair<int, int>, std::multiset<Timepoint>>& colocalizationTimeline) {
     for (const auto& node : graph.nodes) {
         // Skip if node is not an ARG
         if (!node.isARG) continue;

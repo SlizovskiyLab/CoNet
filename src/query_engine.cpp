@@ -28,9 +28,9 @@ bool isDonor(Timepoint tp) {
 void getPatientwiseColocalizationsByCriteria(
     const Graph& graph,
     const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual,
-    Presence donorStatus,
-    Presence preFMTStatus,
-    Presence postFMTStatus,
+    bool donorStatus,
+    bool preFMTStatus,
+    bool postFMTStatus,
     const std::string& label
 ) {
     std::map<std::tuple<int, int, int>, std::set<Timepoint>> filteredColocs;
@@ -47,9 +47,7 @@ void getPatientwiseColocalizationsByCriteria(
         });
 
         // Match against provided pattern
-        if ((donorStatus == Presence::Any || (hasDonor == (donorStatus == Presence::Present))) &&
-            (preFMTStatus == Presence::Any || (hasPreFMT == (preFMTStatus == Presence::Present))) &&
-            (postFMTStatus == Presence::Any || (hasPostFMT == (postFMTStatus == Presence::Present)))) {
+        if ((hasDonor == donorStatus) && (hasPreFMT == preFMTStatus) && (hasPostFMT == postFMTStatus)) {
             filteredColocs.insert({tuple, tps});
         }
     }
@@ -61,13 +59,13 @@ void getPatientwiseColocalizationsByCriteria(
 /***************************************** Colocalizations ****************************************/
 void getColocalizationsByCriteria(
     const Graph& graph,
-    const std::map<std::pair<int, int>, std::set<Timepoint>>& colocalizationByTimepoint,
-    Presence donorStatus,
-    Presence preFMTStatus,
-    Presence postFMTStatus,
+    const std::map<std::pair<int, int>, std::multiset<Timepoint>>& colocalizationByTimepoint,
+    bool donorStatus,
+    bool preFMTStatus,
+    bool postFMTStatus,
     const std::string& label
 ) {
-    std::map<std::pair<int, int>, std::set<Timepoint>> filteredColocs;
+    std::map<std::pair<int, int>, std::multiset<Timepoint>> filteredColocs;
 
     for (const auto& [pair, tps] : colocalizationByTimepoint) {
         bool hasDonor = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) {
@@ -81,15 +79,13 @@ void getColocalizationsByCriteria(
         });
 
         // Match against provided pattern
-        if ((donorStatus == Presence::Any || (hasDonor == (donorStatus == Presence::Present))) &&
-            (preFMTStatus == Presence::Any || (hasPreFMT == (preFMTStatus == Presence::Present))) &&
-            (postFMTStatus == Presence::Any || (hasPostFMT == (postFMTStatus == Presence::Present)))) {
+        if ((hasDonor == donorStatus) && (hasPreFMT == preFMTStatus) && (hasPostFMT == postFMTStatus)) {
             filteredColocs.insert({pair, tps});
         }
     }
 
     std::cout << "Colocalizations (" << label << "): " << filteredColocs.size() << "\n";
-    getTopARGMGEPairsByFrequencyGlobally(filteredColocs, 10);
+    getTopARGMGEPairsByFrequencyGlobally(filteredColocs, 10, false);
 }
 
 
@@ -98,15 +94,14 @@ void getColocalizationsByCriteria(
 // exclude donor timepoints - handle through a boolean parameter
 
 void getTopARGMGEPairsByFrequencyGlobally(
-    const std::map<std::pair<int, int>, std::set<Timepoint>>& colocalizations,int topN) {
+    const std::map<std::pair<int, int>, std::multiset<Timepoint>>& colocalizations,int topN, bool excludeDonor) {
     std::map<std::pair<int, int>, int> countMap;
     // Count frequency of each (ARG, MGE) pair
     for (const auto& [pair, tps] : colocalizations) {
         for (const Timepoint& tp : tps) {
-            // Only count post-FMT timepoints
-                countMap[pair]++;
-            }
+            countMap[pair]++;
         }
+    }
     // Convert map to vector for sorting
     std::vector<std::pair<std::pair<int, int>, int>> freqList(countMap.begin(), countMap.end());
     std::sort(freqList.begin(), freqList.end(), [](const auto& a, const auto& b) {
