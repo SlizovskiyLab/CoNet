@@ -37,9 +37,9 @@ int main() {
     //     }
     //     std::cout << "\n";
     // }
-    // exportToDot(g, "graph_output.dot");
-    // Graph sub = filterGraphByARGName(g, "A16S");
-    // exportToDot(sub, "A16S_subgraph.dot");
+    exportToDot(g, "graph_output.dot");
+    Graph sub = filterGraphByARGName(g, "A16S");
+    exportToDot(sub, "A16S_subgraph.dot");
 
     // std::cout << "print nodes" << "\n";
     // for (const auto& node : g.nodes) {
@@ -97,8 +97,8 @@ int main() {
 
     getTopARGMGEPairsByFrequency(colocalizationByIndividual, 10); // Top 10 ARG-MGE pairs by frequency
 
-    Graph sub = filterGraphByARGName(g, "ANT3-DPRIME");
-    exportToDot(sub, "ANT3-DPRIME_subgraph.dot");
+    Graph sub2 = filterGraphByARGName(g, "ANT3-DPRIME");
+    exportToDot(sub2, "ANT3-DPRIME_subgraph.dot");
 
     // getTimelineForARG(g, "CTX");
     // getTimelineForMGE(g, "gene:plasmid:141426");

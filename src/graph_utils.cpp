@@ -53,3 +53,33 @@ Graph filterGraphByMGEName(const Graph& g, const std::string& mgeName) {
 
     return subgraph;
 }
+
+Graph filterGraphByMGEGroup(const Graph& g, const std::string& groupName) {
+    std::unordered_set<int> mgeIDsInGroup;
+    for (const auto& [id, name] : mgeGroupMap) {
+        if (name == groupName) {
+            mgeIDsInGroup.insert(id);
+        }
+    }
+
+    if (mgeIDsInGroup.empty()) {
+        std::cerr << "No MGEs found for group: " << groupName << "\n";
+        return {};
+    }
+
+    Graph subgraph;
+    for (const Edge& edge : g.edges) {
+        if (!edge.isColo) continue;
+
+        bool sourceInGroup = !edge.source.isARG && mgeIDsInGroup.count(edge.source.id);
+        bool targetInGroup = !edge.target.isARG && mgeIDsInGroup.count(edge.target.id);
+
+        if (sourceInGroup || targetInGroup) {
+            subgraph.nodes.insert(edge.source);
+            subgraph.nodes.insert(edge.target);
+            subgraph.edges.insert(edge);
+        }
+    }
+
+    return subgraph;
+}

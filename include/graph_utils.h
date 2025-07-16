@@ -3,9 +3,10 @@
 
 #include "graph.h"
 #include <string>
+#include <unordered_set>
 
-// Public functions: filter subgraphs by ARG or MGE name
 Graph filterGraphByARGName(const Graph& g, const std::string& argName);
 Graph filterGraphByMGEName(const Graph& g, const std::string& mgeName);
+Graph filterGraphByMGEGroup(const Graph& g, const std::string& groupName);
 
-#endif // GRAPH_UTILS_H
+#endif
