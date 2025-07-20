@@ -99,6 +99,11 @@ int main() {
 
     Graph sub2 = filterGraphByARGName(g, "ANT3-DPRIME");
     exportToDot(sub2, "ANT3-DPRIME_subgraph.dot");
+    Graph sub3 = filterGraphByMGEGroup(g, "virus");
+    exportToDot(sub3, "virus.dot");
+    Graph sub4 = filterGraphByTimepoint(g, "donor");
+    exportToDot(sub4, "donor.dot");
+    exportToDot(g, "graph.dot");
 
     // getTimelineForARG(g, "CTX");
     // getTimelineForMGE(g, "gene:plasmid:141426");
