@@ -6,6 +6,7 @@
 
 extern const std::unordered_map<int, std::string> argIdMap;
 extern const std::unordered_map<int, std::string> mgeIdMap;
+extern const std::unordered_map<int, std::string> mgeIdMap2;
 extern const std::unordered_map<int, std::string> argGroupMap;
 extern const std::unordered_map<int, bool> argIDSNPConfirmation;
 extern const std::unordered_map<int, std::string> argResistanceMap;
@@ -19,6 +20,7 @@ std::string getMGEGroupName(int id);
 
 int getARGId(const std::string& name);
 int getMGEId(const std::string& name);
+int getMGEId2(const std::string& name);
 int getARGGroupId(const std::string& name);
 
 #endif
