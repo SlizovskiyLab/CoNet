@@ -8,6 +8,7 @@
 #include <vector>
 #include <set>
 #include <algorithm>
+#include <map>
 
 /* Read input files (CSV), extract (individual, ARG, MGE, timepoint) data */
 
@@ -110,16 +111,6 @@ void parseData(const std::filesystem::path& filename, Graph& graph, bool include
                 graph.nodes.insert(mgeNode);
 
                 addEdge(graph, argNode, mgeNode, true, patientID);
-                // auto existing = std::find_if(graph.edges.begin(), graph.edges.end(), [&](const Edge& e) {
-                //     return e.isColo && e.source == argNode && e.target == mgeNode;
-                // });
-
-                // if (existing != graph.edges.end()) {
-                //     const_cast<Edge&>(*existing).individuals.insert(patientID);
-                // } else {
-                //     Edge edge = {argNode, mgeNode, true, {patientID}};
-                //     graph.edges.insert(edge);
-                // }
             }
         }
     }
@@ -127,32 +118,43 @@ void parseData(const std::filesystem::path& filename, Graph& graph, bool include
 
 
 
-// This function adds temporal edges between nodes based on their timepoints.
-// It creates directed edges from earlier timepoints to later ones within the same ARG or MGE
+/**
+ * This function adds patient-specific temporal edges between nodes.
+ * It creates directed edges ONLY between chronologically adjacent timepoints for the same gene within the same patient.
+ * @param graph The graph to which temporal edges will be added.
+ */
 void addTemporalEdges(Graph& graph) {
-    std::unordered_map<std::pair<int, bool>, std::vector<Node>> groupedNodes;
-
-    for (const Node& node : graph.nodes) {
-        groupedNodes[{node.id, node.isARG}].push_back(node);
+    // Reconstruct which nodes belong to which patient from the colocalization edges.
+    std::map<int, std::set<Node>> nodesByPatient;
+    for (const auto& edge : graph.edges) {
+        if (!edge.isColo) continue;
+        for (int patientID : edge.individuals) {
+            nodesByPatient[patientID].insert(edge.source);
+            nodesByPatient[patientID].insert(edge.target);
+        }
     }
 
-    for (const auto& [key, nodeGroup] : groupedNodes) {
-        const auto& nodes = nodeGroup;
-        for (size_t i = 0; i < nodes.size(); ++i) {
-            for (size_t j = 0; j < nodes.size(); ++j) {
-                if (i == j) continue;
-                const Node& a = nodes[i];
-                const Node& b = nodes[j];
+    // For each patient, create their temporal edges.
+    for (const auto& [patientID, nodeSet] : nodesByPatient) {
+        // Group nodes for this specific patient by their ID and type (ARG/MGE).
+        std::unordered_map<std::pair<int, bool>, std::vector<Node>> groupedNodes;
+        for (const Node& node : nodeSet) {
+            groupedNodes[{node.id, node.isARG}].push_back(node);
+        }
 
-                if (a.timepoint < b.timepoint) {
-                    addEdge(graph, a, b, false);  // directional temporal edge from earlier to later
-                }
+        // For each gene group within this patient, sort by time and create chronological edges.
+        for (auto const& [key, nodeGroup] : groupedNodes) {
+            auto nodes = nodeGroup; // Make a mutable copy
+
+            std::sort(nodes.begin(), nodes.end());
+
+            // Create edges between consecutive timepoints.
+            for (size_t i = 0; i < nodes.size() - 1; ++i) {
+                const Node& sourceNode = nodes[i];
+                const Node& targetNode = nodes[i + 1];
+                // Add a non-colocalization edge
+                addEdge(graph, sourceNode, targetNode, false, -1);
             }
         }
     }
 }
-
-
-
-
-

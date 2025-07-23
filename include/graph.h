@@ -21,7 +21,20 @@ struct Node {
     bool requiresSNPConfirmation;
 
     bool operator<(const Node& other) const {
-        return std::tie(id, timepoint, isARG) < std::tie(other.id, other.timepoint, other.isARG);
+        // First, compare by the entity's ID and type
+        if (id != other.id) return id < other.id;
+        if (isARG != other.isARG) return isARG < other.isARG;
+
+        // If they are the same entity, use custom chronological sorting for timepoints
+        Timepoint tp1 = timepoint;
+        Timepoint tp2 = other.timepoint;
+
+        // If one is Donor and the other isn't, Donor always comes first.
+        if (tp1 == Timepoint::Donor && tp2 != Timepoint::Donor) return true;
+        if (tp1 != Timepoint::Donor && tp2 == Timepoint::Donor) return false;
+
+        // Otherwise, sort by the standard numerical order (PreFMT < PostFMT).
+        return static_cast<int>(tp1) < static_cast<int>(tp2);
     }
 
     bool operator==(const Node& other) const {

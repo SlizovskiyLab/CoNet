@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "graph.h"
 #include "id_maps.h"
+#include "export.h"
 
 std::string getNodeName(const Node& node) {
     std::string name = "N_" + std::to_string(node.id);
@@ -55,7 +56,7 @@ std::string getMGEGroupShape(const std::string& groupName) {
     return "box"; // Default for UNCLASSIFIED or others
 }
 
-void exportToDot(const Graph& g, const std::string& filename) {
+void exportToDot(const Graph& g, const std::string& filename, bool showLabels) {
     std::ofstream file(filename);
     file << "digraph G {\n";
     file << "  layout=sfdp;\n";
@@ -69,7 +70,7 @@ void exportToDot(const Graph& g, const std::string& filename) {
 
     for (const Node& node : active_nodes) {
         std::string nodeName = getNodeName(node);
-        std::string label = getNodeLabel(node);
+        std::string label = showLabels ? getNodeLabel(node) : ""; 
         std::string color = getTimepointColor(node.timepoint);
         
         std::string shape;
