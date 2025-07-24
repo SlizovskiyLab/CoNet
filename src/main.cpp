@@ -19,7 +19,7 @@ fs::path data_file = "data/patientwise_colocalization_by_timepoint.csv";
 int main() {
     Graph g;
     // parse the data file and construct the graph (true to exclude ARGs requiring SNP confirmation, true to exclude metals)
-    parseData(data_file, g, false, false); 
+    parseData(data_file, g, true, false); 
     addTemporalEdges(g);  
 
     std::unordered_map<Node, std::unordered_set<Node>> adjacency;
@@ -28,30 +28,6 @@ int main() {
     std::cout << "Graph constructed with " << g.nodes.size() << " nodes and " << g.edges.size() << " edges.\n";
     std::cout << "Adjacency list size: " << adjacency.size() << " nodes.\n";
 
-    // Printing of Adjacency List
-    // std::cout << "Adjacency list" << "\n";
-    // for (const auto& i : adjacency) {
-    //     std::cout << i.first << " -> ";
-    //     for (const auto& neighbor : i.second) {
-    //         std::cout << neighbor <<  " ";
-    //     }
-    //     std::cout << "\n";
-    // }
-    exportToDot(g, "graph_output.dot");
-    Graph sub = filterGraphByARGName(g, "A16S");
-    exportToDot(sub, "A16S_subgraph.dot");
-
-    // std::cout << "print nodes" << "\n";
-    // for (const auto& node : g.nodes) {
-    //     std::cout << node << "\n";
-    // }
-    // std::cout << "print edges" << "\n";
-    // for (const auto& edge : g.edges) {
-    //     std::cout << "Edge from " << edge.source << " to " << edge.target 
-    //               << " | isColo: " << edge.isColo 
-    //               << " | weight: " << edge.weight 
-    //               << "\n";
-    // }
     
      /******************************** Traversal of Graph  ************************************/
     std::map<std::pair<int, int>, std::multiset<Timepoint>> colocalizationTimeline;
@@ -62,7 +38,7 @@ int main() {
     std::map<std::tuple<int, int, int>, std::set<Timepoint>> colocalizationByIndividual;
     traverseGraph(g, colocalizationByIndividual);
 
-
+    std::map<std::pair<int, int>, std::set<int>> globalPairToPatients;
 
     /*********************************** Query Engine  **************************************/
     std::cout << "Colocalization dynamics over time:\n";
@@ -75,13 +51,16 @@ int main() {
     getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, true, true, false, "PreFMT & Donor Only");
     getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, true, true, true, "PreFMT, Donor & PostFMT");
 
-    getColocalizationsByCriteria(g, colocalizationTimeline, false, false, true, "PostFMT Only");
-    getColocalizationsByCriteria(g, colocalizationTimeline, false, true, false, "PreFMT Only");
-    getColocalizationsByCriteria(g, colocalizationTimeline, true, false, true, "PostFMT & Donor Only");
-    getColocalizationsByCriteria(g, colocalizationTimeline, false, true, true, "PreFMT & PostFMT Only");
-    getColocalizationsByCriteria(g, colocalizationTimeline, true, false, false, "Donor Only");
-    getColocalizationsByCriteria(g, colocalizationTimeline, true, true, false, "PreFMT & Donor Only");
-    getColocalizationsByCriteria(g, colocalizationTimeline, true, true, true, "PreFMT, Donor & PostFMT");
+    getColocalizationsByCriteria(colocalizationByIndividual, false, false, true, globalPairToPatients);
+    globalPairToPatients.clear(); // Clear the map for the next scenario
+    getColocalizationsByCriteria(colocalizationByIndividual, false, true, false, globalPairToPatients);
+    globalPairToPatients.clear(); // Clear the map for the next scenario
+
+    getColocalizationsByCriteria(colocalizationByIndividual, true, false, true, globalPairToPatients);
+    globalPairToPatients.clear(); // Clear the map for the next scenario
+    getColocalizationsByCriteria(colocalizationByIndividual, false, true, true, globalPairToPatients);
+    globalPairToPatients.clear(); // Clear the map for the next scenario
+
 
 
     std::vector<std::pair<int, int>> topARGs = getTopKEntities(g, true, static_cast<unsigned int>(10)); // Top 10 ARGs
@@ -95,13 +74,10 @@ int main() {
         std::cout << "MGE: " << getMGEName(id) << ", Count: " << count << "\n";
     }  
 
-    getTopARGMGEPairsByFrequency(colocalizationByIndividual, 10); // Top 10 ARG-MGE pairs by frequency
+    getTopARGMGEPairsByFrequencyWODonor(colocalizationByIndividual, 10); // Top 10 ARG-MGE pairs by frequency
 
     Graph sub2 = filterGraphByARGName(g, "ANT3-DPRIME");
     exportToDot(sub2, "ANT3-DPRIME_subgraph.dot");
-
-    // getTimelineForARG(g, "CTX");
-    // getTimelineForMGE(g, "gene:plasmid:141426");
 
     return 0;
 
@@ -111,115 +87,4 @@ int main() {
 
 
 
-
-
-
-
-    // Globally how an ARG/MGE was distributed over time related to a patient. not the below function
-    // auto argDegree = computeNodeDegreeOverTime(g, true, "A16S");
-    // std::cout << "Node degree over time for ARG A16S:\n";
-    // for (const auto& [tp, deg] : argDegree) {
-    //     std::cout << "Timepoint " << static_cast<int>(tp) << ": Degree = " << deg << "\n";
-    // }
-
-
-
-
-
-    /******************************** Traversal based on time - approach 1 ************************************/
-    // std::map<std::pair<int, int>, Node> firstOccurrence;
-    // std::map<std::pair<int, int>, std::set<Timepoint>> colocalizationsByTime;
-
-    // traverseTempGraph(g, adjacency, firstOccurrence, colocalizationsByTime);
-
-    // for (const auto& entry : colocalizationsByTime) {
-    //     int argId = entry.first.first;
-    //     int mgeId = entry.first.second;
-    //     std::cout << "ARG ID: " << argId << ", MGE ID: " << mgeId << "\n";
-    //     for (const auto& tp : entry.second) {
-    //         std::cout << "  - " << tp << "\n";
-    //     }
-    // }
-
-    // std::cout << "First occurrence of colocalizations:\n";
-    // for (const auto& entry : firstOccurrence) {
-    //     int argId = entry.first.first;
-    //     int mgeId = entry.first.second;
-    //     std::cout << "ARG ID: " << argId << ", MGE ID: " << mgeId << "\n";
-    //     std::cout << "  - " << entry.second.timepoint << "\n";
-    // }
-
-
-    /******************************** Traversal based on time - approach2 ************************************/
-    // std::map<std::tuple<int, int, int>, Node> firstOccurrenceByInd;
-    // std::map<std::tuple<int, int, int>, std::set<Timepoint>> colocalizationsTimelineByInd;
-
-    // traverseGraphByInd(g, adjacency, g.edges, firstOccurrenceByInd, colocalizationsTimelineByInd);
-
-    // for (const auto& entry : colocalizationsByTime) {
-    //     int argId = entry.first.first;
-    //     int mgeId = entry.first.second;
-    //     std::cout << "ARG ID: " << argId << ", MGE ID: " << mgeId << "\n";
-    //     for (const auto& tp : entry.second) {
-    //         std::cout << "  - " << tp << "\n";
-    //     }
-    // }
-
-    // std::cout << "First occurrence of colocalizations:\n";
-    // for (const auto& entry : firstOccurrence) {
-    //     int argId = entry.first.first;
-    //     int mgeId = entry.first.second;
-    //     std::cout << "ARG ID: " << argId << ", MGE ID: " << mgeId << "\n";
-    //     std::cout << "  - " << entry.second.timepoint << "\n";
-    // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- /******************************** Traversal of Graph  ************************************/
-    // std::map<std::pair<int, int>, std::set<Timepoint>> colocalizationTimeline;
-    
-    // traverseAdjacency(g, adjacency, colocalizationTimeline);
-    // std::cout << "individual timeline" << "\n";
-    // for (const auto& entry : colocalizationTimeline) {
-    //     std::cout << "ARG ID: " << entry.first.first
-    //               << ", MGE ID: " << entry.first.second << "\n";
-    //     for (const auto& tp : entry.second) {
-    //         std::cout << "  - " << tp << "\n";
-    //     }
-    // }
-
-    // std::map<std::tuple<int, int, int>, std::set<Timepoint>> colocalizationByIndividual;
-    // traverseGraph(g, colocalizationByIndividual);
-    // std::cout << "colocalization by individual" << "\n";
-    // for (const auto& entry : colocalizationByIndividual) {
-    //     int individualId = std::get<0>(entry.first);
-    //     int argId = std::get<1>(entry.first);
-    //     int mgeId = std::get<2>(entry.first);
-    //     std::cout << "Ind ID: " << individualId 
-    //               << ", ARG ID: " << argId 
-    //               << ", MGE ID: " << mgeId << "\n";
-    //     for (const auto& tp : entry.second) {
-    //         std::cout << "  - " << tp << "\n";
-    //     }
-    // }
-    // std::cout << "Total nodes: " << g.nodes.size() << "\n";
-    // std::cout << "Total edges: " << g.edges.size() << "\n";
-    // std::cout << "Colocalization by individual size: " << colocalizationByIndividual.size() << "\n";
-    // std::cout << "Colocalization timeline size: " << colocalizationTimeline.size() << "\n";
 

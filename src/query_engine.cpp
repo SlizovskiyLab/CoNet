@@ -57,82 +57,96 @@ void getPatientwiseColocalizationsByCriteria(
 }
 
 /***************************************** Colocalizations ****************************************/
+
 void getColocalizationsByCriteria(
-    const Graph& graph,
-    const std::map<std::pair<int, int>, std::multiset<Timepoint>>& colocalizationByTimepoint,
+    const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual,
     bool donorStatus,
     bool preFMTStatus,
     bool postFMTStatus,
-    const std::string& label
+    std::map<std::pair<int, int>, std::set<int>>& globalPairToPatients
 ) {
-    std::map<std::pair<int, int>, std::multiset<Timepoint>> filteredColocs;
+    std::map<std::pair<int, int>, std::set<Timepoint>> globalTimepoints;
 
-    for (const auto& [pair, tps] : colocalizationByTimepoint) {
-        bool hasDonor = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) {
-            return isDonor(tp);
-        });
-        bool hasPreFMT = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) {
-            return isPreFMT(tp);
-        });
-        bool hasPostFMT = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) {
-            return isPostFMT(tp);
-        });
+    // Step 1: Accumulate all timepoints per (ARG, MGE) pair across patients
+    for (const auto& [tuple, tps] : colocalizationByIndividual) {
+        int argID     = std::get<1>(tuple);
+        int mgeID     = std::get<2>(tuple);
+        auto& timeSet = globalTimepoints[{argID, mgeID}];
+        timeSet.insert(tps.begin(), tps.end());
+    }
 
-        // Match against provided pattern
-        if ((hasDonor == donorStatus) && (hasPreFMT == preFMTStatus) && (hasPostFMT == postFMTStatus)) {
-            filteredColocs.insert({pair, tps});
+    // Step 2: Determine valid (ARG, MGE) pairs matching the scenario
+    std::set<std::pair<int, int>> validPairs;
+    for (const auto& [pair, tps] : globalTimepoints) {
+        bool hasDonor   = std::any_of(tps.begin(), tps.end(), [](Timepoint tp) { return isDonor(tp); });
+        bool hasPreFMT  = std::any_of(tps.begin(), tps.end(), [](Timepoint tp) { return isPreFMT(tp); });
+        bool hasPostFMT = std::any_of(tps.begin(), tps.end(), [](Timepoint tp) { return isPostFMT(tp); });
+
+        if ((hasDonor == donorStatus) &&
+            (hasPreFMT == preFMTStatus) &&
+            (hasPostFMT == postFMTStatus)) {
+            validPairs.insert(pair);  // keep only pairs that match the timepoint pattern
         }
     }
 
-    std::cout << "Colocalizations (" << label << "): " << filteredColocs.size() << "\n";
-    getTopARGMGEPairsByFrequencyGlobally(filteredColocs, 10, false);
+    // Step 3: For valid (ARG, MGE) pairs, collect unique patient IDs
+    for (const auto& [tuple, tps] : colocalizationByIndividual) {
+        int patientID = std::get<0>(tuple);
+        int argID     = std::get<1>(tuple);
+        int mgeID     = std::get<2>(tuple);
+        std::pair<int, int> pair = {argID, mgeID};
+
+        if (validPairs.count(pair)) {
+            // Count patient if scenario includes POST_FMT and patient has POST_FMT timepoint
+            if (postFMTStatus) {
+                if (std::any_of(tps.begin(), tps.end(), [](Timepoint tp) { return isPostFMT(tp); })) {
+                    globalPairToPatients[pair].insert(patientID);
+                }
+            } else {
+                // For donor-only, preFMT-only, or other combinations: count patient regardless of timepoint
+                globalPairToPatients[pair].insert(patientID);
+            }
+        }
+    }
+    getTopARGMGEPairsByUniquePatients(globalPairToPatients, 10, "Aggregated by scenario");
 }
 
-
-/********************************* Prominent Colocalizations by Frequency ********************************/
-
-// exclude donor timepoints - handle through a boolean parameter
-
-void getTopARGMGEPairsByFrequencyGlobally(
-    const std::map<std::pair<int, int>, std::multiset<Timepoint>>& colocalizations,int topN, bool excludeDonor) {
-    std::map<std::pair<int, int>, int> countMap;
-    // Count frequency of each (ARG, MGE) pair
-    for (const auto& [pair, tps] : colocalizations) {
-        for (const Timepoint& tp : tps) {
-            countMap[pair]++;
-        }
+void getTopARGMGEPairsByUniquePatients(
+    const std::map<std::pair<int, int>, std::set<int>>& globalPairToPatients,
+    int topN,
+    const std::string& label
+) {
+    std::vector<std::pair<std::pair<int, int>, int>> freqList;
+    for (const auto& [pair, patientSet] : globalPairToPatients) {
+        freqList.emplace_back(pair, patientSet.size());
     }
-    // Convert map to vector for sorting
-    std::vector<std::pair<std::pair<int, int>, int>> freqList(countMap.begin(), countMap.end());
+
     std::sort(freqList.begin(), freqList.end(), [](const auto& a, const auto& b) {
         return a.second > b.second;
     });
-    std::cout << "Top ARG–MGE pairs by frequency:\n";
+
+    std::cout << "\nTop ARG–MGE pairs by unique patients (" << label << "):\n";
     int countPrinted = 0;
     for (const auto& [pair, count] : freqList) {
-        if (countPrinted >= topN) break;
-
+        if (countPrinted++ >= topN) break;
         int argID = pair.first;
         int mgeID = pair.second;
 
         std::cout << "ARG: ";
-        if (argIdMap.count(argID))
-            std::cout << getARGName(argID) << " (" << getARGGroupName(argID) << ")";
-        else
-            std::cout << "Unknown ARG ID " << argID;
+        if (argIdMap.count(argID)) std::cout << getARGName(argID) << " (" << getARGGroupName(argID) << ")";
+        else std::cout << "Unknown ARG ID " << argID;
+
         std::cout << ", MGE: ";
-        if (mgeIdMap.count(mgeID))
-            std::cout << getMGEName(mgeID);
-        else
-            std::cout << "Unknown MGE ID " << mgeID;
-        std::cout << ", Count: " << count << "\n";
-        countPrinted++;
+        if (mgeIdMap.count(mgeID)) std::cout << getMGEName(mgeID);
+        else std::cout << "Unknown MGE ID " << mgeID;
+
+        std::cout << ",Patients: " << count << "\n";
     }
 
-    std::cout << "Total unique ARG–MGE pairs: " << freqList.size() << "\n";
+    std::cout << "Total unique colocalizations: " << freqList.size() << "\n";
 }
 
-
+/********************************* Prominent Colocalizations by Frequency ********************************/
 void getTopARGMGEPairsByFrequency(
     const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizations, int topN) {
     std::map<std::pair<int, int>, int> countMap;
@@ -168,6 +182,52 @@ void getTopARGMGEPairsByFrequency(
 }
 
 
+void getTopARGMGEPairsByFrequencyWODonor(
+    const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizations, int topN) {
+    
+    std::map<std::pair<int, int>, int> countMap;
+
+    for (const auto& [tuple, tps] : colocalizations) {
+        // Skip if all timepoints are DONOR
+        bool hasNonDonor = false;
+        for (const auto& tp : tps) {
+            if (tp != Timepoint::Donor) {
+                hasNonDonor = true;
+                break;
+            }
+        }
+        if (!hasNonDonor) continue;
+
+        int argID = std::get<1>(tuple);
+        int mgeID = std::get<2>(tuple);
+        countMap[{argID, mgeID}]++;
+    }
+
+    std::vector<std::pair<std::pair<int, int>, int>> freqList(countMap.begin(), countMap.end());
+    std::sort(freqList.begin(), freqList.end(), [](const auto& a, const auto& b) {
+        return a.second > b.second;
+    });
+
+    std::cout << "Top ARG–MGE pairs by frequency (excluding donor-only entries):\n";
+    int countPrinted = 0;
+    for (const auto& [pair, count] : freqList) {
+        if (countPrinted >= topN) break;
+        int argID = pair.first;
+        int mgeID = pair.second;
+        std::cout << "ARG: ";
+        if (argIdMap.count(argID)) std::cout << getARGName(argID) << " (" << getARGGroupName(argID) << ")";
+        else std::cout << "Unknown ARG ID " << argID;
+        std::cout << ", MGE: ";
+        if (mgeIdMap.count(mgeID)) std::cout << getMGEName(mgeID);
+        else std::cout << "Unknown MGE ID " << mgeID;
+        std::cout << ", Count: " << count << "\n";
+        countPrinted++;
+    }
+
+    std::cout << "Total unique ARG–MGE pairs: " << freqList.size() << "\n";
+}
+
+
 /***************************************** Connected MGEs *********************************************/
 void getConnectedMGEs(const Graph& graph, int argID) {
     std::unordered_set<int> connectedMGEs;
@@ -188,3 +248,8 @@ void getConnectedMGEs(const Graph& graph, int argID) {
         std::cout << "\n";
     }
 }
+
+
+
+
+

@@ -29,5 +29,19 @@ void getColocalizationsByCriteria(
 
 void getTopARGMGEPairsByFrequencyGlobally(const std::map<std::pair<int, int>, std::multiset<Timepoint>>& colocalizations, int topN = 10, bool excludeDonor = false);
 void getTopARGMGEPairsByFrequency(const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizations, int topN = 10);
+void getTopARGMGEPairsByFrequencyWODonor(const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizations, int topN);
 void getConnectedMGE(const Graph& graph, const std::set<Edge>& edges, int mgeId, const std::string& mgeName);
+
+void getColocalizationsByCriteria(
+    const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual,
+    bool donorStatus,
+    bool preFMTStatus,
+    bool postFMTStatus,
+    std::map<std::pair<int, int>, std::set<int>>& globalPairToPatients
+);
+void getTopARGMGEPairsByUniquePatients(
+    const std::map<std::pair<int, int>, std::set<int>>& globalPairToPatients,
+    int topN = 10,
+    const std::string& label = "All Patients"
+);
 #endif
