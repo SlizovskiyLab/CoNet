@@ -16,7 +16,7 @@ std::string getNodeName(const Node& node) {
 }
 
 std::string getNodeLabel(const Node& node) {
-    std::string label = node.isARG ? getARGName(node.id) : getMGEName(node.id);
+    std::string label = node.isARG ? getARGName(node.id) : getMGENameForLabel(node.id);
     label += "\\n" + toString(node.timepoint);
     return label;
 }
@@ -70,7 +70,7 @@ void exportToDot(const Graph& g, const std::string& filename, bool showLabels) {
 
     for (const Node& node : active_nodes) {
         std::string nodeName = getNodeName(node);
-        std::string label = showLabels ? getNodeLabel(node) : ""; 
+        std::string label = showLabels ? getNodeLabel(node) : "";
         std::string color = getTimepointColor(node.timepoint);
         
         std::string shape;
@@ -103,14 +103,33 @@ void exportToDot(const Graph& g, const std::string& filename, bool showLabels) {
             }
             processedColoEdges.insert(canonical_pair);
 
-            color = "\"#0000FF\"";
+            color = "\"#0000FF\""; // Blue for colocalization
             style = "solid";
             extraAttributes = "dir=both";
 
         } else if (isTemporalEdge(edge)) {
-            color = "\"#FF0000\"";
-            style = "dashed";
+            style = "dashed"; // Style is always dashed for temporal edges
+            
+            Timepoint src_tp = edge.source.timepoint;
+            Timepoint tgt_tp = edge.target.timepoint;
+
+            bool src_is_post = (src_tp != Timepoint::Donor && src_tp != Timepoint::PreFMT);
+            bool tgt_is_post = (tgt_tp != Timepoint::Donor && tgt_tp != Timepoint::PreFMT);
+
+            if (src_tp == Timepoint::Donor && tgt_tp == Timepoint::PreFMT) {
+                color = "\"orange\"";      // Donor -> Pre
+            } else if (src_tp == Timepoint::Donor && tgt_is_post) {
+                color = "\"purple\"";      // Donor -> Post
+            } else if (src_tp == Timepoint::PreFMT && tgt_is_post) {
+                color = "\"brown\"";        // Pre -> Post
+            } else if (src_is_post && tgt_is_post) {
+                color = "\"#FF0000\"";     // Post -> Post (original red)
+            } else {
+                color = "\"#FF0000\"";     // Fallback to red for any other temporal case
+            }
+            
         } else {
+            // This case should ideally not be hit with current logic
             color = "\"#808080\"";
             style = "solid";
         }

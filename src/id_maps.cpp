@@ -11,6 +11,15 @@ std::string getMGEName(int id) {
     return it != mgeIdMap.end() ? it->second : "Unknown MGE";
 }
 
+std::string getMGENameForLabel(int id) {
+    auto it = mgeNameMap.find(id);
+    if (it != mgeNameMap.end()) {
+        return it->second;
+    }
+    return getMGEName(id);
+}
+
+
 std::string getARGGroupName(int id) {
     auto it = argGroupMap.find(id);
     return it != argGroupMap.end() ? it->second : "Unknown ARG Group";
@@ -32,13 +41,6 @@ int getARGId(const std::string& name) {
 
 int getMGEId(const std::string& name) {
     for (const auto& [id, mgeName] : mgeIdMap) {
-        if (mgeName == name)
-            return id;
-    }
-    return -1; // Not found
-}
-int getMGEId2(const std::string& name) {
-    for (const auto& [id, mgeName] : mgeIdMap2) {
         if (mgeName == name)
             return id;
     }
@@ -608,7 +610,8 @@ const std::unordered_map<int, bool> argIDSNPConfirmation = {
     {274, false},
     {275, false}
 };
-const std::unordered_map<int, std::string> mgeIdMap2 = {
+
+const std::unordered_map<int, std::string> mgeNameMap = {
     {1001, "Col3M_1__JX514065"},
 {1002, "FII(pBK30683)_1__KF954760"},
 {1003, "ISMae23"},

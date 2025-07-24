@@ -37,7 +37,7 @@ int main() {
     //     }
     //     std::cout << "\n";
     // }
-    exportToDot(g, "graph_output.dot");
+    exportToDot(g, "graph_output.dot", true);
     Graph sub = filterGraphByARGName(g, "A16S");
     exportToDot(sub, "A16S_subgraph.dot");
 
