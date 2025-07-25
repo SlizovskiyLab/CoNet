@@ -47,6 +47,18 @@ int getMGEId(const std::string& name) {
     return -1; // Not found
 }
 
+int getMGEIdByName(const std::string& name) {
+    for (const auto& [id, mgeName] : mgeNameMap) {
+        if (mgeName == name)
+            return id;
+    }
+    for (const auto& [id, mgeName] : mgeIdMap) {
+        if (mgeName == name)
+            return id;
+    }
+    return -1;
+}
+
 int getARGGroupId(const std::string& name) {
     for (const auto& [id, groupName] : argGroupMap) {
         if (groupName == name)

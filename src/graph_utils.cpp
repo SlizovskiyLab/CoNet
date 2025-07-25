@@ -10,7 +10,8 @@ Graph filterGraphByARGAndMGENames(const Graph& g, const std::string& argName, co
         return {};
     }
 
-    int mgeID = getMGEId(mgeName);
+    // This now uses the new function that searches both MGE name maps.
+    int mgeID = getMGEIdByName(mgeName); 
     if (mgeID == -1) {
         std::cerr << "MGE not found: " << mgeName << "\n";
         return {};
@@ -128,7 +129,8 @@ Graph filterGraphByARGName(const Graph& g, const std::string& argName) {
 }
 
 Graph filterGraphByMGEName(const Graph& g, const std::string& mgeName) {
-    int mgeID = getMGEId(mgeName);
+    // This now uses the new function that searches both MGE name maps.
+    int mgeID = getMGEIdByName(mgeName); 
     if (mgeID == -1) {
         std::cerr << "MGE not found: " << mgeName << "\n";
         return {};
