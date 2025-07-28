@@ -33,8 +33,9 @@ int main() {
     std::cout << "Colocalization Edges: " << std::count_if(g.edges.begin(), g.edges.end(), [](const Edge& e) { return e.isColo; }) << "\n";
     std::cout << "Temporal Edges: " << std::count_if(g.edges.begin(), g.edges.end(), [](const Edge& e) { return !e.isColo; }) << "\n";
     std::cout << "Total edges: " << g.edges.size() << "\n";
+    std::cout << "Adjacency list size: " << adjacency.size() << " nodes.\n";
 
-    
+   
      /******************************** Traversal of Graph  ***********************************/
     std::map<std::pair<int, int>, std::multiset<Timepoint>> colocalizationTimeline;
     traverseAdjacency(g, adjacency, colocalizationTimeline);
@@ -93,6 +94,9 @@ int main() {
 
     /************************************* Graph Visualization ***********************************/
 
+    exportToDot(g, "graph_output.dot", true);
+    Graph sub = filterGraphByARGName(g, "A16S");
+    exportToDot(sub, "A16S_subgraph.dot");
 
 
     Graph sub2 = filterGraphByARGName(g, "CTX");
