@@ -19,8 +19,17 @@ fs::path data_file = "data/patientwise_colocalization_by_timepoint.csv";
 int main() {
     Graph g;
     // parse the data file and construct the graph (true to exclude ARGs requiring SNP confirmation, true to exclude metals)
-    parseData(data_file, g, true, true); 
+    std::map<int, std::string> patientToDiseaseMap; 
+
+    parseData(data_file, g, patientToDiseaseMap, true, true); 
     addTemporalEdges(g);  
+
+    Graph rCDI = filterGraphByDisease(g, "rCDI", patientToDiseaseMap);
+    exportToDot(rCDI, "rcdi.dot");
+    Graph melanoma = filterGraphByDisease(g, "Melanoma", patientToDiseaseMap);
+    exportToDot(melanoma, "melanoma.dot");
+    Graph mdrb = filterGraphByDisease(g, "MDRB", patientToDiseaseMap);
+    exportToDot(mdrb, "mdrb.dot");
 
     std::unordered_map<Node, std::unordered_set<Node>> adjacency;
     buildAdjacency(g, adjacency);
@@ -37,7 +46,7 @@ int main() {
     //     }
     //     std::cout << "\n";
     // }
-    exportToDot(g, "graph_output.dot", true);
+    exportToDot(g, "graph_output.dot", false);
     Graph sub = filterGraphByARGName(g, "A16S");
     exportToDot(sub, "A16S_subgraph.dot");
 
@@ -97,13 +106,32 @@ int main() {
 
     getTopARGMGEPairsByFrequency(colocalizationByIndividual, 10); // Top 10 ARG-MGE pairs by frequency
 
-    Graph sub2 = filterGraphByARGName(g, "ANT3-DPRIME");
-    exportToDot(sub2, "ANT3-DPRIME_subgraph.dot");
+    Graph sub2 = filterGraphByARGName(g, "MPHA");
+    exportToDot(sub2, "MPHA.dot");
+    Graph sub15 = filterGraphByARGName(g, "ERMB");
+    exportToDot(sub15, "ERMB.dot");
+    Graph sub8 = filterGraphByMGEName(g, "ISNwi4");
+    exportToDot(sub8, "ISNwi4.dot");
     Graph sub3 = filterGraphByMGEGroup(g, "virus");
     exportToDot(sub3, "virus.dot");
     Graph sub4 = filterGraphByTimepoint(g, "donor");
     exportToDot(sub4, "donor.dot");
     exportToDot(g, "graph.dot");
+
+
+
+
+
+    Graph sub9 = filterGraphByARGAndMGENames(g, "SULIII", "IS406");
+    exportToDot(sub9, "SULIII.dot");
+    Graph sub10 = filterGraphByARGAndMGENames(g, "AAC3", "ISHati3");
+    exportToDot(sub10, "AAC_ISH.dot");
+    Graph sub11 = filterGraphByARGAndMGENames(g, "CFX", "ISNwi4");
+    exportToDot(sub11, "CFX_ISNwi4.dot");
+    Graph sub12 = filterGraphByARGAndMGENames(g, "ZNTR", "ISMae2");
+    exportToDot(sub12, "CORA_ISRo1.dot");
+    // Graph sub13 = filterGraphByARGAndMGENames(g, "CFX", "ISNwi4");
+    // exportToDot(sub13, "CFX_ISNwi4.dot");
 
     // getTimelineForARG(g, "CTX");
     // getTimelineForMGE(g, "gene:plasmid:141426");

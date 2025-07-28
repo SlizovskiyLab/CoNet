@@ -215,3 +215,45 @@ Graph filterGraphByMGEGroup(const Graph& g, const std::string& groupName) {
 
     return subgraph;
 }
+
+
+Graph filterGraphByDisease(const Graph& g, const std::string& disease, const std::map<int, std::string>& patientToDiseaseMap) {
+    // Step 1: Find all patient IDs that match the target disease.
+    std::set<int> targetPatientIDs;
+    for (const auto& [patientID, diseaseName] : patientToDiseaseMap) {
+        if (diseaseName == disease) {
+            targetPatientIDs.insert(patientID);
+        }
+    }
+
+    if (targetPatientIDs.empty()) {
+        std::cerr << "Warning: No patients found for disease '" << disease << "'. The resulting graph will be empty.\n";
+        return {};
+    }
+
+    // Step 2: Identify all nodes that belong to those patients by checking colocalization edges.
+    std::unordered_set<Node> relevant_nodes;
+    for (const auto& edge : g.edges) {
+        if (!edge.isColo) continue;
+        for (int patientID : edge.individuals) {
+            if (targetPatientIDs.count(patientID)) {
+                relevant_nodes.insert(edge.source);
+                relevant_nodes.insert(edge.target);
+                break; 
+            }
+        }
+    }
+    
+    // Step 3: Build the subgraph using only the relevant nodes.
+    Graph subgraph;
+    subgraph.nodes = std::set<Node>(relevant_nodes.begin(), relevant_nodes.end());
+
+    for (const auto& edge : g.edges) {
+        // Add any edge (colocalization or temporal) if BOTH its nodes are in our relevant set.
+        if (relevant_nodes.count(edge.source) && relevant_nodes.count(edge.target)) {
+            subgraph.edges.insert(edge);
+        }
+    }
+    
+    return subgraph;
+}
