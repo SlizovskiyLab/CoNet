@@ -65,51 +65,51 @@ void getColocalizationsByCriteria(
     bool postFMTStatus,
     std::map<std::pair<int, int>, std::set<int>>& globalPairToPatients
 ) {
+    // Step 1: Determine globally valid (ARG, MGE) pairs
     std::map<std::pair<int, int>, std::set<Timepoint>> globalTimepoints;
 
-    // Step 1: Accumulate all timepoints per (ARG, MGE) pair across patients
     for (const auto& [tuple, tps] : colocalizationByIndividual) {
-        int argID     = std::get<1>(tuple);
-        int mgeID     = std::get<2>(tuple);
-        auto& timeSet = globalTimepoints[{argID, mgeID}];
-        timeSet.insert(tps.begin(), tps.end());
+        int argID = std::get<1>(tuple);
+        int mgeID = std::get<2>(tuple);
+        globalTimepoints[{argID, mgeID}].insert(tps.begin(), tps.end());
     }
 
-    // Step 2: Determine valid (ARG, MGE) pairs matching the scenario
     std::set<std::pair<int, int>> validPairs;
     for (const auto& [pair, tps] : globalTimepoints) {
-        bool hasDonor   = std::any_of(tps.begin(), tps.end(), [](Timepoint tp) { return isDonor(tp); });
-        bool hasPreFMT  = std::any_of(tps.begin(), tps.end(), [](Timepoint tp) { return isPreFMT(tp); });
-        bool hasPostFMT = std::any_of(tps.begin(), tps.end(), [](Timepoint tp) { return isPostFMT(tp); });
+        bool hasDonor   = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp){ return isDonor(tp); });
+        bool hasPreFMT  = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp){ return isPreFMT(tp); });
+        bool hasPostFMT = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp){ return isPostFMT(tp); });
 
-        if ((hasDonor == donorStatus) &&
-            (hasPreFMT == preFMTStatus) &&
-            (hasPostFMT == postFMTStatus)) {
-            validPairs.insert(pair);  // keep only pairs that match the timepoint pattern
+        if (hasDonor == donorStatus &&
+            hasPreFMT == preFMTStatus &&
+            hasPostFMT == postFMTStatus) {
+            validPairs.insert(pair);
         }
     }
 
-    // Step 3: For valid (ARG, MGE) pairs, collect unique patient IDs
+    // Step 2: Count patients per valid (ARG, MGE) pair only if their individual timepoints match the scenario
     for (const auto& [tuple, tps] : colocalizationByIndividual) {
         int patientID = std::get<0>(tuple);
         int argID     = std::get<1>(tuple);
         int mgeID     = std::get<2>(tuple);
         std::pair<int, int> pair = {argID, mgeID};
 
-        if (validPairs.count(pair)) {
-            // Count patient if scenario includes POST_FMT and patient has POST_FMT timepoint
-            if (postFMTStatus) {
-                if (std::any_of(tps.begin(), tps.end(), [](Timepoint tp) { return isPostFMT(tp); })) {
-                    globalPairToPatients[pair].insert(patientID);
-                }
-            } else {
-                // For donor-only, preFMT-only, or other combinations: count patient regardless of timepoint
-                globalPairToPatients[pair].insert(patientID);
-            }
+        if (!validPairs.count(pair)) continue;
+
+        bool hasDonor   = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) { return isDonor(tp); });
+        bool hasPreFMT  = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) { return isPreFMT(tp); });
+        bool hasPostFMT = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) { return isPostFMT(tp); });
+
+        if (hasDonor == donorStatus &&
+            hasPreFMT == preFMTStatus &&
+            hasPostFMT == postFMTStatus) {
+            globalPairToPatients[pair].insert(patientID);
         }
     }
-    getTopARGMGEPairsByUniquePatients(globalPairToPatients, 10, "Aggregated by scenario");
+
+    getTopARGMGEPairsByUniquePatients(globalPairToPatients, 10, "Filtered by scenario");
 }
+
 
 void getTopARGMGEPairsByUniquePatients(
     const std::map<std::pair<int, int>, std::set<int>>& globalPairToPatients,
@@ -125,7 +125,7 @@ void getTopARGMGEPairsByUniquePatients(
         return a.second > b.second;
     });
 
-    std::cout << "\nTop ARG–MGE pairs by unique patients (" << label << "):\n";
+    std::cout << "\nTop colocalizations by unique patients (" << label << "):\n";
     int countPrinted = 0;
     for (const auto& [pair, count] : freqList) {
         if (countPrinted++ >= topN) break;

@@ -40,23 +40,17 @@ void traverseAdjacency(const Graph& graph, const std::unordered_map<Node, std::u
 void traverseGraph(const Graph& graph, 
     std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual) {
     // std::unordered_map<Node, std::unordered_set<Node>> adjacency;
-    int count = 0;
-    int cnt = 0;
     for (const auto& edge : graph.edges) {
         if (!edge.isColo) continue;
-        cnt++;
         int arg_id = edge.source.isARG ? edge.source.id : edge.target.id;
         int mge_id = edge.source.isARG ? edge.target.id : edge.source.id;
         Timepoint tp = edge.source.timepoint; // or target.timepoint
 
         for (int ind_id : edge.individuals) {
-            count++;
             auto key = std::make_tuple(ind_id, arg_id, mge_id);
             colocalizationByIndividual[key].insert(tp);
         }
     }
-    std::cout << "Total colocalization edges processed: " << count << "\n";
-    std::cout << "Number of unique colocalizations (ARG-MGE pairs): " << cnt << "\n";
 }
 
 

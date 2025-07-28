@@ -21,18 +21,24 @@ int main() {
     // parse the data file and construct the graph (true to exclude ARGs requiring SNP confirmation, true to exclude metals)
     parseData(data_file, g, true, false); 
     addTemporalEdges(g);  
-
+    
     std::unordered_map<Node, std::unordered_set<Node>> adjacency;
     buildAdjacency(g, adjacency);
 
+    /******************************** Graph Statistics ************************************/
     std::cout << "Graph constructed with " << g.nodes.size() << " nodes and " << g.edges.size() << " edges.\n";
-    std::cout << "Adjacency list size: " << adjacency.size() << " nodes.\n";
+    std::cout << "ARGs: " << std::count_if(g.nodes.begin(), g.nodes.end(), [](const Node& n) { return n.isARG; }) << "\n";
+    std::cout << "MGEs: " << std::count_if(g.nodes.begin(), g.nodes.end(), [](const Node& n) { return !n.isARG; }) << "\n";
+    std::cout << "Total nodes: " << g.nodes.size() << "\n";
+    std::cout << "Colocalization Edges: " << std::count_if(g.edges.begin(), g.edges.end(), [](const Edge& e) { return e.isColo; }) << "\n";
+    std::cout << "Temporal Edges: " << std::count_if(g.edges.begin(), g.edges.end(), [](const Edge& e) { return !e.isColo; }) << "\n";
+    std::cout << "Total edges: " << g.edges.size() << "\n";
 
     
-     /******************************** Traversal of Graph  ************************************/
+     /******************************** Traversal of Graph  ***********************************/
     std::map<std::pair<int, int>, std::multiset<Timepoint>> colocalizationTimeline;
     traverseAdjacency(g, adjacency, colocalizationTimeline);
-
+    std::cout << "No of unique colocalizations: " << colocalizationTimeline.size() << "\n";
 
     /******************************** Traversal of Graph  ************************************/
     std::map<std::tuple<int, int, int>, std::set<Timepoint>> colocalizationByIndividual;
@@ -40,44 +46,65 @@ int main() {
 
     std::map<std::pair<int, int>, std::set<int>> globalPairToPatients;
 
-    /*********************************** Query Engine  **************************************/
-    std::cout << "Colocalization dynamics over time:\n";
+    /********************************* Colocalizations by Timepoints ************************************/
+    std::cout << "Patientwise Colocalization dynamics over time:\n";
 
     getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, false, false, true, "PostFMT Only");
     getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, false, true, false, "PreFMT Only");
-    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, true, false, true, "PostFMT & Donor Only");
-    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, false, true, true, "PreFMT & PostFMT Only");
     getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, true, false, false, "Donor Only");
-    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, true, true, false, "PreFMT & Donor Only");
+    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, true, true, false, "Donor & PreFMT Only");
+    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, false, true, true, "PreFMT & PostFMT Only");
     getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, true, true, true, "PreFMT, Donor & PostFMT");
+    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual, true, false, true, "Donor & PostFMT Only");
 
-    getColocalizationsByCriteria(colocalizationByIndividual, false, false, true, globalPairToPatients);
-    globalPairToPatients.clear(); // Clear the map for the next scenario
-    getColocalizationsByCriteria(colocalizationByIndividual, false, true, false, globalPairToPatients);
-    globalPairToPatients.clear(); // Clear the map for the next scenario
+    std::cout << "Colocalization dynamics over time:\n";
+    // getColocalizationsByCriteria(colocalizationByIndividual, false, false, true, globalPairToPatients);
+    // globalPairToPatients.clear(); // Clear the map for the next scenario
+    // getColocalizationsByCriteria(colocalizationByIndividual, false, true, false, globalPairToPatients);
+    // globalPairToPatients.clear(); // Clear the map for the next scenario
+    // getColocalizationsByCriteria(colocalizationByIndividual, true, false, false, globalPairToPatients);
+    // globalPairToPatients.clear(); // Clear the map for the next scenario
+    // getColocalizationsByCriteria(colocalizationByIndividual, true, true, false, globalPairToPatients);
+    // globalPairToPatients.clear(); // Clear the map for the next scenario
+    // getColocalizationsByCriteria(colocalizationByIndividual, false, true, true, globalPairToPatients);
+    // globalPairToPatients.clear(); // Clear the map for the next scenario
+    // getColocalizationsByCriteria(colocalizationByIndividual, true, true, true, globalPairToPatients);
+    // globalPairToPatients.clear(); // Clear the map for the next scenario
+    // getColocalizationsByCriteria(colocalizationByIndividual, true, false, true, globalPairToPatients);
+    // globalPairToPatients.clear(); // Clear the map for the next scenario
 
-    getColocalizationsByCriteria(colocalizationByIndividual, true, false, true, globalPairToPatients);
-    globalPairToPatients.clear(); // Clear the map for the next scenario
-    getColocalizationsByCriteria(colocalizationByIndividual, false, true, true, globalPairToPatients);
-    globalPairToPatients.clear(); // Clear the map for the next scenario
+
+    /**************************************** Most Prominent Genes ***********************************/
+
+
+    // std::vector<std::pair<int, int>> topARGs = getTopKEntities(g, true, static_cast<unsigned int>(10)); // Top 10 ARGs
+    // std::cout << "Top ARGs:\n";
+    // for (const auto& [id, count] : topARGs) {
+    //     std::cout << "ARG: " << getARGName(id) << " (" << getARGGroupName(id) << "), Count: " << count << "\n";
+    // }
+    // std::vector<std::pair<int, int>> topMGEs = getTopKEntities(g, false, static_cast<unsigned int>(10)); // Top 5 MGEs
+    // std::cout << "Top MGEs:\n";
+    // for (const auto& [id, count] : topMGEs) {
+    //     std::cout << "MGE: " << getMGEName(id) << ", Count: " << count << "\n";
+    // }  
+
+    // getTopARGMGEPairsByFrequencyWODonor(colocalizationByIndividual, 10); // Top 10 ARG-MGE pairs by frequency
+
+
+    /************************************* Graph Visualization ***********************************/
 
 
 
-    std::vector<std::pair<int, int>> topARGs = getTopKEntities(g, true, static_cast<unsigned int>(10)); // Top 10 ARGs
-    std::cout << "Top ARGs:\n";
-    for (const auto& [id, count] : topARGs) {
-        std::cout << "ARG: " << getARGName(id) << " (" << getARGGroupName(id) << "), Count: " << count << "\n";
-    }
-    std::vector<std::pair<int, int>> topMGEs = getTopKEntities(g, false, static_cast<unsigned int>(10)); // Top 5 MGEs
-    std::cout << "Top MGEs:\n";
-    for (const auto& [id, count] : topMGEs) {
-        std::cout << "MGE: " << getMGEName(id) << ", Count: " << count << "\n";
-    }  
+    Graph sub2 = filterGraphByARGName(g, "CTX");
+    exportToDot(sub2, "CTX.dot");
+    Graph sub3 = filterGraphByMGEGroup(g, "virus");
+    exportToDot(sub3, "virus.dot");
+    Graph sub4 = filterGraphByTimepoint(g, "donor");
+    exportToDot(sub4, "donor.dot");
+    exportToDot(g, "graph.dot");
 
-    getTopARGMGEPairsByFrequencyWODonor(colocalizationByIndividual, 10); // Top 10 ARG-MGE pairs by frequency
 
-    Graph sub2 = filterGraphByARGName(g, "ANT3-DPRIME");
-    exportToDot(sub2, "ANT3-DPRIME_subgraph.dot");
+
 
     return 0;
 
