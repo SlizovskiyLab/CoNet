@@ -99,8 +99,8 @@ int main() {
     exportToDot(sub, "A16S_subgraph.dot");
 
 
-    Graph sub2 = filterGraphByARGName(g, "CTX");
-    exportToDot(sub2, "CTX.dot");
+    Graph sub2 = filterGraphByARGName(g, "CFX");
+    exportToDot(sub2, "CFX.dot");
     Graph sub3 = filterGraphByMGEGroup(g, "virus");
     exportToDot(sub3, "virus.dot");
     Graph sub4 = filterGraphByTimepoint(g, "donor");
