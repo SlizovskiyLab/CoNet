@@ -44,14 +44,8 @@ int main() {
     std::cout << "Total edges: " << g.edges.size() << "\n";
     std::cout << "Adjacency list size: " << adjacency.size() << " nodes.\n";
 
-
-    exportToDot(g, "graph_output.dot", false);
-    Graph sub = filterGraphByARGName(g, "A16S");
-    exportToDot(sub, "A16S_subgraph.dot");
-
- 
     
-     /******************************** Traversal of Graph  ************************************/
+    /******************************** Traversal of Graph  ************************************/
     std::map<std::pair<int, int>, std::multiset<Timepoint>> colocalizationTimeline;
     traverseAdjacency(g, adjacency, colocalizationTimeline);
     std::cout << "No of unique colocalizations: " << colocalizationTimeline.size() << "\n";
@@ -107,11 +101,9 @@ int main() {
     getTopARGMGEPairsByFrequency(colocalizationByIndividual, 10); // Top 10 ARG-MGE pairs by frequency
 
     /************************************* Graph Visualization ***********************************/
-
-    exportToDot(g, "graph_output.dot", true);
+   
     Graph sub = filterGraphByARGName(g, "A16S");
     exportToDot(sub, "A16S_subgraph.dot");
-
 
     Graph sub2 = filterGraphByARGName(g, "CFX");
     exportToDot(sub2, "CFX.dot");
