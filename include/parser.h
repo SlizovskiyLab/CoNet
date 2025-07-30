@@ -3,6 +3,7 @@
 
 #include <string>
 #include <filesystem>
+#include <map> // Required for std::map
 #include "graph.h"
 
 namespace std {
@@ -15,8 +16,8 @@ namespace std {
 }
 
 
-// Declares the function that will be defined in parser.cpp
-void parseData(const std::filesystem::path& filename, Graph& graph, bool includeSNPConfirmationARGs, bool excludeMetals);
+// The signature of parseData is updated to include a map for patient-disease associations.
+void parseData(const std::filesystem::path& filename, Graph& graph, std::map<int, std::string>& patientToDiseaseMap, bool includeSNPConfirmationARGs, bool excludeMetals);
 void addEdge(Graph& graph, const Node& src, const Node& tgt, bool isColo, int patientID = -1);
 void addTemporalEdges(Graph& graph);
 

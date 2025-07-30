@@ -21,7 +21,7 @@ std::string getMGEGroupName(int id);
 
 int getARGId(const std::string& name);
 int getMGEId(const std::string& name);
-int getMGEIdByName(const std::string& name); // New universal search function
+int getMGEIdByName(const std::string& name);
 int getARGGroupId(const std::string& name);
 
 #endif

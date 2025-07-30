@@ -9,6 +9,7 @@
 #include <set>
 #include <algorithm>
 #include <map>
+#include <cctype>
 
 /* Read input files (CSV), extract (individual, ARG, MGE, timepoint) data */
 
@@ -34,7 +35,7 @@ void addEdge(Graph& graph, const Node& src, const Node& tgt, bool isColo, int pa
 
 // This function reads a CSV file containing patient data and constructs a graph.
 // It extracts ARG and MGE labels, maps them to IDs, and creates nodes and edges
-void parseData(const std::filesystem::path& filename, Graph& graph, bool includeSNPConfirmationARGs, bool excludeMetals) {
+void parseData(const std::filesystem::path& filename, Graph& graph, std::map<int, std::string>& patientToDiseaseMap, bool includeSNPConfirmationARGs, bool excludeMetals) {
     std::ifstream infile(filename);
     std::string line;
     std::vector<std::string> headers;
@@ -43,6 +44,10 @@ void parseData(const std::filesystem::path& filename, Graph& graph, bool include
     std::unordered_map<std::string, Timepoint> columnToTimepoint;
 
     while (std::getline(infile, line)) {
+        if (!line.empty() && line.back() == '\r') {
+            line.pop_back();
+        }
+
         std::stringstream ss(line);
         std::string token;
         std::vector<std::string> tokens;
@@ -53,56 +58,51 @@ void parseData(const std::filesystem::path& filename, Graph& graph, bool include
 
         if (isHeader) {
             headers = tokens;
-            for (const std::string& col : headers) {
+            for (const std::string& col_const : headers) {
+                std::string col = col_const;
+                 while (!col.empty() && isspace(col.back())) {
+                    col.pop_back();
+                }
+
                 if (col == "Donor") columnToTimepoint[col] = Timepoint::Donor;
                 else if (col == "PreFMT") columnToTimepoint[col] = Timepoint::PreFMT;
                 else if (col.rfind("PostFMT_", 0) == 0) {
-                    std::string day = col.substr(8);
-                    columnToTimepoint[col] = static_cast<Timepoint>(std::stoi(day));
+                    std::string day_str = col.substr(8);
+                    try {
+                        columnToTimepoint[col] = static_cast<Timepoint>(std::stoi(day_str));
+                    } catch (const std::invalid_argument& e) {
+                        std::cerr << "Warning: Could not parse day from header column: " << col << std::endl;
+                    }
                 }
             }
             isHeader = false;
             continue;
         }
 
+        if (tokens.size() < 4) continue;
+
         int patientID = std::stoi(tokens[0]);
+        std::string diseaseType = tokens[1];
+        patientToDiseaseMap[patientID] = diseaseType; 
+
         std::string argLabel = tokens[2];
         std::string mgeLabel = tokens[3];
 
-        int argID = -1, mgeID = -1;
-        for (const auto& [id, name] : argIdMap)
-            if (name == argLabel) { argID = id; break; }
-        for (const auto& [id, name] : mgeIdMap)
-            if (name == mgeLabel) { mgeID = id; break; }
+        int argID = getARGId(argLabel);
+        int mgeID = getMGEId(mgeLabel);
 
         if (argID == -1 || mgeID == -1) continue;
 
         for (size_t i = 4; i < tokens.size(); ++i) {
             std::string colName = headers[i];
-            if (columnToTimepoint.count(colName) && ((tokens[i] == "1")||(tokens[i] == "2"))) {
-                Timepoint tp = columnToTimepoint[colName];
-
-                bool requiresSNPConfirmation = false;
-
-                // Check if this ARG is marked as requiring SNP confirmation
-                auto it = argIDSNPConfirmation.find(argID);
-                if (it != argIDSNPConfirmation.end()) {
-                    requiresSNPConfirmation = it->second;
-                }
-                std::string argResistance = "Drugs";
-                // If user wants to EXCLUDE SNP-confirmed ARGs, skip them
-                if (includeSNPConfirmationARGs && requiresSNPConfirmation)
-                    continue;
+            if (columnToTimepoint.count(colName) && (tokens[i] == "1" || tokens[i] == "2")) {
+                Timepoint tp = columnToTimepoint.at(colName);
                 
-                // Determine ARG resistance type (e.g., Drugs, Metals, Biocides)
-                auto resistanceIt = argResistanceMap.find(argID);
-                if (resistanceIt != argResistanceMap.end()) {
-                    argResistance = resistanceIt->second;
-                }
-                // Skip metals and biocides if requested
-                if (excludeMetals && argResistance != "Drugs") {
-                    continue;
-                }
+                bool requiresSNPConfirmation = argIDSNPConfirmation.count(argID) ? argIDSNPConfirmation.at(argID) : false;
+                if (includeSNPConfirmationARGs && requiresSNPConfirmation) continue;
+                
+                std::string argResistance = argResistanceMap.count(argID) ? argResistanceMap.at(argID) : "Unknown";
+                if (excludeMetals && argResistance != "Drugs") continue;
 
                 Node argNode = {argID, true, tp, requiresSNPConfirmation};
                 Node mgeNode = {mgeID, false, tp, false};
@@ -124,7 +124,6 @@ void parseData(const std::filesystem::path& filename, Graph& graph, bool include
  * @param graph The graph to which temporal edges will be added.
  */
 void addTemporalEdges(Graph& graph) {
-    // Reconstruct which nodes belong to which patient from the colocalization edges.
     std::map<int, std::set<Node>> nodesByPatient;
     for (const auto& edge : graph.edges) {
         if (!edge.isColo) continue;
@@ -134,25 +133,18 @@ void addTemporalEdges(Graph& graph) {
         }
     }
 
-    // For each patient, create their temporal edges.
     for (const auto& [patientID, nodeSet] : nodesByPatient) {
-        // Group nodes for this specific patient by their ID and type (ARG/MGE).
         std::unordered_map<std::pair<int, bool>, std::vector<Node>> groupedNodes;
         for (const Node& node : nodeSet) {
             groupedNodes[{node.id, node.isARG}].push_back(node);
         }
 
-        // For each gene group within this patient, sort by time and create chronological edges.
         for (auto const& [key, nodeGroup] : groupedNodes) {
-            auto nodes = nodeGroup; // Make a mutable copy
-
+            auto nodes = nodeGroup;
             std::sort(nodes.begin(), nodes.end());
-
-            // Create edges between consecutive timepoints.
             for (size_t i = 0; i < nodes.size() - 1; ++i) {
                 const Node& sourceNode = nodes[i];
                 const Node& targetNode = nodes[i + 1];
-                // Add a non-colocalization edge
                 addEdge(graph, sourceNode, targetNode, false, -1);
             }
         }

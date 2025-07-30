@@ -18,10 +18,19 @@ fs::path data_file = "data/patientwise_colocalization_by_timepoint.csv";
 
 int main() {
     Graph g;
-    // parse the data file and construct the graph (true to exclude ARGs requiring SNP confirmation, true to exclude metals)
-    parseData(data_file, g, true, false); 
-    addTemporalEdges(g);  
+    std::map<int, std::string> patientToDiseaseMap;
     
+    // parse the data file and construct the graph (true to exclude ARGs requiring SNP confirmation, true to exclude metals)
+    parseData(data_file, g, patientToDiseaseMap, true, true); 
+    addTemporalEdges(g);  
+
+    Graph rCDI = filterGraphByDisease(g, "rCDI", patientToDiseaseMap);
+    exportToDot(rCDI, "rcdi.dot");
+    Graph melanoma = filterGraphByDisease(g, "Melanoma", patientToDiseaseMap);
+    exportToDot(melanoma, "melanoma.dot");
+    Graph mdrb = filterGraphByDisease(g, "MDRB", patientToDiseaseMap);
+    exportToDot(mdrb, "mdrb.dot");
+
     std::unordered_map<Node, std::unordered_set<Node>> adjacency;
     buildAdjacency(g, adjacency);
 
@@ -35,8 +44,14 @@ int main() {
     std::cout << "Total edges: " << g.edges.size() << "\n";
     std::cout << "Adjacency list size: " << adjacency.size() << " nodes.\n";
 
-   
-     /******************************** Traversal of Graph  ***********************************/
+
+    exportToDot(g, "graph_output.dot", false);
+    Graph sub = filterGraphByARGName(g, "A16S");
+    exportToDot(sub, "A16S_subgraph.dot");
+
+ 
+    
+     /******************************** Traversal of Graph  ************************************/
     std::map<std::pair<int, int>, std::multiset<Timepoint>> colocalizationTimeline;
     traverseAdjacency(g, adjacency, colocalizationTimeline);
     std::cout << "No of unique colocalizations: " << colocalizationTimeline.size() << "\n";
@@ -89,8 +104,7 @@ int main() {
     //     std::cout << "MGE: " << getMGEName(id) << ", Count: " << count << "\n";
     // }  
 
-    // getTopARGMGEPairsByFrequencyWODonor(colocalizationByIndividual, 10); // Top 10 ARG-MGE pairs by frequency
-
+    getTopARGMGEPairsByFrequency(colocalizationByIndividual, 10); // Top 10 ARG-MGE pairs by frequency
 
     /************************************* Graph Visualization ***********************************/
 
@@ -106,7 +120,6 @@ int main() {
     Graph sub4 = filterGraphByTimepoint(g, "donor");
     exportToDot(sub4, "donor.dot");
     exportToDot(g, "graph.dot");
-
 
 
 

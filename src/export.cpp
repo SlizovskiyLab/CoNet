@@ -23,9 +23,13 @@ std::string getNodeLabel(const Node& node) {
 
 std::string getTimepointColor(const Timepoint& tp) {
     int timeValue = static_cast<int>(tp);
-    if (timeValue == 1000) return "yellow";
-    if (timeValue == 0)  return "deepskyblue";
-    return "green";
+    if (timeValue == 1000) return "\"yellow\"";
+    if (timeValue == 0)  return "\"red\"";
+    // Updated blue shades for a more cohesive look
+    if (timeValue > 0 && timeValue < 31) return "\"#6495ED\"";   // Cornflower Blue
+    if (timeValue > 30 && timeValue < 61) return "\"#4169E1\"";  // Royal Blue
+    if (timeValue > 60) return "\"#1E90FF\"";   // Dodger Blue
+    return "\"green\""; // Fallback for any unexpected values
 }
 
 bool isTemporalEdge(const Edge& edge) {
@@ -103,12 +107,13 @@ void exportToDot(const Graph& g, const std::string& filename, bool showLabels) {
             }
             processedColoEdges.insert(canonical_pair);
 
-            color = "\"#0000FF\""; // Blue for colocalization
+            color = "\"#696969\""; // Dark Gray for colocalization
             style = "solid";
-            extraAttributes = "dir=both";
+            extraAttributes = "dir=both, penwidth=5.0"; // Made colocalization edges thicker
 
         } else if (isTemporalEdge(edge)) {
-            style = "dashed"; // Style is always dashed for temporal edges
+            style = "dashed";
+            extraAttributes = "penwidth=5.0"; // Make temporal edges thicker
             
             Timepoint src_tp = edge.source.timepoint;
             Timepoint tgt_tp = edge.target.timepoint;
@@ -117,19 +122,18 @@ void exportToDot(const Graph& g, const std::string& filename, bool showLabels) {
             bool tgt_is_post = (tgt_tp != Timepoint::Donor && tgt_tp != Timepoint::PreFMT);
 
             if (src_tp == Timepoint::Donor && tgt_tp == Timepoint::PreFMT) {
-                color = "\"orange\"";      // Donor -> Pre
+                color =  "\"#006400\"";     // Donor -> Pre
             } else if (src_tp == Timepoint::Donor && tgt_is_post) {
-                color = "\"purple\"";      // Donor -> Post
+                color = "\"#4B0082\"";      // Darker Purple (Indigo) for Donor -> Post
             } else if (src_tp == Timepoint::PreFMT && tgt_is_post) {
-                color = "\"brown\"";        // Pre -> Post
+                color = "\"orange\"";      // Orange for Pre -> Post
             } else if (src_is_post && tgt_is_post) {
-                color = "\"#FF0000\"";     // Post -> Post (original red)
+                color = "\"black\"";       // Black for Post -> Post
             } else {
-                color = "\"#FF0000\"";     // Fallback to red for any other temporal case
+                color = "\"black\"";       // Fallback to black for any other temporal case
             }
             
         } else {
-            // This case should ideally not be hit with current logic
             color = "\"#808080\"";
             style = "solid";
         }
