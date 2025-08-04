@@ -2,6 +2,7 @@
 #include <string>
 #include <unordered_set>
 #include <set>
+#include <map>
 #include <utility>
 #include <algorithm>
 #include "graph.h"
@@ -38,6 +39,13 @@ bool isTemporalEdge(const Edge& edge) {
            edge.source.timepoint != edge.target.timepoint;
 }
 
+auto timepointOrder = [](Timepoint tp) -> int {
+    if (tp == Timepoint::Donor) return -1;       // Donor comes first
+    if (tp == Timepoint::PreFMT) return 0;       // PreFMT next
+    return static_cast<int>(tp);                 // PostFMT keeps numeric order
+};
+
+
 std::string getMGEGroupShape(const std::string& groupName) {
     if (groupName == "plasmid" || groupName == "Colicin_plasmid" || groupName == "Inc_plasmid") {
         return "diamond";
@@ -64,6 +72,7 @@ void exportToDot(const Graph& g, const std::string& filename, bool showLabels) {
     std::ofstream file(filename);
     file << "digraph G {\n";
     file << "  layout=sfdp;\n";
+    file << "  graph [nodesep=2.0, ranksep=2.0, overlap=false];\n";
     file << "  node [style=filled];\n";
 
     std::unordered_set<Node> active_nodes;
@@ -152,3 +161,107 @@ void exportToDot(const Graph& g, const std::string& filename, bool showLabels) {
 
     file << "}\n";
 }
+
+
+void exportParentTemporalGraphDot(const Graph& g, const std::string& filename, bool showLabels) {
+    std::ofstream file(filename);
+    file << "digraph ParentTemporalGraph {\n";
+    file << "  rankdir=LR;\n"; // Left to Right layout
+    file << "  graph [nodesep=2.0, ranksep=2.0, overlap=false];\n";
+    file << "  edge [splines=true, minlen=2, arrowsize=0.6, penwidth=2];\n";
+    if (showLabels) {
+        file << "  label=\"Parent Temporal Graph\";\n";
+    } else {
+        file << "  label=\"\";\n"; // No label if showLabels is false
+    }
+    file << "  layout=sfdp;\n";
+    file << "  node [style=filled];\n";
+
+    struct ParentNodeInfo {
+        std::string name;
+        Timepoint tp;
+    };
+
+    int colocCounter = 0;
+    std::map<std::pair<int,int>, std::vector<ParentNodeInfo>> colocMap;
+    std::map<std::tuple<int,int,Timepoint>, std::string> uniqueParents;
+
+    // --- Create parent nodes ---
+    for (const Edge& edge : g.edges) {
+        if (edge.isColo) {
+            const Node& argNode = edge.source.isARG ? edge.source : edge.target;
+            const Node& mgeNode = edge.source.isARG ? edge.target : edge.source;
+
+            int argId = argNode.id;
+            int mgeId = mgeNode.id;
+            Timepoint tp = argNode.timepoint;
+
+            auto uniqueKey = std::make_tuple(argId, mgeId, tp);
+
+            // Avoid duplicate parent nodes
+            if (!uniqueParents.count(uniqueKey)) {
+                std::string colocName = "Parent_" + std::to_string(++colocCounter);
+                uniqueParents[uniqueKey] = colocName;
+
+                // Color and shape
+                std::string color = getTimepointColor(argNode.timepoint);
+                std::string groupName = getMGEGroupName(mgeId);
+                std::string shape = getMGEGroupShape(groupName);
+                std::string label = getARGName(argId) + "\n" + getMGENameForLabel(mgeId) 
+                                    + "\n" + toString(tp);
+
+                // Write node
+                file << "  \"" << colocName << "\" [label=\"" << label
+                     << "\", shape=" << shape
+                     << ", fixedsize=true, width=0.6, height=0.6, fillcolor="
+                     << color << "];\n";
+            }
+
+            auto pairKey = std::make_pair(argId, mgeId);
+            colocMap[pairKey].push_back({uniqueParents[uniqueKey], tp});
+        }
+    }
+
+    // --- Draw temporal edges for each ARG–MGE pair ---
+    for (auto& entry : colocMap) {
+    auto& parentNodes = entry.second;
+
+    // Custom sort: Donor → PreFMT → PostFMT
+    std::sort(parentNodes.begin(), parentNodes.end(), [&](const ParentNodeInfo& a, const ParentNodeInfo& b) {
+        return timepointOrder(a.tp) < timepointOrder(b.tp);
+    });
+
+    // Connect consecutive temporal edges
+    for (size_t i = 0; i + 1 < parentNodes.size(); ++i) {
+        if (parentNodes[i].tp == parentNodes[i + 1].tp ||
+            parentNodes[i].name == parentNodes[i + 1].name) {
+            continue; // skip self or same timepoint
+        }
+
+        Timepoint src_tp = parentNodes[i].tp;
+        Timepoint tgt_tp = parentNodes[i + 1].tp;
+
+        bool src_is_post = (src_tp != Timepoint::Donor && src_tp != Timepoint::PreFMT);
+        bool tgt_is_post = (tgt_tp != Timepoint::Donor && tgt_tp != Timepoint::PreFMT);
+
+        std::string color;
+        if (src_tp == Timepoint::Donor && tgt_tp == Timepoint::PreFMT) {
+            color = "\"#006400\"";
+        } else if (src_tp == Timepoint::Donor && tgt_is_post) {
+            color = "\"#4B0082\"";
+        } else if (src_tp == Timepoint::PreFMT && tgt_is_post) {
+            color = "\"orange\"";
+        } else if (src_is_post && tgt_is_post) {
+            color = "\"black\"";
+        } else {
+            color = "\"black\"";
+        }
+
+        file << "  \"" << parentNodes[i].name << "\" -> \"" << parentNodes[i + 1].name
+             << "\" [style=dashed, color=" << color
+             << ", penwidth=5.0];\n";
+    }
+}
+file << "}\n";
+}
+
