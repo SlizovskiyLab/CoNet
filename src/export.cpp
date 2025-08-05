@@ -27,9 +27,9 @@ std::string getTimepointColor(const Timepoint& tp) {
     if (timeValue == 1000) return "\"yellow\"";
     if (timeValue == 0)  return "\"red\"";
     // Updated blue shades for a more cohesive look
-    if (timeValue > 0 && timeValue < 31) return "\"#6495ED\"";   // Cornflower Blue
-    if (timeValue > 30 && timeValue < 61) return "\"#4169E1\"";  // Royal Blue
-    if (timeValue > 60) return "\"#1E90FF\"";   // Dodger Blue
+    if (timeValue > 0 && timeValue < 31) return "\"#ADD8E6\"";   // Light Blue
+    if (timeValue > 30 && timeValue < 61) return "\"#4682B4\"";  // Steel Blue
+    if (timeValue > 60) return "\"#4169E1\"";   // Dodger Blue
     return "\"green\""; // Fallback for any unexpected values
 }
 
