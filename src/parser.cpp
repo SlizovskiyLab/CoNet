@@ -14,21 +14,32 @@
 /* Read input files (CSV), extract (individual, ARG, MGE, timepoint) data */
 
 void addEdge(Graph& graph, const Node& src, const Node& tgt, bool isColo, int patientID) {
-    Edge edge = {src, tgt, isColo};
-    if (isColo && patientID != -1) {
-        edge.individuals.insert(patientID);
-    }
+    if (isColo) {
+        Node s = std::min(src, tgt);
+        Node t = std::max(src, tgt);
+        Edge search_edge = {s, t, true};
 
-    auto it = graph.edges.find(edge);
-    if (it != graph.edges.end() && isColo && patientID != -1) {
-        const_cast<Edge&>(*it).individuals.insert(patientID);
+        auto it = graph.edges.find(search_edge);
+        if (it != graph.edges.end()) {
+            Edge modified_edge = *it;
+            graph.edges.erase(it);
+            if (patientID != -1) modified_edge.individuals.insert(patientID);
+            graph.edges.insert(modified_edge);
+        } else {
+            if (patientID != -1) search_edge.individuals.insert(patientID);
+            graph.edges.insert(search_edge);
+        }
     } else {
-        graph.edges.insert(edge);
-        if (isColo) {
-            // Ensure reverse edge is also inserted for bidirectional colocalization
-            Edge reverseEdge = {tgt, src, true};
-            if (patientID != -1) reverseEdge.individuals.insert(patientID);
-            graph.edges.insert(reverseEdge);
+        Edge search_edge = {src, tgt, false};
+        auto it = graph.edges.find(search_edge);
+        if (it != graph.edges.end()) {
+            Edge modified_edge = *it;
+            graph.edges.erase(it);
+            modified_edge.weight++;
+            graph.edges.insert(modified_edge);
+        } else {
+            search_edge.weight = 1;
+            graph.edges.insert(search_edge);
         }
     }
 }

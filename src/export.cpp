@@ -72,7 +72,6 @@ void exportToDot(const Graph& g, const std::string& filename, bool showLabels) {
     std::ofstream file(filename);
     file << "digraph G {\n";
     file << "  layout=sfdp;\n";
-    file << "  graph [nodesep=2.0, ranksep=2.0, overlap=false];\n";
     file << "  node [style=filled];\n";
 
     std::unordered_set<Node> active_nodes;
@@ -108,6 +107,7 @@ void exportToDot(const Graph& g, const std::string& filename, bool showLabels) {
         std::string color;
         std::string style;
         std::string extraAttributes;
+        double penwidth = 4.0; 
 
         if (edge.isColo) {
             auto canonical_pair = std::minmax(edge.source, edge.target);
@@ -116,13 +116,20 @@ void exportToDot(const Graph& g, const std::string& filename, bool showLabels) {
             }
             processedColoEdges.insert(canonical_pair);
 
-            color = "\"#696969\""; // Dark Gray for colocalization
+            color = "\"#696969\"";
             style = "solid";
-            extraAttributes = "dir=both, penwidth=5.0"; // Made colocalization edges thicker
+            double count = edge.individuals.size();
+            if (count > 1) {
+                penwidth = 4.0 + (count - 1) * 2.0;
+            }
+            extraAttributes = "dir=both";
 
         } else if (isTemporalEdge(edge)) {
             style = "dashed";
-            extraAttributes = "penwidth=5.0"; // Make temporal edges thicker
+            double count = edge.weight;
+            if (count > 1) {
+                penwidth = 4.0 + (count - 1) * 2.0;
+            }
             
             Timepoint src_tp = edge.source.timepoint;
             Timepoint tgt_tp = edge.target.timepoint;
@@ -131,15 +138,15 @@ void exportToDot(const Graph& g, const std::string& filename, bool showLabels) {
             bool tgt_is_post = (tgt_tp != Timepoint::Donor && tgt_tp != Timepoint::PreFMT);
 
             if (src_tp == Timepoint::Donor && tgt_tp == Timepoint::PreFMT) {
-                color =  "\"#006400\"";     // Donor -> Pre
+                color =  "\"#006400\"";
             } else if (src_tp == Timepoint::Donor && tgt_is_post) {
-                color = "\"#4B0082\"";      // Darker Purple (Indigo) for Donor -> Post
+                color = "\"#4B0082\"";
             } else if (src_tp == Timepoint::PreFMT && tgt_is_post) {
-                color = "\"orange\"";      // Orange for Pre -> Post
+                color = "\"orange\"";
             } else if (src_is_post && tgt_is_post) {
-                color = "\"black\"";       // Black for Post -> Post
+                color = "\"black\"";
             } else {
-                color = "\"black\"";       // Fallback to black for any other temporal case
+                color = "\"black\"";
             }
             
         } else {
@@ -150,7 +157,8 @@ void exportToDot(const Graph& g, const std::string& filename, bool showLabels) {
         file << "  " << sourceName << " -> " << targetName
              << " [style=" << style
              << ", color=" << color
-             << ", arrowsize=0.3";
+             << ", arrowsize=0.3"
+             << ", penwidth=" << penwidth;
 
         if (!extraAttributes.empty()) {
             file << ", " << extraAttributes;
