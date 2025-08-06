@@ -72,6 +72,7 @@ void exportToDot(const Graph& g, const std::string& filename, bool showLabels) {
     std::ofstream file(filename);
     file << "digraph G {\n";
     file << "  layout=sfdp;\n";
+    file << "  graph [nodesep=2.0, ranksep=2.0, overlap=false];\n";
     file << "  node [style=filled];\n";
 
     std::unordered_set<Node> active_nodes;
