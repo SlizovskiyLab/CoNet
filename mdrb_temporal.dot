@@ -1,0 +1,4294 @@
+digraph ParentTemporalGraph {
+  rankdir=LR;
+  graph [nodesep=2.0, ranksep=2.0, overlap=false];
+  edge [splines=true, minlen=2, arrowsize=0.6, penwidth=2];
+  label="Parent Temporal Graph";
+  layout=sfdp;
+  node [style=filled];
+  "Parent_1" [label="AAC3
+Meso_4375
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_2" [label="AAC3
+ISStma19
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_3" [label="AAC3
+pC15-1a_014
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_4" [label="AAC3
+OANT_RS23200
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_5" [label="AAC3
+Meso_4375
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_6" [label="AAC3
+pCTX-M3_077
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_7" [label="AAC3
+ISHati3
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_8" [label="AAC3
+ISNoc2
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_9" [label="AAC3
+ISStma19
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_10" [label="AAC3
+pC15-1a_014
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_11" [label="AAC3
+gene:plasmid:158830
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_12" [label="AAC3
+OANT_RS23200
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_13" [label="AAC6-PRIME
+ISAoba1
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_14" [label="AAC6-PRIME
+ISSfl3
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_15" [label="AAC6-PRIME
+EF_RS16420
+donor", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_16" [label="AAC6-PRIME
+ISCb4
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_17" [label="AAC6-PRIME
+SERP1587
+donor", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_18" [label="AAC6-PRIME
+gene:plasmid:13101
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_19" [label="AAC6-PRIME
+ISLdr1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_20" [label="AAC6-PRIME
+SERP1584
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_21" [label="AAC6-PRIME
+pli0049
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_22" [label="AAC6-PRIME
+ISLdr1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_23" [label="ACRA
+gene:vir:1321
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_24" [label="ACRD
+ISSph13
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_25" [label="ACRD
+gene:proph:182641
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_26" [label="ACRD
+gene:proph:183583
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_27" [label="ACRD
+gene:proph:184644
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_28" [label="ACRD
+gene:vir:7156
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_29" [label="ACRS
+ISLjo2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_30" [label="AMPH
+ISOpb2
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_31" [label="AMPH
+ISFba4
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_32" [label="AMPH
+ISMmo2
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_33" [label="AMPH
+ISShes9
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_34" [label="AMPH
+ISMgi3
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_35" [label="ANT6
+ISAoba1
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_36" [label="ANT6
+ISSfl3
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_37" [label="ANT6
+ISCb4
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_38" [label="ANT6
+IS1221A
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_39" [label="ANT6
+Tn5403
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_40" [label="ANT6
+pRUM_p20
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_41" [label="APH3-PRIME
+ISArsp14
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_42" [label="APH3-PRIME
+ISAzs36
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_43" [label="APH3-PRIME
+ISPpu35
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_44" [label="APH3-PRIME
+ISSpu12
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_45" [label="APH3-PRIME
+ISHko1
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_46" [label="APH3-PRIME
+TnXax1
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_47" [label="APH3-PRIME
+ISKpn66
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_48" [label="APH3-PRIME
+ISNme5
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_49" [label="APH3-PRIME
+ISLasa2
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_50" [label="APH3-PRIME
+ISAzs9
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_51" [label="APH3-PRIME
+ISSfl1
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_52" [label="APH3-PRIME
+ISWpi16
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_53" [label="APH3-PRIME
+ISBli29
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_54" [label="APH3-PRIME
+ISHti4
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_55" [label="APH6
+ISAli15
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_56" [label="ARIR
+ISLisp1
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_57" [label="ARIR
+ISVisp4
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_58" [label="ARIR
+ISEch6
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_59" [label="ARIR
+ISAcde2
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_60" [label="ARIR
+ISPpu36
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_61" [label="ARIR
+ISMno8
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_62" [label="ARIR
+ISAcp1
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_63" [label="ARIR
+ISPye2
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_64" [label="ARIR
+ISHaar1
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_65" [label="ARIR
+ISRssp2
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_66" [label="ARIR
+gene:proph:177632
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_67" [label="ARIR
+gene:proph:177685
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_68" [label="ARIR
+gene:proph:177696
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_69" [label="ARIR
+gene:proph:183637
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_70" [label="ARIR
+gene:vir:93595
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_71" [label="ARIR
+gene:vir:93604
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_72" [label="ARNT
+ISAcba1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_73" [label="ARR
+O2R_110
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_74" [label="ARR
+SNSL254_pSN254_0142
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_75" [label="ARSBM
+ISLla3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_76" [label="ARSBM
+ISNamo16
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_77" [label="ARSBM
+ISCfr27
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_78" [label="ARSCM
+ISAli13
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_79" [label="ARSCM
+ISPye8
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_80" [label="ARSCM
+ISPko6
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_81" [label="ARSCM
+ISAli13
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_82" [label="ARSCM
+ISPa33
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_83" [label="ARSP
+ISWosp5
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_84" [label="ARSRM
+SNSL254_pSN254_0142
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_85" [label="ARSRM
+ISWpi1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_86" [label="ARSRM
+ISHam1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_87" [label="ARSRM
+ISAzs20
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_88" [label="ARSRM
+ISDpr9
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_89" [label="ARSRM
+ISSph3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_90" [label="ARSRM
+KPN_pKPN3p05930
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_91" [label="ARSRM
+KPN_pKPN3p05931
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_92" [label="ARSRM
+ISVisp7
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_93" [label="ARSRM
+IS1151
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_94" [label="ARSRM
+IS607
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_95" [label="ARSRM
+KPN_pKPN3p05963
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_96" [label="ARSRM
+ISLsa2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_97" [label="ARSRM
+ISUnCu20
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_98" [label="ARSRM
+KPN_pKPN3p05896
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_99" [label="ARSRM
+ISApr2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_100" [label="ARSRM
+KPN_pKPN3p05906
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_101" [label="ARSRM
+ISDpr6
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_102" [label="ARSRM
+ISGsu3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_103" [label="ARSRM
+ISCku10
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_104" [label="ARSRM
+ISMbov6
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_105" [label="ARSRM
+ISCla1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_106" [label="ARSRM
+ISMbov5
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_107" [label="ARSRM
+TnXo19
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_108" [label="ARSRM
+MITEHhi1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_109" [label="ARSRM
+ISSma22
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_110" [label="ARSRM
+ISKpn33
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_111" [label="ARSRM
+ISCud1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_112" [label="ARSRM
+ISSod2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_113" [label="ARSRM
+ISAzs17
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_114" [label="ARSRM
+EcE24377A_0815
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_115" [label="ARSRM
+ISKpn33
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_116" [label="ARSRM
+MITEHhi1
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_117" [label="ARSRM
+ISSma22
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_118" [label="ARSRM
+ISKpn33
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_119" [label="ARSRM
+ISCARN78
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_120" [label="ARSRM
+gene:plasmid:24694
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_121" [label="ARSRM
+ISKpn33
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_122" [label="ASMA
+ISBph1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_123" [label="ASMA
+ISAasp1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_124" [label="ASMA
+ISHph1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_125" [label="ASMA
+ISSph3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_126" [label="ASMA
+ISRpa10
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_127" [label="ASMA
+ISRso12
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_128" [label="ASMA
+ISPvu1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_129" [label="ASMA
+ISBmo1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_130" [label="ASMA
+ISRe46
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_131" [label="ASMA
+ISPpu27
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_132" [label="ASMA
+IS1595
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_133" [label="ASMA
+gene:proph:176848
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_134" [label="ASMA
+gene:proph:181234
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_135" [label="ASMA
+gene:vir:105390
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_136" [label="ASMA
+gene:vir:1919
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_137" [label="ASMA
+gene:vir:1921
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_138" [label="ASMA
+gene:vir:213
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_139" [label="ASMA
+gene:vir:219
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_140" [label="ASR
+gene:proph:183581
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_141" [label="ASR
+ISPar1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_142" [label="ASR
+ISUnCu2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_143" [label="ASR
+ISNoc2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_144" [label="ASR
+ISAzs17
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_145" [label="ASR
+ISYal1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_146" [label="ASR
+ISBthe4
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_147" [label="ASR
+ISNiba2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_148" [label="ASR
+ISPna2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_149" [label="ASR
+ISPpu27
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_150" [label="ASR
+ISPa108
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_151" [label="ASR
+ISSma17
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_152" [label="ASR
+ISAcc2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_153" [label="ASR
+ISCfr27
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_154" [label="ASR
+ISDsp4
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_155" [label="ASR
+ISNov1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_156" [label="ASR
+ISLpn9
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_157" [label="ASR
+ISDsba2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_158" [label="ASR
+ISPrst3
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_159" [label="ASR
+ISTrsp1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_160" [label="ASR
+ISBth14
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_161" [label="ASR
+ISArsp6
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_162" [label="ASR
+gene:proph:176845
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_163" [label="ASR
+gene:proph:176861
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_164" [label="ASR
+gene:proph:176866
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_165" [label="ASR
+gene:proph:177426
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_166" [label="ASR
+gene:proph:177429
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_167" [label="ASR
+gene:proph:181267
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_168" [label="ASR
+gene:proph:181272
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_169" [label="ASR
+gene:proph:181284
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_170" [label="ASR
+gene:proph:182994
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_171" [label="ASR
+gene:proph:183007
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_172" [label="ASR
+gene:proph:183581
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_173" [label="ASR
+gene:proph:183626
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_174" [label="ASR
+gene:proph:183629
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_175" [label="ASR
+gene:proph:184990
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_176" [label="ASR
+gene:vir:105371
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_177" [label="ASR
+gene:vir:105430
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_178" [label="ASR
+gene:vir:105726
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_179" [label="ASR
+gene:vir:105727
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_180" [label="ASR
+gene:vir:105728
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_181" [label="ASR
+gene:vir:150
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_182" [label="ASR
+gene:vir:151
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_183" [label="ASR
+gene:vir:154
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_184" [label="ASR
+gene:vir:236
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_185" [label="ASR
+gene:vir:243
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_186" [label="ASR
+gene:vir:3474
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_187" [label="BLA1
+ISLiv1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_188" [label="BLA1
+ISTte3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_189" [label="BLA1
+ISSphsp18
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_190" [label="BLA1
+ISCARN98
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_191" [label="BLAEC
+ISBuhy1
+post_180", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0e0ecbff"];
+  "Parent_192" [label="BLAZ
+IS231T
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_193" [label="CATA
+ISWpi2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_194" [label="CATA
+ISAcsp6
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_195" [label="CATA
+ISCbt4
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_196" [label="CATA
+ISAcsp6
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_197" [label="CATA
+ISWpi2
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_198" [label="CATA
+ISCbt4
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_199" [label="CATA
+ISAcsp6
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_200" [label="CFX
+ISNwi4
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_201" [label="CFX
+ISNwi4
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_202" [label="CFX
+ISEnfa7
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_203" [label="CFX
+ISSeq2
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_204" [label="CFX
+ISSta1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_205" [label="CFX
+ISPsy20
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_206" [label="CFX
+ISGvi4
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_207" [label="CFX
+ISSth1b
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_208" [label="CFX
+ISMac9
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_209" [label="CFX
+ISOmba1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_210" [label="CFX
+TnBth2
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_211" [label="CFX
+ISCku3
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_212" [label="CFX
+ISVgsp1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_213" [label="CFX
+ISHahy3
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_214" [label="CFX
+ISTfo1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_215" [label="CFX
+ISAasp1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_216" [label="CFX
+IS30D
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_217" [label="CFX
+ISNiba3
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_218" [label="CFX
+ISPph3
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_219" [label="CFX
+ISSwo1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_220" [label="CFX
+TnBth2
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_221" [label="CFX
+ISNamo8
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_222" [label="CFX
+ISNwi4
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_223" [label="CFX
+ISNwi4
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_224" [label="CFX
+ISPst2
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_225" [label="CFX
+ISNwi4
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_226" [label="CFX
+ISNwi4
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_227" [label="CFX
+ISNwi4
+post_180", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0e0ecbff"];
+  "Parent_228" [label="CMY
+ISPsy37
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_229" [label="CMY
+ISNma19
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_230" [label="CMY
+ISNvsp1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_231" [label="CMY
+ISCARN102
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_232" [label="CMY
+ISArsp6
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_233" [label="CMY
+ISFba4
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_234" [label="CMY
+ISAzo13
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_235" [label="CMY
+ISMno26
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_236" [label="CMY
+ISAlw14
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_237" [label="CMY
+ISVei2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_238" [label="CMY
+pCTX-M3_004
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_239" [label="CMY
+ISPein1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_240" [label="CMY
+ISSma10
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_241" [label="CMY
+ISSm3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_242" [label="CMY
+ISKpn64
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_243" [label="CMY
+ISMasp7
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_244" [label="CMY
+ISHje2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_245" [label="CMY
+ISPsy43
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_246" [label="CMY
+ISGba3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_247" [label="CMY
+ISAjo1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_248" [label="CMY
+ISAri1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_249" [label="CMY
+ISUnCu10
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_250" [label="CMY
+IS120
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_251" [label="CMY
+ISNfl1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_252" [label="CMY
+ISCasp2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_253" [label="CMY
+ISSusp4
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_254" [label="CMY
+ISAs16
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_255" [label="CMY
+ISLead2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_256" [label="CMY
+ISPye13
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_257" [label="CMY
+ISRm10-1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_258" [label="CMY
+ISTna1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_259" [label="CMY
+ISSysp4
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_260" [label="CMY
+ISArsp16
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_261" [label="CMY
+ISCausp3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_262" [label="CMY
+ISAlw22
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_263" [label="CMY
+ISEcret7
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_264" [label="CMY
+ISRta3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_265" [label="CMY
+ISCac2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_266" [label="CMY
+ISChba4
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_267" [label="CMY
+ISMbu2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_268" [label="CMY
+ISPa159
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_269" [label="CMY
+ISMaq1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_270" [label="CMY
+ISAli3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_271" [label="CMY
+ISNma21
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_272" [label="CMY
+ISEce1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_273" [label="CMY
+ISAs10
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_274" [label="CMY
+ISBce15
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_275" [label="CMY
+ISShdy4
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_276" [label="CMY
+ISHar3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_277" [label="CMY
+ISPye26
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_278" [label="CMY
+ISTsu2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_279" [label="CMY
+ISAeca3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_280" [label="CMY
+ISHwa17
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_281" [label="CMY
+ISTeha3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_282" [label="CMY
+SC108
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_283" [label="CMY
+ISAeme17
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_284" [label="CMY
+ISKmi4
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_285" [label="CMY
+ISPko4
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_286" [label="CMY
+ISCte5
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_287" [label="CMY
+ISMex43
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_288" [label="CMY
+ISMex43
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_289" [label="CMY
+ISLil1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_290" [label="CMY
+ISTsu2
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_291" [label="CMY
+ISAfe4
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_292" [label="CMY
+ISAnba1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_293" [label="CMY
+ISDes1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_294" [label="CMY
+ISHaha2
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_295" [label="CMY
+ISPa43
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_296" [label="CMY
+ISHam2
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_297" [label="CMY
+ISCco3
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_298" [label="CMY
+ISLmo10
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_299" [label="CMY
+ISMahy8
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_300" [label="CMY
+TnXo19
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_301" [label="CMY
+ISRor6
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_302" [label="CMY
+gene:plasmid:19408
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_303" [label="CMY
+gene:plasmid:19409
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_304" [label="CMY
+gene:plasmid:19506
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_305" [label="CMY
+gene:plasmid:24721
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_306" [label="CMY
+ISNg1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_307" [label="CMY
+EcE24377A_1758
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_308" [label="CMY
+EcE24377A_1757
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_309" [label="CMY
+EcE24377A_1759
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_310" [label="CMY
+IS1549
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_311" [label="CMY
+ISPsy35
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_312" [label="CMY
+pCTX-M3_004
+post_042", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_313" [label="CMY
+ISMasp7
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_314" [label="CMY
+ISCARN102
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_315" [label="CMY
+ISHje2
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_316" [label="CMY
+ISPsy43
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_317" [label="CMY
+ISAjo1
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_318" [label="CMY
+ISUnCu10
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_319" [label="CMY
+IS120
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_320" [label="CMY
+ISCasp2
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_321" [label="CMY
+ISAs16
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_322" [label="CMY
+ISSphsp20
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_323" [label="CMY
+ISRor8
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_324" [label="CMY
+ISPye13
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_325" [label="CMY
+ISRm10-1
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_326" [label="CMY
+ISSysp4
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_327" [label="CMY
+ISRta3
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_328" [label="CMY
+ISCac2
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_329" [label="CMY
+ISChba4
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_330" [label="CMY
+ISPa159
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_331" [label="CMY
+ISMaq1
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_332" [label="CMY
+ISAli3
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_333" [label="CMY
+ISNma21
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_334" [label="CMY
+ISEce1
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_335" [label="CMY
+ISBce15
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_336" [label="CMY
+ISHar3
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_337" [label="CMY
+ISTsu2
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_338" [label="COMR
+ISSusp1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_339" [label="COMR
+ISCrsp1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_340" [label="COMR
+ISVisp4
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_341" [label="COMR
+ISEch6
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_342" [label="COMR
+ISAcde2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_343" [label="COMR
+ISPpu36
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_344" [label="COMR
+ISMno8
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_345" [label="COMR
+ISAcp1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_346" [label="COMR
+ISPye2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_347" [label="COMR
+ISHaar1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_348" [label="COMR
+IS1550
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_349" [label="COMR
+ISNpu10
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_350" [label="COMR
+ISCARN1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_351" [label="COMR
+ISLbp4
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_352" [label="COMR
+gene:proph:181166
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_353" [label="COMR
+gene:proph:181167
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_354" [label="COMR
+gene:proph:181222
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_355" [label="COMR
+gene:vir:104422
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_356" [label="COMR
+gene:vir:108544
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_357" [label="COMR
+gene:vir:108716
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_358" [label="COMR
+gene:vir:2884
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_359" [label="COMR
+gene:vir:3271
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_360" [label="COMR
+gene:vir:3472
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_361" [label="COPA
+ISFba4
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_362" [label="COPA
+ISMmo2
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_363" [label="COPA
+ISShes9
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_364" [label="COPA
+ISMgi3
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_365" [label="COPA
+ISKpn74
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_366" [label="COPA
+ISArsp11
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_367" [label="COPA
+ISGsu3
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_368" [label="COPA
+gene:proph:179475
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_369" [label="COPA
+gene:proph:179476
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_370" [label="COPA
+gene:proph:179478
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_371" [label="COPA
+gene:proph:179486
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_372" [label="COPA
+gene:proph:181087
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_373" [label="COPA
+gene:proph:181111
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_374" [label="COPA
+gene:proph:181113
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_375" [label="COPA
+gene:proph:181161
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_376" [label="COPA
+gene:vir:108544
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_377" [label="COPA
+gene:vir:4533
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_378" [label="COPA
+gene:vir:4534
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_379" [label="COPA
+gene:vir:4536
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_380" [label="COPA
+gene:vir:4537
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_381" [label="COPA
+gene:vir:4546
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_382" [label="COPA
+gene:vir:4547
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_383" [label="COPA
+ISMmo2
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_384" [label="COPA
+ISShes9
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_385" [label="COPA
+ISMgi3
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_386" [label="COPA
+ISPep1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_387" [label="COPA
+ISCARN1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_388" [label="COPA
+ISGbsp1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_389" [label="COPA
+ISFop4
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_390" [label="COPA
+gene:proph:179473
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_391" [label="COPA
+gene:proph:179486
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_392" [label="COPA
+gene:proph:181087
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_393" [label="COPA
+gene:proph:181113
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_394" [label="COPA
+gene:proph:181119
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_395" [label="COPA
+gene:proph:181170
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_396" [label="COPA
+gene:proph:181318
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_397" [label="COPA
+gene:proph:181322
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_398" [label="COPA
+gene:proph:181323
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_399" [label="COPA
+gene:proph:181324
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_400" [label="COPA
+gene:vir:166
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_401" [label="COPA
+gene:vir:167
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_402" [label="COPA
+gene:vir:4533
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_403" [label="COPA
+gene:vir:4534
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_404" [label="COPA
+gene:vir:4536
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_405" [label="COPA
+gene:vir:4537
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_406" [label="COPA
+gene:vir:4547
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_407" [label="CORA
+ISPein1
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_408" [label="CORA
+ISRo1
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_409" [label="CORA
+ISPein1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_410" [label="CORA
+ISRo1
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_411" [label="CORA
+ISCph11
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_412" [label="CORA
+ISLmo11
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_413" [label="CORA
+ISPlsp1
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_414" [label="CORA
+ISBrsp11
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_415" [label="CORA
+ISBuhy1
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_416" [label="CORA
+ISEc47
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_417" [label="CORA
+ISClsp4
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_418" [label="CORA
+ISCre2
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_419" [label="CORA
+ISAasp1
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_420" [label="CORA
+ISLiv3
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_421" [label="CORA
+ISCsp3
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_422" [label="CORA
+ISPein1
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_423" [label="CORB
+ISMme1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_424" [label="CORB
+IS1602
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_425" [label="CORB
+ISMhu4
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_426" [label="CORB
+ISLho1
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_427" [label="CORB
+ISAcur1
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_428" [label="CORB
+ISGaba1
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_429" [label="CORB
+SDY_2762
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_430" [label="CORB
+gene:proph:179474
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_431" [label="CORB
+gene:proph:181067
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_432" [label="CORB
+gene:proph:181068
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_433" [label="CORB
+gene:proph:181069
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_434" [label="CORB
+gene:proph:181070
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_435" [label="CORB
+gene:proph:181073
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_436" [label="CORB
+gene:proph:181074
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_437" [label="CORB
+gene:proph:181075
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_438" [label="CORB
+gene:proph:181076
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_439" [label="CORB
+gene:proph:181077
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_440" [label="CORB
+gene:proph:181078
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_441" [label="CORB
+gene:proph:181080
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_442" [label="CORB
+gene:proph:181081
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_443" [label="CORB
+gene:proph:181082
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_444" [label="CORB
+gene:proph:181083
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_445" [label="CORB
+gene:proph:181085
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_446" [label="CORB
+gene:proph:181086
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_447" [label="CORB
+gene:proph:181091
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_448" [label="CORB
+gene:proph:181092
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_449" [label="CORB
+gene:proph:181093
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_450" [label="CORB
+gene:proph:181094
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_451" [label="CORB
+gene:proph:181095
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_452" [label="CORB
+gene:proph:181096
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_453" [label="CORB
+gene:proph:181097
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_454" [label="CORB
+gene:proph:181098
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_455" [label="CORB
+gene:proph:181099
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_456" [label="CORB
+gene:proph:181100
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_457" [label="CORB
+gene:proph:181101
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_458" [label="CORB
+gene:proph:181102
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_459" [label="CORB
+gene:proph:181103
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_460" [label="CORB
+gene:proph:181104
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_461" [label="CORB
+gene:proph:181159
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_462" [label="CORB
+ISJsp3
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_463" [label="CORB
+TnAs3
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_464" [label="CORB
+SDY_2762
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_465" [label="CORB
+SDY_2762
+post_042", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_466" [label="CRP
+ISMav7
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_467" [label="CRP
+gene:vir:1321
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_468" [label="CTX
+ISVa11
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_469" [label="CTX
+SC155
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_470" [label="CTX
+ISSlo1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_471" [label="CTX
+O2R_110
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_472" [label="CTX
+ISMno34
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_473" [label="CTX
+ISNma16
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_474" [label="CTX
+ISAeme19
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_475" [label="CTX
+ISVisp7
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_476" [label="CTX
+IS1151
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_477" [label="CTX
+IS607
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_478" [label="CTX
+KPN_pKPN3p05963
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_479" [label="CTX
+ISLsa2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_480" [label="CTX
+ISUnCu20
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_481" [label="CTX
+ISMyba1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_482" [label="CTX
+ISEnca1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_483" [label="CTX
+ISAzs18
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_484" [label="CTX
+ISCade1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_485" [label="CTX
+ISWco1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_486" [label="CTX
+ISMgi3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_487" [label="CTX
+KPN_pKPN3p05896
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_488" [label="CTX
+ISApr2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_489" [label="CTX
+ISDpr6
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_490" [label="CTX
+ISGsu3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_491" [label="CTX
+ISAar44
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_492" [label="CTX
+ISLre2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_493" [label="CTX
+ISAtba1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_494" [label="CTX
+ISPansp1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_495" [label="CTX
+ISA0963-7
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_496" [label="CTX
+Ent638_4224
+post_042", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_497" [label="CUEO
+ISMex37
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_498" [label="CUER
+ISAva6
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_499" [label="CUER
+gene:vir:4533
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_500" [label="CUER
+gene:vir:4534
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_501" [label="CUER
+gene:vir:4535
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_502" [label="CUER
+gene:vir:4536
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_503" [label="CUTA
+SBO_0975
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_504" [label="CUTC
+ISCro2
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_505" [label="CUTC
+gene:proph:183581
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_506" [label="DFRA
+gene:plasmid:158823
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_507" [label="DFRA
+gene:plasmid:158836
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_508" [label="DFRA
+gene:plasmid:158907
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_509" [label="DFRA
+ISFK1
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_510" [label="DFRA
+ISFK1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_511" [label="DFRA
+ISBmu3
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_512" [label="DFRF
+pTP10_p30
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_513" [label="DNAK
+ISPaes2
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_514" [label="DNAK
+ISPaes2
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_515" [label="DSBC
+O2ColV194
+donor", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_516" [label="DSBC
+pCoo007
+donor", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_517" [label="DSBC
+O2ColV194
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_518" [label="DSBC
+pCoo007
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_519" [label="EFMA
+ISCbo10
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_520" [label="EFMA
+ISHce1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_521" [label="EFMA
+ISCbo10
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_522" [label="EFMA
+ISHce1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_523" [label="EMMDR
+UTI89_P067
+post_042", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_524" [label="EMMDR
+gene:proph:182641
+post_042", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_525" [label="EMRD
+gene:proph:179438
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_526" [label="EMRD
+gene:proph:179438
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_527" [label="EMRR
+SDY_2762
+donor", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_528" [label="EMRR
+gene:proph:179489
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_529" [label="EMRR
+gene:proph:179490
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_530" [label="ERMB
+IS1221A
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_531" [label="ERMB
+ISSba14
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_532" [label="ERMB
+ISLbu1
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_533" [label="ERMC
+IS1000B
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_534" [label="ERMC
+gene:plasmid:19874
+pre", shape=box, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_535" [label="FABI
+ISNamo21
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_536" [label="FABI
+ISJsp3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_537" [label="FABI
+IS1602
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_538" [label="FABI
+ISNamo21
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_539" [label="FABI
+ISJsp3
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_540" [label="FABI
+IS1602
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_541" [label="FECD
+SDY_P103
+donor", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_542" [label="FECD
+SBO_P009
+donor", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_543" [label="FECD
+ISNma16
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_544" [label="FECD
+pWR501_0231
+donor", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_545" [label="FECD
+O2ColV69
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_546" [label="FECD
+ISNma16
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_547" [label="FECD
+LV130
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_548" [label="FECD
+LV176
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_549" [label="FECD
+pOU1113_33
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_550" [label="FECD
+p165897_064
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_551" [label="FECD
+CP0269
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_552" [label="FECD
+ISWco1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_553" [label="FECD
+ISMgi3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_554" [label="FECD
+ISApr2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_555" [label="FECD
+EcE24377A_0815
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_556" [label="FECD
+SBO_0966
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_557" [label="FECD
+SBO_P146
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_558" [label="FECD
+SBO_P057
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_559" [label="FECD
+ISNma16
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_560" [label="FECD
+gene:proph:183618
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_561" [label="FECD
+SBO_P146
+post_021", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_562" [label="FECD
+ISNma16
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_563" [label="FECD
+SDY_P093
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_564" [label="FECD
+SDY_P103
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_565" [label="FECD
+pO86A1_p129
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_566" [label="FECD
+LH0188
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_567" [label="FECD
+SBO_P009
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_568" [label="FECD
+ISNma16
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_569" [label="FECD
+pWR501_0170
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_570" [label="FECD
+CP0269
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_571" [label="FECD
+EcE24377A_0817
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_572" [label="FECD
+gene:proph:177620
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_573" [label="FECD
+gene:proph:177621
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_574" [label="FECD
+ISNma16
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_575" [label="FIEF
+ISPlu17
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_576" [label="FIEF
+gene:proph:176915
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_577" [label="FIEF
+gene:proph:176925
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_578" [label="FIEF
+gene:vir:2040
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_579" [label="FIEF
+gene:vir:5705
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_580" [label="FIEF
+gene:vir:5706
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_581" [label="FIEF
+gene:vir:5707
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_582" [label="FIEF
+gene:vir:5708
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_583" [label="FIEF
+gene:vir:5709
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_584" [label="FIEF
+gene:vir:5713
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_585" [label="FIEF
+gene:vir:5718
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_586" [label="FIEF
+gene:vir:6070
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_587" [label="FIEF
+gene:vir:6072
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_588" [label="FIEF
+gene:vir:6079
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_589" [label="FIEF
+gene:vir:6080
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_590" [label="FOSA
+ISNpe7
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_591" [label="FOSA
+ISGst3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_592" [label="FOSA
+ISAdh3
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_593" [label="FOSA
+ISAzo6
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_594" [label="GADX
+ISHtu2
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_595" [label="GADX
+ISMav7
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_596" [label="GLPF
+ISFba4
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_597" [label="GLPF
+ISPlu17
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_598" [label="GLPF
+SF0157_p77
+donor", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_599" [label="GLPF
+SF0157_p75
+donor", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_600" [label="GLPF
+ISDin1
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_601" [label="GLPF
+ISAjo4
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_602" [label="GLPF
+gene:proph:176915
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_603" [label="GLPF
+gene:proph:176917
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_604" [label="GLPF
+gene:proph:176925
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_605" [label="GLPF
+gene:vir:108626
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_606" [label="GLPF
+gene:vir:2014
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_607" [label="GLPF
+gene:vir:2016
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_608" [label="GLPF
+gene:vir:2022
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_609" [label="GLPF
+gene:vir:2023
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_610" [label="GLPF
+gene:vir:2024
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_611" [label="GLPF
+gene:vir:2040
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_612" [label="GLPF
+gene:vir:2050
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_613" [label="GLPF
+gene:vir:5695
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_614" [label="GLPF
+gene:vir:5698
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_615" [label="GLPF
+gene:vir:5699
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_616" [label="GLPF
+gene:vir:5705
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_617" [label="GLPF
+gene:vir:5706
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_618" [label="GLPF
+gene:vir:5707
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_619" [label="GLPF
+gene:vir:5708
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_620" [label="GLPF
+gene:vir:5709
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_621" [label="GLPF
+gene:vir:5713
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_622" [label="GLPF
+gene:vir:5718
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_623" [label="GLPF
+gene:vir:5719
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_624" [label="GLPF
+gene:vir:5720
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_625" [label="GLPF
+gene:vir:5721
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_626" [label="GLPF
+gene:vir:5723
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_627" [label="GLPF
+gene:vir:5725
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_628" [label="GLPF
+gene:vir:5727
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_629" [label="GLPF
+gene:vir:6060
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_630" [label="GLPF
+gene:vir:6063
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_631" [label="GLPF
+gene:vir:6064
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_632" [label="GLPF
+gene:vir:6070
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_633" [label="GLPF
+gene:vir:6072
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_634" [label="GLPF
+gene:vir:6079
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_635" [label="GLPF
+gene:vir:6080
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_636" [label="HNS
+ISBph1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_637" [label="HNS
+ISHph1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_638" [label="HNS
+ISSph3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_639" [label="HNS
+ISRpa10
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_640" [label="HNS
+ISRso12
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_641" [label="HNS
+SBO_P086
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_642" [label="HNS
+ISBmo1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_643" [label="HNS
+ISRe46
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_644" [label="HNS
+KPN_pKPN3p05963
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_645" [label="HNS
+SSON_P173
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_646" [label="HNS
+gene:proph:184879
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_647" [label="HNS
+gene:proph:184884
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_648" [label="HNS
+gene:proph:184889
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_649" [label="HNS
+gene:proph:184890
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_650" [label="HNS
+gene:proph:184891
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_651" [label="HNS
+gene:proph:184893
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_652" [label="HNS
+gene:proph:184896
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_653" [label="HNS
+gene:proph:184898
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_654" [label="HNS
+gene:proph:184899
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_655" [label="HNS
+gene:proph:184901
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_656" [label="HNS
+gene:proph:184902
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_657" [label="HNS
+gene:proph:184903
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_658" [label="HNS
+gene:proph:184904
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_659" [label="HNS
+gene:proph:184905
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_660" [label="HNS
+gene:proph:184906
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_661" [label="HNS
+gene:proph:184908
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_662" [label="HNS
+gene:proph:184910
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_663" [label="HNS
+gene:proph:184911
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_664" [label="HNS
+gene:proph:184912
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_665" [label="HNS
+gene:proph:184913
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_666" [label="HNS
+SBO_P086
+post_042", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_667" [label="ICLR
+ISStma20
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_668" [label="KDEA
+ISShsp4
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_669" [label="KDEA
+ISAli13
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_670" [label="KDEA
+ISPa33
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_671" [label="KDEA
+gene:proph:182982
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_672" [label="KMRA
+ISArsp14
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_673" [label="KPC
+ISRsp2
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_674" [label="KPC
+ISEfa7
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_675" [label="KPC
+ISLesp3
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_676" [label="KPC
+ISCsa1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_677" [label="KPC
+ISCfr3
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_678" [label="KPC
+ISTvi2
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_679" [label="KPC
+ISSpu24
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_680" [label="KPC
+ISPye29
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_681" [label="KPC
+ISDssp4
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_682" [label="KPC
+ISThma1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_683" [label="KPC
+IS231K
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_684" [label="KPC
+ISVpa6
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_685" [label="KPC
+ISAcma19
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_686" [label="KPC
+D616_p80056
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_687" [label="KPC
+ISSphsp19
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_688" [label="KPNE
+p165897_096
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_689" [label="KPNE
+ISArsp6
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_690" [label="KPNE
+ISRpa9
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_691" [label="KPNE
+ISPpu23
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_692" [label="KPNE
+ISPye33
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_693" [label="LMRD
+ISDsp3
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_694" [label="LMRD
+ISCth13
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_695" [label="LMRD
+ISMssp1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_696" [label="LMRD
+ISKpn52
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_697" [label="LMRD
+ISLpn1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_698" [label="LMRD
+gene:proph:184396
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_699" [label="LMRD
+gene:proph:184397
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_700" [label="LMRD
+gene:proph:184398
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_701" [label="LMRD
+gene:vir:1042
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_702" [label="LMRD
+gene:vir:1050
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_703" [label="LMRD
+gene:vir:3580
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_704" [label="LMRD
+gene:vir:3933
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_705" [label="LMRD
+gene:vir:4033
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_706" [label="LMRD
+gene:vir:4035
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_707" [label="LMRD
+gene:vir:94754
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_708" [label="LMRD
+gene:vir:992
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_709" [label="LNUC
+ISSma20
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_710" [label="LNUC
+ISSgl1
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_711" [label="LNUC
+gene:proph:181669
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_712" [label="LNUC
+gene:proph:181670
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_713" [label="LNUC
+ISSgl1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_714" [label="LNUC
+gene:proph:181669
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_715" [label="LNUC
+gene:proph:181670
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_716" [label="LSA
+ISMae23
+pre", shape=octagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_717" [label="LSA
+ISMae23
+post_014", shape=octagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_718" [label="LSA
+gene:proph:183775
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_719" [label="LSA
+ISMae23
+post_030", shape=octagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_720" [label="MARA
+ISRme9
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_721" [label="MARA
+ISRme9
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_722" [label="MARR
+ISCysp21
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_723" [label="MARR
+ISAjo4
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_724" [label="MARR
+ISHati3
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_725" [label="MARR
+ISC1173a
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_726" [label="MARR
+ISBcy1
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_727" [label="MARR
+ISBce20
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_728" [label="MARR
+ISThsp20
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_729" [label="MARR
+ISBeg1
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_730" [label="MARR
+ISPep1
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_731" [label="MARR
+ISDeba1
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_732" [label="MARR
+ISPa30
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_733" [label="MARR
+ISClsp9
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_734" [label="MARR
+ISBce12
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_735" [label="MARR
+ISSyth2
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_736" [label="MARR
+ISLmo7
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_737" [label="MARR
+ISSphsp7
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_738" [label="MARR
+gene:proph:179432
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_739" [label="MARR
+gene:proph:179433
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_740" [label="MARR
+gene:proph:179435
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_741" [label="MARR
+gene:proph:179436
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_742" [label="MARR
+gene:proph:179439
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_743" [label="MARR
+gene:proph:179443
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_744" [label="MARR
+gene:proph:179464
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_745" [label="MARR
+gene:proph:181121
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_746" [label="MARR
+gene:proph:181210
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_747" [label="MARR
+gene:proph:181302
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_748" [label="MARR
+gene:proph:181308
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_749" [label="MARR
+gene:proph:181312
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_750" [label="MARR
+gene:proph:181314
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_751" [label="MARR
+gene:proph:181315
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_752" [label="MARR
+gene:proph:181317
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_753" [label="MARR
+gene:proph:182931
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_754" [label="MARR
+gene:vir:3424
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_755" [label="MARR
+gene:vir:3425
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_756" [label="MARR
+gene:vir:3426
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_757" [label="MARR
+gene:vir:3429
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_758" [label="MARR
+gene:vir:3430
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_759" [label="MARR
+gene:vir:3431
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_760" [label="MDE
+gene:proph:181670
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_761" [label="MDE
+ISSsu6
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_762" [label="MDTA
+ISHam1
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_763" [label="MDTA
+IS1076
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_764" [label="MDTA
+gene:proph:179438
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_765" [label="MECA
+gene:vir:98354
+pre", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_766" [label="MEFE
+ISPpu15
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_767" [label="MEFE
+ISNph29
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_768" [label="MEFE
+ISSpal1
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_769" [label="MEFE
+ISNwi4
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_770" [label="MEFE
+ISCasp4
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_771" [label="MEFE
+ISAbe14
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_772" [label="MEFE
+ISNwi4
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_773" [label="MEFE
+ISCasp4
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_774" [label="MEFE
+ISNwi4
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_775" [label="MEFE
+ISNwi4
+post_180", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0e0ecbff"];
+  "Parent_776" [label="MEFE
+ISSph9
+post_180", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0e0ecbff"];
+  "Parent_777" [label="MERD
+Neut_2564
+post_042", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_778" [label="MERR
+ISLesp3
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_779" [label="MERR
+ISRsp2
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_780" [label="MERR
+ISSpu24
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_781" [label="MERR1
+ISKpn66
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_782" [label="MERR1
+ISPpu35
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_783" [label="MERR1
+ISSpu12
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_784" [label="MERR1
+ISNme5
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_785" [label="MERR1
+ISLasa2
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_786" [label="MERR1
+ISAzs9
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_787" [label="MERR1
+ISHko1
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_788" [label="MERR1
+ISArsp14
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_789" [label="MERR1
+TnXax1
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_790" [label="MERR1
+ISSfl1
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_791" [label="MERR1
+ISWpi16
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_792" [label="MERR1
+ISBli29
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_793" [label="MERR1
+ISHti4
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_794" [label="MERR1
+ISAzs36
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_795" [label="MERR1
+ISStin1
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_796" [label="MNTH
+ISAzo1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_797" [label="MNTH
+ISCul1
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_798" [label="MNTH
+ISAzo1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_799" [label="MNTH
+ISVha1
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_800" [label="MNTH
+ISKpn33
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_801" [label="MNTH
+ISSsu15
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_802" [label="MNTH
+ISFba4
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_803" [label="MNTH
+gene:proph:176852
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_804" [label="MNTH
+gene:proph:176855
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_805" [label="MNTH
+gene:proph:176864
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_806" [label="MNTH
+gene:proph:176870
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_807" [label="MNTH
+gene:proph:179433
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_808" [label="MNTH
+gene:proph:181201
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_809" [label="MNTH
+gene:proph:181242
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_810" [label="MNTH
+gene:proph:181243
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_811" [label="MNTH
+gene:proph:181247
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_812" [label="MNTH
+gene:proph:181257
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_813" [label="MNTH
+gene:proph:181258
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_814" [label="MNTH
+gene:proph:181272
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_815" [label="MNTH
+gene:proph:181292
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_816" [label="MNTH
+gene:proph:182991
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_817" [label="MNTH
+gene:proph:182994
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_818" [label="MNTH
+gene:proph:182995
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_819" [label="MNTH
+gene:proph:182999
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_820" [label="MNTH
+gene:proph:183028
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_821" [label="MNTH
+gene:proph:183029
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_822" [label="MNTH
+gene:proph:183030
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_823" [label="MNTH
+gene:proph:183032
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_824" [label="MNTH
+gene:vir:10237
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_825" [label="MNTH
+gene:vir:10250
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_826" [label="MNTH
+gene:vir:105370
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_827" [label="MNTH
+gene:vir:105418
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_828" [label="MNTH
+gene:vir:105428
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_829" [label="MNTH
+gene:vir:105726
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_830" [label="MNTH
+gene:vir:105727
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_831" [label="MNTH
+gene:vir:105728
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_832" [label="MNTH
+gene:vir:130
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_833" [label="MNTH
+gene:vir:131
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_834" [label="MNTH
+gene:vir:151
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_835" [label="MNTH
+gene:vir:179
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_836" [label="MNTH
+gene:vir:1912
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_837" [label="MNTH
+gene:vir:1933
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_838" [label="MNTH
+gene:vir:2121
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_839" [label="MNTH
+gene:vir:243
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_840" [label="MNTH
+gene:vir:2854
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_841" [label="MNTH
+gene:vir:3476
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_842" [label="MNTH
+gene:vir:772
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_843" [label="MNTH
+ISAzo1
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_844" [label="MNTH
+ISAzo1
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_845" [label="MNTP
+gene:proph:183581
+post_042", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_846" [label="MODA
+SC1223
+post_042", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_847" [label="MODC
+ISFba4
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_848" [label="MODC
+ISMgi3
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_849" [label="MODC
+gene:proph:177442
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_850" [label="MODC
+gene:proph:181032
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_851" [label="MODC
+gene:proph:181033
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_852" [label="MODC
+gene:proph:181034
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_853" [label="MODC
+gene:proph:181036
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_854" [label="MODC
+gene:proph:181037
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_855" [label="MODC
+gene:proph:181038
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_856" [label="MODC
+gene:proph:181039
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_857" [label="MODC
+gene:proph:181040
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_858" [label="MODC
+gene:proph:181041
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_859" [label="MODC
+gene:proph:183637
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_860" [label="MODC
+gene:proph:184574
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_861" [label="MPHA
+gene:plasmid:158838
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_862" [label="MPHA
+gene:plasmid:158860
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_863" [label="MPHA
+ISFK1
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_864" [label="MPHA
+ISMch7
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_865" [label="MPHA
+gene:plasmid:158838
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_866" [label="MPHA
+gene:plasmid:158860
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_867" [label="MPHA
+ISFK1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_868" [label="MPHA
+D616_p80027
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_869" [label="MPHA
+gene:plasmid:158838
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_870" [label="MPHA
+ISMch7
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_871" [label="MPHA
+ISFK1
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_872" [label="MPHA
+ISBmu3
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_873" [label="MPHA
+ISFK1
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_874" [label="MPHA
+ISBmu3
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_875" [label="MVRC
+ISKpn74
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_876" [label="MVRC
+ISCwa3
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_877" [label="MVRC
+ISLmo21
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_878" [label="MVRC
+ISCul1
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_879" [label="MVRC
+ISBmu7
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_880" [label="MVRC
+ISBli35
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_881" [label="MVRC
+ISFop4
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_882" [label="MVRC
+ISCwa3
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_883" [label="MVRC
+ISLmo21
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_884" [label="MVRC
+ISBmu7
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_885" [label="MVRC
+SBO_0966
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_886" [label="MVRC
+ISBli35
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_887" [label="MVRC
+ISKpn74
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_888" [label="MVRC
+ISAar7
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_889" [label="MVRC
+ISNisp7
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_890" [label="MVRC
+ISPma1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_891" [label="MVRC
+ISNaoc1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_892" [label="MVRC
+ISStin6
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_893" [label="MVRC
+ISBfun4
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_894" [label="MVRC
+ISHarch15
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_895" [label="MVRC
+ISAs6
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_896" [label="MVRC
+ISSfl9
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_897" [label="MVRC
+ISEc47
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_898" [label="MVRC
+ISKpn33
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_899" [label="MVRC
+ISClsp3
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_900" [label="MVRC
+ISGes1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_901" [label="MVRC
+ISSjo1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_902" [label="MVRC
+ISMhu7
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_903" [label="MVRC
+ISEc62
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_904" [label="MVRC
+ISAba62
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_905" [label="MVRC
+ISPlu15
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_906" [label="MVRC
+ISBvi3
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_907" [label="MVRC
+ISStma1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_908" [label="MVRC
+ISSen7
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_909" [label="MVRC
+ISCte4
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_910" [label="MVRC
+ISCausp3
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_911" [label="MVRC
+ISAlis1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_912" [label="MVRC
+ISXoo7
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_913" [label="MVRC
+IS2621
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_914" [label="MVRC
+ISAbc2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_915" [label="MVRC
+ISVpa4
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_916" [label="MVRC
+ISMru1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_917" [label="MVRC
+ISAzs19
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_918" [label="MVRC
+ISCth8
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_919" [label="MVRC
+ISPa30
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_920" [label="MVRC
+ISBf11
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_921" [label="MVRC
+ISCrsa1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_922" [label="MVRC
+ISLhe66
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_923" [label="MVRC
+ISLisp1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_924" [label="MVRC
+ISPeth2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_925" [label="MVRC
+ISShdy4
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_926" [label="MVRC
+ISHahy2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_927" [label="MVRC
+ISXa1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_928" [label="MVRC
+ISEsa1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_929" [label="MVRC
+gene:proph:176804
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_930" [label="MVRC
+gene:proph:176816
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_931" [label="MVRC
+gene:proph:176817
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_932" [label="MVRC
+gene:proph:176818
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_933" [label="MVRC
+gene:proph:176819
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_934" [label="MVRC
+gene:proph:176820
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_935" [label="MVRC
+gene:proph:176821
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_936" [label="MVRC
+gene:proph:176822
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_937" [label="MVRC
+gene:proph:176823
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_938" [label="MVRC
+gene:proph:176824
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_939" [label="MVRC
+gene:proph:176825
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_940" [label="MVRC
+gene:proph:176826
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_941" [label="MVRC
+gene:proph:176827
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_942" [label="MVRC
+gene:proph:176828
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_943" [label="MVRC
+gene:proph:176829
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_944" [label="MVRC
+gene:proph:176830
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_945" [label="MVRC
+gene:proph:176831
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_946" [label="MVRC
+gene:proph:176832
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_947" [label="MVRC
+gene:proph:177498
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_948" [label="MVRC
+gene:proph:177500
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_949" [label="MVRC
+gene:proph:177501
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_950" [label="MVRC
+gene:proph:179433
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_951" [label="MVRC
+gene:proph:179435
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_952" [label="MVRC
+gene:proph:179438
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_953" [label="MVRC
+gene:proph:179439
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_954" [label="MVRC
+gene:proph:181121
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_955" [label="MVRC
+gene:proph:181174
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_956" [label="MVRC
+gene:proph:183581
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_957" [label="MVRC
+gene:proph:183637
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_958" [label="MVRC
+gene:vir:104416
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_959" [label="MVRC
+gene:vir:108421
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_960" [label="MVRC
+gene:vir:108646
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_961" [label="MVRC
+gene:vir:79565
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_962" [label="MVRC
+ISLmo21
+post_042", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_963" [label="MVRC
+ISCwa3
+post_042", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_964" [label="MVRC
+ISPye17
+post_042", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_965" [label="MVRC
+ISBli35
+post_042", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_966" [label="MVRC
+ISBaps1
+post_042", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_967" [label="MVRC
+ISBmu7
+post_042", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_968" [label="MVRC
+ISRsp13
+post_042", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_969" [label="MVRC
+ISMpo2
+post_042", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_970" [label="MVRC
+ISKpn74
+post_042", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_971" [label="MVRC
+gene:proph:181169
+post_042", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_972" [label="MVRC
+gene:proph:181170
+post_042", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_973" [label="MVRC
+gene:vir:108544
+post_042", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_974" [label="MVRC
+gene:vir:1321
+post_042", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_975" [label="MVRC
+gene:vir:779
+post_042", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_976" [label="NHAA
+UTI89_P067
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_977" [label="NHAB
+ISLmo21
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_978" [label="NHAB
+ISKpn33
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_979" [label="NHAB
+ISLjo2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_980" [label="NHAB
+ISPye17
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_981" [label="NHAB
+ISMlu1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_982" [label="NHAB
+ISSusp1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_983" [label="NHAB
+ISBaps1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_984" [label="NHAB
+ISThy1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_985" [label="NHAB
+ISRle2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_986" [label="NHAB
+ISCARN110
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_987" [label="NHAB
+ISStma14
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_988" [label="NHAB
+ISCc1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_989" [label="NHAB
+ISVisp4
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_990" [label="NHAB
+ISEch6
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_991" [label="NHAB
+ISAcde2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_992" [label="NHAB
+ISPpu36
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_993" [label="NHAB
+ISMno8
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_994" [label="NHAB
+ISAcp1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_995" [label="NHAB
+ISPye2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_996" [label="NHAB
+ISHaar1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_997" [label="NHAB
+ISHarch12
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_998" [label="NHAB
+ISMex43
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_999" [label="NHAB
+ISArsp6
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1000" [label="NHAB
+ISAlisp1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1001" [label="NHAB
+ISAlw9
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1002" [label="NHAB
+ISGme2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1003" [label="NHAB
+ISGob4
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1004" [label="NHAB
+ISBt3
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1005" [label="NHAB
+ISAba20
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1006" [label="NHAB
+ISHli7
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1007" [label="NHAB
+IS1372
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1008" [label="NHAB
+ISBlma9
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1009" [label="NHAB
+ISVer3
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1010" [label="NHAB
+ISMaa1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1011" [label="NHAB
+ISNpe24
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1012" [label="NHAB
+ISKpn25
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1013" [label="NHAB
+ISHarch18
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1014" [label="NHAB
+ISEhe3
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1015" [label="NHAB
+ISSphsp15
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1016" [label="NHAB
+ISEfa17
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1017" [label="NHAB
+ISPsy40
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1018" [label="NHAB
+Tn4430
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1019" [label="NHAB
+ISSer2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1020" [label="NHAB
+ISDsh1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1021" [label="NHAB
+ISBfun1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1022" [label="NHAB
+ISRsp13
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1023" [label="NHAB
+ISBli35
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1024" [label="NHAB
+IS1122
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1025" [label="NHAB
+ISMra4
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1026" [label="NHAB
+ISTni1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1027" [label="NHAB
+ISKpn74
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1028" [label="NHAB
+gene:proph:176813
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1029" [label="NHAB
+gene:proph:176814
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1030" [label="NHAB
+gene:proph:177541
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1031" [label="NHAB
+gene:proph:177557
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1032" [label="NHAB
+gene:proph:179433
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1033" [label="NHAB
+gene:proph:181052
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1034" [label="NHAB
+gene:proph:181054
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1035" [label="NHAB
+gene:proph:181055
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1036" [label="NHAB
+gene:proph:181056
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1037" [label="NHAB
+gene:proph:181057
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1038" [label="NHAB
+gene:proph:181058
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1039" [label="NHAB
+gene:proph:181059
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1040" [label="NHAB
+gene:proph:181061
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1041" [label="NHAB
+gene:proph:181062
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1042" [label="NHAB
+gene:proph:181173
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1043" [label="NHAB
+gene:proph:181174
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1044" [label="NHAB
+gene:proph:181175
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1045" [label="NHAB
+gene:proph:181177
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1046" [label="NHAB
+gene:proph:181210
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1047" [label="NHAB
+gene:proph:181222
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1048" [label="NHAB
+gene:proph:181223
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1049" [label="NHAB
+gene:proph:181224
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1050" [label="NHAB
+gene:proph:181225
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1051" [label="NHAB
+gene:proph:181305
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1052" [label="NHAB
+gene:proph:181306
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1053" [label="NHAB
+gene:proph:181314
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1054" [label="NHAB
+gene:proph:181315
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1055" [label="NHAB
+gene:proph:181316
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1056" [label="NHAB
+gene:vir:104392
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1057" [label="NHAB
+gene:vir:3424
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1058" [label="NHAB
+gene:vir:3425
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1059" [label="NHAB
+gene:vir:3431
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1060" [label="NHAB
+gene:vir:3432
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1061" [label="NHAB
+gene:vir:3433
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1062" [label="NHAB
+gene:vir:3434
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1063" [label="NHAB
+gene:vir:79556
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1064" [label="NMPC
+ISAzo1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1065" [label="NMPC
+ISEnfa2
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1066" [label="NMPC
+ISCwa3
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1067" [label="NMPC
+ISCul1
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1068" [label="NMPC
+ISHati3
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1069" [label="NMPC
+ISFop4
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1070" [label="NMPC
+gene:vir:5711
+pre", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1071" [label="NMPC
+ISEnfa2
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1072" [label="NMPC
+ISCul1
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1073" [label="NMPC
+gene:proph:181127
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1074" [label="NMPC
+ISThsp19
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_1075" [label="NORA
+SSP_RS12525
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1076" [label="OMP37
+ISShsp4
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1077" [label="OMP37
+IS1602
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1078" [label="OMPA
+ISLjo2
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1079" [label="OMPA
+gene:proph:183644
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1080" [label="OMPA
+ISMno28
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1081" [label="OQXA
+ISBmo1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1082" [label="OQXA
+ISMme1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1083" [label="OQXA
+ISJsp3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1084" [label="OQXA
+IS1602
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1085" [label="OQXA
+ISRme9
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1086" [label="OQXA
+gene:proph:182978
+pre", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1087" [label="OQXA
+gene:vir:5711
+pre", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1088" [label="OQXA
+gene:vir:98552
+pre", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1089" [label="OQXA
+ISAzo1
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1090" [label="OQXA
+ISVisp4
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1091" [label="PCOA
+ISAzs20
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1092" [label="PITA
+gene:plasmid:24694
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1093" [label="PITA
+gene:plasmid:24694
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1094" [label="PMRF
+gene:proph:181244
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1095" [label="PMRF
+gene:proph:181292
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1096" [label="PMRF
+ISAzo1
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1097" [label="PMRF
+ISSph13
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1098" [label="PMRF
+gene:proph:179438
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1099" [label="PMRF
+gene:proph:181243
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1100" [label="PMRF
+gene:proph:182641
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1101" [label="PMRF
+gene:proph:182647
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1102" [label="PMRF
+gene:proph:183583
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1103" [label="PMRF
+gene:proph:183597
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1104" [label="PMRF
+gene:vir:7156
+post_030", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1105" [label="QACEDELTA1
+gene:plasmid:158836
+post_180", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0e0ecbff"];
+  "Parent_1106" [label="QACEDELTA1
+gene:plasmid:158838
+post_180", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0e0ecbff"];
+  "Parent_1107" [label="QACEDELTA1
+ISFK1
+post_180", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0e0ecbff"];
+  "Parent_1108" [label="QNRS
+ST42906_p020
+donor", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1109" [label="QNRS
+ST42906_p020
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1110" [label="QNRS
+ST42906_p020
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1111" [label="RCNR
+ISKpn74
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1112" [label="RCNR
+ISSusp1
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1113" [label="RCNR
+ISCrsp1
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1114" [label="RCNR
+IS1550
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1115" [label="RCNR
+ISLbp4
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1116" [label="RCNR
+gene:proph:181166
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1117" [label="RCNR
+gene:vir:104426
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1118" [label="RCNR
+gene:vir:108544
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1119" [label="RCNR
+gene:vir:108716
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1120" [label="RCNR
+gene:vir:2883
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1121" [label="RCNR
+gene:vir:3271
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1122" [label="RCNR
+gene:vir:3472
+donor", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1123" [label="RCNR
+ISDin1
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1124" [label="RCNR
+ISBci1
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1125" [label="RCNR
+ISAjo4
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1126" [label="RCNR
+gene:proph:176924
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1127" [label="RCNR
+gene:vir:108625
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1128" [label="RCNR
+gene:vir:2013
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1129" [label="RCNR
+gene:vir:2016
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1130" [label="RCNR
+gene:vir:2018
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1131" [label="RCNR
+gene:vir:2019
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1132" [label="RCNR
+gene:vir:2022
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1133" [label="RCNR
+gene:vir:2024
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1134" [label="RCNR
+gene:vir:2027
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1135" [label="RCNR
+gene:vir:2028
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1136" [label="RCNR
+gene:vir:2029
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1137" [label="RCNR
+gene:vir:2030
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1138" [label="RCNR
+gene:vir:2031
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1139" [label="RCNR
+gene:vir:2032
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1140" [label="RCNR
+gene:vir:2033
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1141" [label="RCNR
+gene:vir:2035
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1142" [label="RCNR
+gene:vir:2039
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1143" [label="RCNR
+gene:vir:2040
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1144" [label="RCNR
+gene:vir:2045
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1145" [label="RCNR
+gene:vir:2050
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1146" [label="RCNR
+gene:vir:5693
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1147" [label="RCNR
+gene:vir:5699
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1148" [label="RCNR
+gene:vir:5701
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1149" [label="RCNR
+gene:vir:5713
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1150" [label="RCNR
+gene:vir:5722
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1151" [label="RCNR
+gene:vir:6059
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1152" [label="RCNR
+gene:vir:6062
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1153" [label="RCNR
+gene:vir:6065
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1154" [label="RCNR
+gene:vir:6070
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1155" [label="RCNR
+gene:vir:6071
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1156" [label="RCNR
+gene:vir:6080
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1157" [label="RCNR
+gene:vir:6093
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1158" [label="RMTC
+ISAzo13
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1159" [label="RMTC
+Neut_2562
+post_021", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1160" [label="RMTC
+ISArsp6
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1161" [label="RMTC
+ISSm3
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1162" [label="RMTC
+ISPsy37
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1163" [label="RMTC
+ISPein1
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1164" [label="RMTC
+ISSma10
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1165" [label="RMTC
+ISPsy43
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1166" [label="RMTC
+ISPsy35
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1167" [label="RMTC
+ISGba3
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1168" [label="RMTC
+SNSL254_pSN254_0139
+post_021", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1169" [label="RMTC
+ISAri1
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1170" [label="RMTC
+ISUnCu10
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1171" [label="RMTC
+ISSusp4
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1172" [label="RMTC
+ISAs16
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1173" [label="RMTC
+ISLead2
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1174" [label="RMTC
+ISRor8
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1175" [label="RMTC
+ISMno26
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1176" [label="RMTC
+ISRm10-1
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1177" [label="RMTC
+ISTna1
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1178" [label="RMTC
+ISSysp4
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1179" [label="RMTC
+ISArsp16
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1180" [label="RMTC
+ISCausp3
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1181" [label="RMTC
+ISAlw22
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1182" [label="RMTC
+ISEcret7
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1183" [label="RMTC
+ISFba4
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1184" [label="RMTC
+ISMbu2
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1185" [label="RMTC
+ISAar34
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1186" [label="RMTC
+ISAs10
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1187" [label="RMTC
+ISBce15
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1188" [label="RMTC
+ISShdy4
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1189" [label="RMTC
+ISPye26
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1190" [label="RMTC
+ISAlw14
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1191" [label="RMTC
+ISAeca3
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1192" [label="RMTC
+ISHwa17
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1193" [label="RMTC
+ISTeha3
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1194" [label="RPOS
+SDY_2762
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1195" [label="RPOS
+SDY_2762
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1196" [label="SAT
+IS1221A
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1197" [label="SAT
+Tn5403
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1198" [label="SDEY
+ISAs29
+post_021", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1199" [label="SHV
+p165897_096
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1200" [label="SHV
+ISArsp6
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1201" [label="SHV
+ISRpa9
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1202" [label="SHV
+ISPpu23
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1203" [label="SHV
+ISPpu23
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1204" [label="SHV
+ISMex18
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1205" [label="SHV
+ISPye33
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1206" [label="SILB
+ISRme9
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_1207" [label="SILC
+ISAzs20
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1208" [label="SILC
+ISWpi1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1209" [label="SILC
+ISHam1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1210" [label="SILC
+ISAzs20
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1211" [label="SILC
+ISDpr9
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1212" [label="SILC
+ISSph3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1213" [label="SILC
+KPN_pKPN3p05930
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1214" [label="SILC
+KPN_pKPN3p05931
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1215" [label="SILC
+ISMex31
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1216" [label="SILC
+ISTvo2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1217" [label="SILC
+KPN_pKPN3p05957
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1218" [label="SILC
+KPN_pKPN3p05895
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1219" [label="SILC
+KPN_pKPN3p05896
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1220" [label="SILC
+ISApr2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1221" [label="SILC
+KPN_pKPN3p05906
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1222" [label="SILC
+ISDpr6
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1223" [label="SILC
+ISGsu3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1224" [label="SILC
+ISCku10
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1225" [label="SILC
+ISMbov6
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1226" [label="SILC
+ISCla1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1227" [label="SILC
+ISMbov5
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1228" [label="SILC
+TnXo19
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1229" [label="SILC
+MITEHhi1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1230" [label="SILC
+ISSma22
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1231" [label="SILC
+ISCud1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1232" [label="SILC
+ISSod2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1233" [label="SILC
+ISAzs17
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1234" [label="SILC
+ISKpn31
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1235" [label="SILC
+ISAzs20
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1236" [label="SILC
+ISWpi1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1237" [label="SILC
+CP0107
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1238" [label="SILE
+ISArch2
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1239" [label="SILE
+ISArch2
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_1240" [label="SILP
+ISAzs20
+post_180", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0e0ecbff"];
+  "Parent_1241" [label="SILS
+O2ColV37
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1242" [label="SILS
+O2ColV38
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1243" [label="SILS
+ISKpn31
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1244" [label="SITABCD
+ISCysp20
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1245" [label="SITABCD
+ISCysp20
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1246" [label="SITABCD
+ISBko1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1247" [label="SITABCD
+gene:proph:179433
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1248" [label="SITABCD
+ISEc63
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_1249" [label="SITABCD
+ISCysp20
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_1250" [label="SITABCD
+ISBko1
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_1251" [label="SODA
+ISPlu17
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1252" [label="SOXRB
+ISStsp5
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1253" [label="SOXRB
+UTI89_P044
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1254" [label="SOXRB
+ISCsc1
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1255" [label="SOXRB
+ISBthe6
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1256" [label="SOXRB
+pB171_060
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1257" [label="SUGE
+ISBuhy1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1258" [label="SUGE
+SBO_P086
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1259" [label="SUGE
+pWR501_0231
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1260" [label="SUGE
+gene:vir:1321
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1261" [label="SUGE
+ISBuhy1
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_1262" [label="SULI
+p165897_086
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1263" [label="SULII
+ISMgi2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1264" [label="SULII
+ISMgi2
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1265" [label="SULII
+pMOL30_100
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1266" [label="SULII
+SNSL254_pSN254_0140
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1267" [label="SULIII
+IS406
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1268" [label="SULIII
+ISRba8
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1269" [label="SULIII
+ISSphsp22
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1270" [label="SULIII
+IS406
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1271" [label="SULIII
+ISRba8
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1272" [label="SULIII
+ISSphsp22
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1273" [label="TEM
+ISAeme19
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1274" [label="TEM
+p165897_064
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1275" [label="TEM
+ISAar44
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1276" [label="TEM
+ISLre2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1277" [label="TEM
+ISMtsp8
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1278" [label="TEM
+ISAtba1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1279" [label="TEM
+ISPansp1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1280" [label="TEM
+ISA0963-7
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1281" [label="TEM
+ISPa111
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1282" [label="TERW
+ISSisp1
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1283" [label="TERW
+ISMma10
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1284" [label="TERW
+ISEae1
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_1285" [label="TERW
+ISEhe3
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_1286" [label="TERW
+ISGob5
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_1287" [label="TERW
+ISPa97
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_1288" [label="TERZ
+ISVsp16
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_1289" [label="TERZ
+ISPst5
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_1290" [label="TET40
+ISSphsp2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1291" [label="TETA
+SSON_P237
+donor", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1292" [label="TETA
+O2ColV78
+donor", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1293" [label="TETA
+O2ColV79
+donor", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1294" [label="TETA
+O2ColV81
+donor", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1295" [label="TETA
+O2ColV82
+donor", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1296" [label="TETA
+SF0157_p76
+donor", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1297" [label="TETA
+SSON_P237
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1298" [label="TETA
+O2ColV78
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1299" [label="TETA
+O2ColV79
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1300" [label="TETA
+O2ColV81
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1301" [label="TETA
+ISNg1
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1302" [label="TETA
+SF0157_p76
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1303" [label="TETD
+P99018ORF_005
+pre", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1304" [label="TETD
+ISCaq1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1305" [label="TETM
+gene:plasmid:13101
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1306" [label="TETQ
+ISPpu15
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1307" [label="TETQ
+ISPlba3
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1308" [label="TETQ
+ISNph29
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1309" [label="TETQ
+ISGva2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1310" [label="TETQ
+ISSpal1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1311" [label="TETQ
+ISNwi4
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1312" [label="TETQ
+ISCasp4
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1313" [label="TETQ
+ISClj1
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1314" [label="TETQ
+ISAbe14
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1315" [label="TETQ
+ISPst2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1316" [label="TETW
+ISMae13
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1317" [label="TOLC
+ISBvi2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1318" [label="YBTP
+ISCsc1
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1319" [label="YBTP
+ISBthe6
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1320" [label="YBTP
+ISHwa21
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1321" [label="YBTP
+ISSsu13
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1322" [label="YBTP
+ISMac10
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1323" [label="YBTP
+TnEc2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1324" [label="YBTP
+ISXba1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1325" [label="YCHH
+SC168
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1326" [label="YCHH
+p165897_064
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1327" [label="YCHH
+p165897_065
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1328" [label="YCHH
+pWR501_0243
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1329" [label="YCHH
+ISHwa21
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1330" [label="YCHH
+ISSsu13
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1331" [label="YCHH
+ISMac10
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1332" [label="YCHH
+TnEc2
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1333" [label="YCHH
+gene:proph:177582
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1334" [label="YCHH
+gene:proph:177584
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1335" [label="YDEI
+ISNol1
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1336" [label="YDEI
+ISPa30
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1337" [label="YDEI
+ISBce12
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1338" [label="YDEI
+ISMch1
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1339" [label="YDEI
+gene:proph:177577
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1340" [label="YDEI
+gene:proph:182930
+donor", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1341" [label="YDEI
+ISNol1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1342" [label="YDEI
+ISPa30
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1343" [label="YDEI
+ISBce12
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1344" [label="YDEI
+ISMch1
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1345" [label="YDEI
+gene:proph:177577
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1346" [label="YDEI
+gene:proph:182930
+post_030", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1347" [label="YDEP
+HCM1.201
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1348" [label="YGJH
+UTI89_P038
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1349" [label="YGJH
+UTI89_P039
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1350" [label="YGJH
+ISBvi2
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1351" [label="YGJH
+ISKpn28
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1352" [label="YGJH
+pO86A1_p129
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1353" [label="YGJH
+LH0187
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1354" [label="YGJH
+LH0188
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1355" [label="YGJH
+ISNml4
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1356" [label="YGJH
+pCoo007
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1357" [label="YGJH
+EcE24377A_0815
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1358" [label="YJAA
+ISBuhy1
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1359" [label="YJAA
+SDY_P061
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1360" [label="YJAA
+pWR501_0231
+post_030", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1361" [label="ZINT
+O2ColV194
+post_014", shape=trapezium, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1362" [label="ZNTR
+ISMae2
+pre", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="red"];
+  "Parent_1363" [label="ZNTR
+ISMae2
+post_014", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1364" [label="ZNTR
+ISMae2
+post_021", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1365" [label="ZNTR
+ISMae2
+post_030", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1366" [label="ZNTR
+ISMae2
+post_042", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="#0d6bcaff"];
+  "Parent_1367" [label="ZUPT
+ISBvi2
+donor", shape=diamond, fixedsize=true, width=0.6, height=0.6, fillcolor="yellow"];
+  "Parent_1368" [label="ZUR
+ISAar22
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1369" [label="ZUR
+ISEsa1
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1370" [label="ZUR
+gene:proph:176805
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1371" [label="ZUR
+gene:proph:179486
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1372" [label="ZUR
+gene:proph:181113
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1373" [label="ZUR
+gene:proph:181147
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1374" [label="ZUR
+gene:proph:181149
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1375" [label="ZUR
+gene:proph:181161
+post_014", shape=hexagon, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1376" [label="ZUR
+gene:vir:4542
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1377" [label="ZUR
+gene:vir:4546
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1378" [label="ZUR
+gene:vir:4547
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1379" [label="ZUR
+gene:vir:4549
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1380" [label="ZUR
+gene:vir:79547
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1381" [label="ZUR
+gene:vir:79550
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1382" [label="ZUR
+gene:vir:79561
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1383" [label="ZUR
+gene:vir:79572
+post_014", shape=triangle, fixedsize=true, width=0.6, height=0.6, fillcolor="#87CEFA"];
+  "Parent_1" -> "Parent_5" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_2" -> "Parent_9" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_3" -> "Parent_10" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_4" -> "Parent_12" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_19" -> "Parent_22" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_78" -> "Parent_81" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_108" -> "Parent_116" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_109" -> "Parent_117" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_110" -> "Parent_115" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_115" -> "Parent_118" [style=dashed, color="black", penwidth=5.0];
+  "Parent_118" -> "Parent_121" [style=dashed, color="black", penwidth=5.0];
+  "Parent_140" -> "Parent_172" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_193" -> "Parent_197" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_194" -> "Parent_199" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_195" -> "Parent_198" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_200" -> "Parent_201" [style=dashed, color="#006400", penwidth=5.0];
+  "Parent_201" -> "Parent_222" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_222" -> "Parent_223" [style=dashed, color="black", penwidth=5.0];
+  "Parent_223" -> "Parent_225" [style=dashed, color="black", penwidth=5.0];
+  "Parent_225" -> "Parent_226" [style=dashed, color="black", penwidth=5.0];
+  "Parent_226" -> "Parent_227" [style=dashed, color="black", penwidth=5.0];
+  "Parent_238" -> "Parent_312" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_244" -> "Parent_315" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_245" -> "Parent_316" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_247" -> "Parent_317" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_249" -> "Parent_318" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_250" -> "Parent_319" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_252" -> "Parent_320" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_254" -> "Parent_321" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_256" -> "Parent_324" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_257" -> "Parent_325" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_259" -> "Parent_326" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_264" -> "Parent_327" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_265" -> "Parent_328" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_266" -> "Parent_329" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_268" -> "Parent_330" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_269" -> "Parent_331" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_270" -> "Parent_332" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_271" -> "Parent_333" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_272" -> "Parent_334" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_274" -> "Parent_335" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_276" -> "Parent_336" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_278" -> "Parent_337" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_362" -> "Parent_383" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_363" -> "Parent_384" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_364" -> "Parent_385" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_371" -> "Parent_391" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_372" -> "Parent_392" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_374" -> "Parent_393" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_377" -> "Parent_402" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_378" -> "Parent_403" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_379" -> "Parent_404" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_380" -> "Parent_405" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_382" -> "Parent_406" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_407" -> "Parent_409" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_409" -> "Parent_422" [style=dashed, color="black", penwidth=5.0];
+  "Parent_408" -> "Parent_410" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_429" -> "Parent_464" [style=dashed, color="black", penwidth=5.0];
+  "Parent_464" -> "Parent_465" [style=dashed, color="black", penwidth=5.0];
+  "Parent_509" -> "Parent_510" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_513" -> "Parent_514" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_515" -> "Parent_517" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_516" -> "Parent_518" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_519" -> "Parent_521" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_520" -> "Parent_522" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_525" -> "Parent_526" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_535" -> "Parent_538" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_536" -> "Parent_539" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_537" -> "Parent_540" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_541" -> "Parent_564" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_557" -> "Parent_561" [style=dashed, color="black", penwidth=5.0];
+  "Parent_542" -> "Parent_567" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_543" -> "Parent_546" [style=dashed, color="#006400", penwidth=5.0];
+  "Parent_546" -> "Parent_559" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_559" -> "Parent_562" [style=dashed, color="black", penwidth=5.0];
+  "Parent_562" -> "Parent_568" [style=dashed, color="black", penwidth=5.0];
+  "Parent_568" -> "Parent_574" [style=dashed, color="black", penwidth=5.0];
+  "Parent_551" -> "Parent_570" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_641" -> "Parent_666" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_710" -> "Parent_713" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_711" -> "Parent_714" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_712" -> "Parent_715" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_716" -> "Parent_717" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_717" -> "Parent_719" [style=dashed, color="black", penwidth=5.0];
+  "Parent_720" -> "Parent_721" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_769" -> "Parent_772" [style=dashed, color="#006400", penwidth=5.0];
+  "Parent_772" -> "Parent_774" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_774" -> "Parent_775" [style=dashed, color="black", penwidth=5.0];
+  "Parent_770" -> "Parent_773" [style=dashed, color="#006400", penwidth=5.0];
+  "Parent_796" -> "Parent_798" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_798" -> "Parent_843" [style=dashed, color="black", penwidth=5.0];
+  "Parent_843" -> "Parent_844" [style=dashed, color="black", penwidth=5.0];
+  "Parent_861" -> "Parent_865" [style=dashed, color="#006400", penwidth=5.0];
+  "Parent_865" -> "Parent_869" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_862" -> "Parent_866" [style=dashed, color="#006400", penwidth=5.0];
+  "Parent_863" -> "Parent_867" [style=dashed, color="#006400", penwidth=5.0];
+  "Parent_867" -> "Parent_871" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_871" -> "Parent_873" [style=dashed, color="black", penwidth=5.0];
+  "Parent_872" -> "Parent_874" [style=dashed, color="black", penwidth=5.0];
+  "Parent_876" -> "Parent_882" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_882" -> "Parent_963" [style=dashed, color="black", penwidth=5.0];
+  "Parent_877" -> "Parent_883" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_879" -> "Parent_884" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_884" -> "Parent_967" [style=dashed, color="black", penwidth=5.0];
+  "Parent_880" -> "Parent_886" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_1065" -> "Parent_1071" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_1067" -> "Parent_1072" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_1092" -> "Parent_1093" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_1108" -> "Parent_1109" [style=dashed, color="#006400", penwidth=5.0];
+  "Parent_1109" -> "Parent_1110" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_1194" -> "Parent_1195" [style=dashed, color="black", penwidth=5.0];
+  "Parent_1207" -> "Parent_1235" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_1208" -> "Parent_1236" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_1238" -> "Parent_1239" [style=dashed, color="black", penwidth=5.0];
+  "Parent_1244" -> "Parent_1245" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_1245" -> "Parent_1249" [style=dashed, color="black", penwidth=5.0];
+  "Parent_1246" -> "Parent_1250" [style=dashed, color="black", penwidth=5.0];
+  "Parent_1257" -> "Parent_1261" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_1263" -> "Parent_1264" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_1267" -> "Parent_1270" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_1268" -> "Parent_1271" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_1269" -> "Parent_1272" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_1291" -> "Parent_1297" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_1292" -> "Parent_1298" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_1293" -> "Parent_1299" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_1294" -> "Parent_1300" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_1296" -> "Parent_1302" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_1335" -> "Parent_1341" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_1336" -> "Parent_1342" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_1337" -> "Parent_1343" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_1338" -> "Parent_1344" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_1339" -> "Parent_1345" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_1340" -> "Parent_1346" [style=dashed, color="#4B0082", penwidth=5.0];
+  "Parent_1362" -> "Parent_1363" [style=dashed, color="orange", penwidth=5.0];
+  "Parent_1363" -> "Parent_1364" [style=dashed, color="black", penwidth=5.0];
+  "Parent_1364" -> "Parent_1365" [style=dashed, color="black", penwidth=5.0];
+  "Parent_1365" -> "Parent_1366" [style=dashed, color="black", penwidth=5.0];
+}

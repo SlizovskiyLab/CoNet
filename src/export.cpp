@@ -26,10 +26,9 @@ std::string getTimepointColor(const Timepoint& tp) {
     int timeValue = static_cast<int>(tp);
     if (timeValue == 1000) return "\"yellow\"";
     if (timeValue == 0)  return "\"red\"";
-    // Updated blue shades for a more cohesive look
-    if (timeValue > 0 && timeValue < 31) return "\"#ADD8E6\"";   // Light Blue
-    if (timeValue > 30 && timeValue < 61) return "\"#4682B4\"";  // Steel Blue
-    if (timeValue > 60) return "\"#4169E1\"";   // Dodger Blue
+    if (timeValue > 0 && timeValue < 31) return "\"#87CEFA\""; 
+    if (timeValue > 30 && timeValue < 61) return "\"#0d6bcaff\""; 
+    if (timeValue > 60) return "\"#0e0ecbff\"";
     return "\"green\""; // Fallback for any unexpected values
 }
 
@@ -42,7 +41,7 @@ bool isTemporalEdge(const Edge& edge) {
 auto timepointOrder = [](Timepoint tp) -> int {
     if (tp == Timepoint::Donor) return -1;       // Donor comes first
     if (tp == Timepoint::PreFMT) return 0;       // PreFMT next
-    return static_cast<int>(tp);                 // PostFMT keeps numeric order
+    return static_cast<int>(tp);               
 };
 
 
@@ -108,6 +107,7 @@ void exportToDot(const Graph& g, const std::string& filename, bool showLabels) {
         std::string style;
         std::string extraAttributes;
         double penwidth = 4.0; 
+        std::string edgeLabel = "";
 
         if (edge.isColo) {
             auto canonical_pair = std::minmax(edge.source, edge.target);
@@ -122,6 +122,10 @@ void exportToDot(const Graph& g, const std::string& filename, bool showLabels) {
             if (count > 1) {
                 penwidth = 4.0 + (count - 1) * 2.0;
             }
+            penwidth = std::min(10.0, penwidth);
+            if (showLabels) {
+                edgeLabel = std::to_string((int)count);
+            }
             extraAttributes = "dir=both";
 
         } else if (isTemporalEdge(edge)) {
@@ -129,6 +133,10 @@ void exportToDot(const Graph& g, const std::string& filename, bool showLabels) {
             double count = edge.weight;
             if (count > 1) {
                 penwidth = 4.0 + (count - 1) * 2.0;
+            }
+            penwidth = std::min(10.0, penwidth);
+            if (showLabels) {
+                edgeLabel = std::to_string((int)count);
             }
             
             Timepoint src_tp = edge.source.timepoint;
@@ -158,7 +166,8 @@ void exportToDot(const Graph& g, const std::string& filename, bool showLabels) {
              << " [style=" << style
              << ", color=" << color
              << ", arrowsize=0.3"
-             << ", penwidth=" << penwidth;
+             << ", penwidth=" << penwidth
+             << ", label=\"" << edgeLabel << "\"";
 
         if (!extraAttributes.empty()) {
             file << ", " << extraAttributes;
