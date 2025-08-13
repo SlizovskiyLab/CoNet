@@ -2,6 +2,9 @@
 #define QUERY_ENGINE_H
 #include <map>
 #include <set>
+#include <tuple>
+#include <unordered_set>
+#include <unordered_map>
 #include <string>
 #include "graph.h"
 #include "Timepoint.h"
@@ -19,8 +22,8 @@ void getPatientwiseColocalizationsByCriteria(
     const std::string& label
 );
 
-void getTopARGMGEPairsByFrequency(const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizations, int topN = 10);
-void getTopARGMGEPairsByFrequencyWODonor(const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizations, int topN);
+void getTopARGMGEPairsByFrequency(const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizations, int topN = -1);
+void getTopARGMGEPairsByFrequencyWODonor(const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizations, int topN = -1);
 void getConnectedMGE(const Graph& graph, const std::set<Edge>& edges, int mgeId, const std::string& mgeName);
 
 void getColocalizationsByCriteria(
@@ -32,7 +35,25 @@ void getColocalizationsByCriteria(
 );
 void getTopARGMGEPairsByUniquePatients(
     const std::map<std::pair<int, int>, std::set<int>>& globalPairToPatients,
-    int topN = 10,
+    int topN = -1,
     const std::string& label = "All Patients"
 );
+
+static inline bool isPostBin1(Timepoint tp);
+static inline bool isPostBin2(Timepoint tp);
+static inline bool isPostBin3(Timepoint tp);
+static inline int getPostFMTBin(const std::set<Timepoint>& tps);
+
+
+void writeTemporalDynamicsCountsForDisease(
+    const std::string& disease,
+    std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual,
+    const std::map<int, std::string>& patientToDiseaseMap
+);
+
+void writeAllDiseases_TemporalDynamicsCounts(
+    std::map<std::tuple<int,int,int>, std::set<Timepoint>>& colocalizationByIndividual,
+    const std::map<int, std::string>& patientToDiseaseMap
+);
+
 #endif

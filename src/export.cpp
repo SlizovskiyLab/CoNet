@@ -26,9 +26,9 @@ std::string getTimepointColor(const Timepoint& tp) {
     int timeValue = static_cast<int>(tp);
     if (timeValue == 1000) return "\"yellow\"";
     if (timeValue == 0)  return "\"red\"";
-    if (timeValue > 0 && timeValue < 31) return "\"#87CEFA\""; 
-    if (timeValue > 30 && timeValue < 61) return "\"#0d6bcaff\""; 
-    if (timeValue > 60) return "\"#0e0ecbff\"";
+    if (timeValue > 0 && timeValue < 31) return "\"#99D2FF\""; 
+    if (timeValue > 30 && timeValue < 61) return "\"#4D9DFF\""; 
+    if (timeValue > 60) return "\"#3A6EFF\"";
     return "\"green\""; // Fallback for any unexpected values
 }
 

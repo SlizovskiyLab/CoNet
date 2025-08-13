@@ -4,30 +4,58 @@
 #include "../include/query_engine.h"
 #include "../include/export.h"
 #include "../include/id_maps.h"
+#include "../include/Timepoint.h"
 #include <iostream>
 #include <map>
 #include <set>
 #include <tuple>
 #include <algorithm>
+#include <fstream>
+#include <map>
+#include <set>
+#include <tuple>
+#include <string>
+#include <fstream>
+#include <iostream>
 
-void printGraphStatistics(const Graph& g, 
-                          const std::unordered_map<Node, std::unordered_set<Node>>& adjacency) {
-    std::cout << "Graph constructed with " << g.nodes.size() 
-              << " nodes and " << g.edges.size() << " edges.\n";
-    std::cout << "ARGs: " << std::count_if(g.nodes.begin(), g.nodes.end(), 
-                  [](const Node& n) { return n.isARG; }) << "\n";
-    std::cout << "MGEs: " << std::count_if(g.nodes.begin(), g.nodes.end(), 
-                  [](const Node& n) { return !n.isARG; }) << "\n";
-    std::cout << "Total nodes: " << g.nodes.size() << "\n";
-    std::cout << "Colocalization Edges: " << std::count_if(g.edges.begin(), g.edges.end(), 
-                  [](const Edge& e) { return e.isColo; }) << "\n";
-    std::cout << "Temporal Edges: " << std::count_if(g.edges.begin(), g.edges.end(), 
-                  [](const Edge& e) { return !e.isColo; }) << "\n";
-    std::cout << "Total edges: " << g.edges.size() << "\n";
-    std::cout << "Adjacency list size: " << adjacency.size() << " nodes.\n";
+
+
+void writeGraphStatisticsCSV(
+    const Graph& g,
+    const std::unordered_map<Node, std::unordered_set<Node>>& adjacency,
+    const std::string& filename
+) {
+    // Precompute stats once
+    const size_t total_nodes = g.nodes.size();
+    const size_t total_edges = g.edges.size();
+    const size_t arg_count = std::count_if(g.nodes.begin(), g.nodes.end(),
+                                           [](const Node& n){ return n.isARG; });
+    const size_t mge_count = total_nodes - arg_count;
+    const size_t colo_edges = std::count_if(g.edges.begin(), g.edges.end(),
+                                            [](const Edge& e){ return e.isColo; });
+    const size_t temporal_edges = total_edges - colo_edges;
+    const size_t adjacency_nodes = adjacency.size();
+
+    std::ofstream out(filename);
+    if (!out.is_open()) {
+        std::cerr << "Error opening file: " << filename << "\n";
+        return;
+    }
+
+    // Header
+    out << "TotalNodes,TotalEdges,ARGs,MGEs,ColocalizationEdges,TemporalEdges,AdjacencyNodes\n";
+    // Row
+    out << total_nodes << ','
+        << total_edges << ','
+        << arg_count << ','
+        << mge_count << ','
+        << colo_edges << ','
+        << temporal_edges << ','
+        << adjacency_nodes << '\n';
+
+    out.close();
+    std::cout << "Graph statistics written to " << filename << "\n";
 }
-
-
 
 
 void analyzeColocalizations(const Graph& g, 
@@ -89,3 +117,6 @@ void mostProminentEntities(const Graph& g) {
     getTopARGMGEPairsByFrequency(colocalizationByIndividual, 10); // Top 10 ARG-MGE pairs by frequency
 
 }
+
+
+

@@ -16,7 +16,6 @@ namespace fs = std::filesystem;
 
 fs::path data_file = "data/patientwise_colocalization_by_timepoint.csv";
 
-
 int main() {
     Graph g;
     std::map<int, std::string> patientToDiseaseMap;
@@ -28,61 +27,60 @@ int main() {
     buildAdjacency(g, adjacency);
 
     /******************************** Graph Statistics  ************************************/
-    printGraphStatistics(g, adjacency);
+    writeGraphStatisticsCSV(g, adjacency, "output/graph_statistics.csv");
 
     /******************************** Traversal of Graph  ************************************/
     std::map<std::pair<int, int>, std::multiset<Timepoint>> colocalizationTimeline;
     traverseAdjacency(g, adjacency, colocalizationTimeline);
-    std::cout << "No of unique colocalizations: " << colocalizationTimeline.size() << "\n";
 
     /******************************** Traversal of Graph  ************************************/
     std::map<std::tuple<int, int, int>, std::set<Timepoint>> colocalizationByIndividual;
     traverseGraph(g, colocalizationByIndividual);
     std::map<std::pair<int, int>, std::set<int>> globalPairToPatients;
+    
 
     /********************************* Colocalizations by Timepoints ************************************/
-    analyzeColocalizations(g, adjacency);
-    analyzeColocalizationsCollectively(g, adjacency);
+    writeAllDiseases_TemporalDynamicsCounts(colocalizationByIndividual, patientToDiseaseMap);
 
 
-    /**************************************** Most Prominent Genes ***********************************/
-    mostProminentEntities(g);
+    // analyzeColocalizations(g, adjacency);
+    // // analyzeColocalizationsCollectively(g, adjacency);
 
-    /************************************* Graph Visualization ***********************************/
-    Graph coNet = g;
-    exportToDot(coNet, "conet.dot");
-    exportParentTemporalGraphDot(coNet, "conet_parent_temporal.dot", true);
+    // /**************************************** Most Prominent Genes ***********************************/
+    // mostProminentEntities(g);
 
-    Graph rCDI = filterGraphByDisease(g, "rCDI", patientToDiseaseMap);
-    exportToDot(rCDI, "rcdi.dot");
-    exportParentTemporalGraphDot(rCDI, "rcdi_parent_temporal.dot", true);
+    // /************************************* Graph Visualization ***********************************/
+    // Graph coNet = g;
+    // exportToDot(coNet, "conet.dot");
+    // exportParentTemporalGraphDot(coNet, "conet_parent_temporal.dot", true);
+
+    // Graph rCDI = filterGraphByDisease(g, "rCDI", patientToDiseaseMap);
+    // exportToDot(rCDI, "rcdi.dot");
+    // exportParentTemporalGraphDot(rCDI, "rcdi_parent_temporal.dot", true);
     
-    Graph melanoma = filterGraphByDisease(g, "Melanoma", patientToDiseaseMap);
-    exportToDot(melanoma, "melanoma.dot");
-    exportParentTemporalGraphDot(melanoma, "melanoma_parent_temporal.dot", true);
+    // Graph melanoma = filterGraphByDisease(g, "Melanoma", patientToDiseaseMap);
+    // exportToDot(melanoma, "melanoma.dot");
+    // exportParentTemporalGraphDot(melanoma, "melanoma_parent_temporal.dot", true);
 
-    Graph mdrb = filterGraphByDisease(g, "MDRB", patientToDiseaseMap);
-    exportToDot(mdrb, "mdrb.dot");
-    exportParentTemporalGraphDot(mdrb, "mdrb_temporal.dot", true);
+    // Graph mdrb = filterGraphByDisease(g, "MDRB", patientToDiseaseMap);
+    // exportToDot(mdrb, "mdrb.dot");
+    // exportParentTemporalGraphDot(mdrb, "mdrb_temporal.dot", true);
 
-    // Graph sub = filterGraphByARGName(g, "A16S");
-    // exportToDot(sub, "A16S_subgraph.dot");
-    // exportParentTemporalGraphDot(sub, "A16S_subgraph_parent_temporal.dot", true);
+    // // Graph sub = filterGraphByARGName(g, "A16S");
+    // // exportToDot(sub, "A16S_subgraph.dot");
+    // // exportParentTemporalGraphDot(sub, "A16S_subgraph_parent_temporal.dot", true);
 
-    Graph sub2 = filterGraphByARGName(g, "CFX");
-    exportToDot(sub2, "CFX.dot");
-    exportParentTemporalGraphDot(sub2, "CFX_parent_temporal.dot", true);
+    // Graph sub2 = filterGraphByARGName(g, "CFX");
+    // exportToDot(sub2, "CFX.dot");
+    // exportParentTemporalGraphDot(sub2, "CFX_parent_temporal.dot", true);
 
-    Graph sub3 = filterGraphByMGEGroup(g, "virus");
-    exportToDot(sub3, "virus.dot");
-    exportParentTemporalGraphDot(sub3, "virus_parent_temporal.dot", true);
-    
-    Graph sub4 = filterGraphByTimepoint(g, "donor");
-    exportToDot(sub4, "donor.dot");
-    exportParentTemporalGraphDot(sub4, "donor_parent_temporal.dot", true);
+    // Graph sub3 = filterGraphByMGEGroup(g, "virus");
+    // exportToDot(sub3, "virus.dot");
+    // exportParentTemporalGraphDot(sub3, "virus_parent_temporal.dot", true);
 
-
-
+    // Graph sub4 = filterGraphByTimepoint(g, "donor");
+    // exportToDot(sub4, "donor.dot");
+    // exportParentTemporalGraphDot(sub4, "donor_parent_temporal.dot", true);
 
     return 0;
 

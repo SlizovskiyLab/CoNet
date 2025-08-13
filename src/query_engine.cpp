@@ -10,6 +10,8 @@
 #include "query_engine.h"
 #include "id_maps.h"
 #include <algorithm>
+#include <fstream>
+#include <iostream>
 
 /************************************************************************************************/
 bool isPostFMT(Timepoint tp) {
@@ -53,7 +55,7 @@ void getPatientwiseColocalizationsByCriteria(
     }
 
     std::cout << "Colocalizations (" << label << "): " << filteredColocs.size() << "\n";
-    getTopARGMGEPairsByFrequency(filteredColocs, 10);
+    getTopARGMGEPairsByFrequency(filteredColocs);
 }
 
 /***************************************** Colocalizations ****************************************/
@@ -128,7 +130,7 @@ void getTopARGMGEPairsByUniquePatients(
     std::cout << "\nTop colocalizations by unique patients (" << label << "):\n";
     int countPrinted = 0;
     for (const auto& [pair, count] : freqList) {
-        if (countPrinted++ >= topN) break;
+        if (topN > 0 && countPrinted >= topN) break;
         int argID = pair.first;
         int mgeID = pair.second;
 
@@ -148,15 +150,19 @@ void getTopARGMGEPairsByUniquePatients(
 
 /********************************* Prominent Colocalizations by Frequency ********************************/
 void getTopARGMGEPairsByFrequency(
-    const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizations, int topN) {
+    const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizations,
+    int topN // default: print all
+) {
     std::map<std::pair<int, int>, int> countMap;
 
+    // Count (ARG_ID, MGE_ID) occurrences
     for (const auto& [tuple, tps] : colocalizations) {
-        int argID = std::get<1>(tuple);
-        int mgeID = std::get<2>(tuple);
+        int argID = std::get<0>(tuple); // Correct index: ARG is first in tuple
+        int mgeID = std::get<1>(tuple); // MGE is second in tuple
         countMap[{argID, mgeID}]++;
     }
 
+    // Convert to vector for sorting
     std::vector<std::pair<std::pair<int, int>, int>> freqList(countMap.begin(), countMap.end());
     std::sort(freqList.begin(), freqList.end(), [](const auto& a, const auto& b) {
         return a.second > b.second;
@@ -165,15 +171,23 @@ void getTopARGMGEPairsByFrequency(
     std::cout << "Top ARG–MGE pairs by frequency:\n";
     int countPrinted = 0;
     for (const auto& [pair, count] : freqList) {
-        if (countPrinted >= topN) break;
+        if (topN > 0 && countPrinted >= topN) break;
+
         int argID = pair.first;
         int mgeID = pair.second;
-        std::cout << "ARG: " ;
-        if (argIdMap.count(argID)) std::cout <<  getARGName(argID) << " (" << getARGGroupName(argID) << ")";
-        else std::cout << "Unknown ARG ID " << argID;
-        std::cout << ", MGE: " ;
-        if (mgeIdMap.count(mgeID)) std::cout << getMGEName(mgeID);
-        else std::cout << "Unknown MGE ID " << mgeID;
+
+        std::cout << "ARG: ";
+        if (argIdMap.count(argID))
+            std::cout << getARGName(argID) << " (" << getARGGroupName(argID) << ")";
+        else
+            std::cout << "Unknown ARG ID " << argID;
+
+        std::cout << ", MGE: ";
+        if (mgeIdMap.count(mgeID))
+            std::cout << getMGEName(mgeID);
+        else
+            std::cout << "Unknown MGE ID " << mgeID;
+
         std::cout << ", Count: " << count << "\n";
         countPrinted++;
     }
@@ -211,7 +225,7 @@ void getTopARGMGEPairsByFrequencyWODonor(
     std::cout << "Top ARG–MGE pairs by frequency (excluding donor-only entries):\n";
     int countPrinted = 0;
     for (const auto& [pair, count] : freqList) {
-        if (countPrinted >= topN) break;
+        if (topN > 0 && countPrinted >= topN) break;
         int argID = pair.first;
         int mgeID = pair.second;
         std::cout << "ARG: ";
@@ -251,5 +265,82 @@ void getConnectedMGEs(const Graph& graph, int argID) {
 
 
 
+static inline bool isPostBin1(Timepoint tp) { int v = static_cast<int>(tp); return v >= 1  && v <= 30; }
+static inline bool isPostBin2(Timepoint tp) { int v = static_cast<int>(tp); return v >= 31 && v <= 60; }
+static inline bool isPostBin3(Timepoint tp) { int v = static_cast<int>(tp); return v >= 61; }
+
+// Highest bin wins if multiple present
+static inline int postBinOf(const std::set<Timepoint>& s) {
+    bool b1 = false, b2 = false, b3 = false;
+    for (auto tp : s) {
+        if (!b1 && isPostBin1(tp)) b1 = true;
+        else if (!b2 && isPostBin2(tp)) b2 = true;
+        else if (!b3 && isPostBin3(tp)) b3 = true;
+        if (b1 && b2 && b3) break;
+    }
+    if (b3) return 3; // post_3 (61+)
+    if (b2) return 2; // post_2 (31–60)
+    if (b1) return 1; // post_1 (1–30)
+    return 0;         // no post
+}
 
 
+
+// ---------- ARG,MGE, Donor/Pre/Post flags -> patient counts (disease-specific) ----------
+void writeTemporalDynamicsCountsForDisease(
+    const std::string& disease,
+    std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual,
+    const std::map<int, std::string>& patientToDiseaseMap
+) {
+    // (ARG, MGE, DonorFlag, PreFlag, PostFlag) -> patient count
+    std::map<std::tuple<int,int,int,int,int>, int> comboCounts;
+    
+    for (const auto& [key, tps] : colocalizationByIndividual) {
+        const int patientID = std::get<0>(key);
+        const int argID     = std::get<1>(key);
+        const int mgeID     = std::get<2>(key);
+
+        auto it = patientToDiseaseMap.find(patientID);
+        if (it == patientToDiseaseMap.end() || it->second != disease) continue;
+
+        bool hasDonor   = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) { return isDonor(tp); });
+        bool hasPreFMT  = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) { return isPreFMT(tp); });
+        const int postBin = postBinOf(tps); // 0 (none), 1 (1–30), 2 (31–60), 3 (61+)
+
+        comboCounts[std::make_tuple(argID, mgeID, hasDonor, hasPreFMT, postBin)] += 1;
+    }
+
+
+    const std::string filename = "output/" + disease + "_colocalizations" + ".csv";
+    std::ofstream out(filename);
+    if (!out.is_open()) {
+        std::cerr << "Error opening file: " << filename << "\n";
+        return;
+    }
+
+    out << "ARG_ID,MGE_ID,Donor,Pre,Post,PatientCount\n";
+    for (const auto& [k, cnt] : comboCounts) {
+        int argID, mgeID, donor, pre, post;
+        std::tie(argID, mgeID, donor, pre, post) = k;
+        out << getARGName(argID) << ','
+            << getMGEName(mgeID) << ','
+            << donor << ','
+            << pre   << ','
+            << post  << ','
+            << cnt   << '\n';
+    }
+    out.close();
+    std::cout << "Data written to " << filename << "\n";
+}
+
+
+/* Optional: write a CSV for every disease present in the map */
+void writeAllDiseases_TemporalDynamicsCounts(
+    std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual,
+    const std::map<int, std::string>& patientToDiseaseMap
+) {
+    std::set<std::string> diseases;
+    for (const auto& [pid, dz] : patientToDiseaseMap) diseases.insert(dz);
+    for (const auto& dz : diseases)
+        writeTemporalDynamicsCountsForDisease(dz, colocalizationByIndividual, patientToDiseaseMap);
+}
