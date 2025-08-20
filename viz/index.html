@@ -21,9 +21,6 @@ fetch("./graph.json")
   .then(r => r.json())
   .then(data => {
     // scales (example: encode type/timepoint)
-    const color = d3.scaleOrdinal()
-      .domain(["ARG", "MGE"])
-      .range(["#2f6fed", "#f08c2a"]);
 
     const link = g.selectAll("line.link")
       .data(data.links)
@@ -31,16 +28,30 @@ fetch("./graph.json")
       .attr("class", d => "link" + (d.isColo ? " colo" : ""))
       .attr("stroke-width", d => Math.max(1, d.weight || 1));
 
-    const node = g.selectAll("circle.node")
+    const shapeMap = {
+      circle: d3.symbolCircle,
+      box: d3.symbolSquare,
+      triangle: d3.symbolTriangle,
+      diamond: d3.symbolDiamond,
+      hexagon: d3.symbolHexagon,
+      octagon: d3.symbolOctagon,
+      parallelogram: d3.symbolParallelogram,
+      trapezium: d3.symbolTrapezium
+    };
+
+    const node = g.selectAll(".node")
       .data(data.nodes)
-      .join("circle")
+      .join("path")
       .attr("class", "node")
-      .attr("r", 8)
-      .attr("fill", d => color(d.type))
+      .attr("d", d3.symbol()
+        .type(d => shapeMap[d.shape] || d3.symbolCircle)
+        .size(300))
+      .attr("fill", d => d.color) // use JSON-provided hex code
       .call(d3.drag()
         .on("start", dragstart)
         .on("drag",  dragged)
-        .on("end",   dragend));
+        .on("end",   dragend)
+      );
 
     node.append("title").text(d => `${d.id}\n${d.type} @ ${d.tp}`);
 
@@ -49,22 +60,24 @@ fetch("./graph.json")
       .join("text")
       .attr("class", "label")
       .attr("dy", -12)
-      .text(d => d.origId + " " + d.type + " " + d.tp);
+      .text(d => d.label);
 
     const sim = d3.forceSimulation(data.nodes)
-      .force("link", d3.forceLink(data.links).id(d => d.id).distance(d => d.isColo ? 70 : 110))
-      .force("charge", d3.forceManyBody().strength(-180))
-      .force("center", d3.forceCenter(500, 350))
-      .on("tick", () => {
-        link
-          .attr("x1", d => d.source.x).attr("y1", d => d.source.y)
-          .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
-        node
-          .attr("cx", d => d.x).attr("cy", d => d.y);
-        label
-          .attr("x", d => d.x).attr("y", d => d.y);
-      });
-
+    .force("link", d3.forceLink(data.links)
+      .id(d => d.id)
+      .distance(d => d.isColo ? 70 : 110))
+    .force("charge", d3.forceManyBody().strength(-180))
+    .force("center", d3.forceCenter(500, 350))
+    .force("collision", d3.forceCollide().radius(15)) // 👈 prevent overlap
+    .on("tick", () => {
+      link
+        .attr("x1", d => d.source.x).attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
+      node
+        .attr("transform", d => `translate(${d.x},${d.y})`); // 👈 important for paths
+      label
+        .attr("x", d => d.x).attr("y", d => d.y);
+    });
     function dragstart(e, d){ if(!e.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; }
     function dragged(e, d){ d.fx=e.x; d.fy=e.y; }
     function dragend(e, d){ if(!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }
