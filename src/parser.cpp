@@ -17,7 +17,7 @@ void addEdge(Graph& graph, const Node& src, const Node& tgt, bool isColo, int pa
     if (isColo) {
         Node s = std::min(src, tgt);
         Node t = std::max(src, tgt);
-        Edge search_edge = {s, t, true};
+        Edge search_edge = {s, t, true, {}, 0};
 
         auto it = graph.edges.find(search_edge);
         if (it != graph.edges.end()) {

@@ -1,15 +1,31 @@
 cmake_minimum_required(VERSION 3.10)
-project(CoNet)
+project(CoNet CXX)
 
-# Use C++17
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# Include headers
-include_directories(include)
+# Include dirs
+include_directories(${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/external)
 
-# Source files
-file(GLOB SOURCES "src/*.cpp")
+# Single executable (no other main files!)
+add_executable(CoNet
+    src/main.cpp
+    src/graph.cpp
+    src/export_graph_json.cpp
+    # add other non-main sources here:
+    src/parser.cpp
+    src/id_maps.cpp
+    src/traversal.cpp
+    src/query_engine.cpp
+    src/export.cpp
+    src/graph_utils.cpp
+    src/graph_analysis.cpp
+)
 
-# Build target
-add_executable(CoNet ${SOURCES})
+# Optional warnings
+if (MSVC)
+  target_compile_options(CoNet PRIVATE /W4)
+else()
+  target_compile_options(CoNet PRIVATE -Wall -Wextra -Wpedantic)
+endif()
+
