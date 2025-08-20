@@ -39,12 +39,6 @@ void getTopARGMGEPairsByUniquePatients(
     const std::string& label = "All Patients"
 );
 
-static inline bool isPostBin1(Timepoint tp);
-static inline bool isPostBin2(Timepoint tp);
-static inline bool isPostBin3(Timepoint tp);
-static inline int getPostFMTBin(const std::set<Timepoint>& tps);
-
-
 void writeTemporalDynamicsCountsForDisease(
     const std::string& disease,
     std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual,

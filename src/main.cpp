@@ -51,25 +51,14 @@ int main() {
     /********************************* Colocalizations by Timepoints ************************************/
     writeAllDiseases_TemporalDynamicsCounts(colocalizationByIndividual, patientToDiseaseMap);
 
-    // // ------ Export D3 JSON --------
-    // const fs::path jsonOut = "viz/graph.json";
-    // if (!ensure_parent_dir(jsonOut)) {
-    //     std::cerr << "Failed to create dir: " << jsonOut.parent_path() << "\n";
-    //     return 1;
-    // }
-    // Graph coNet = g;
-    // std::cerr << "[main] Graph has nodes=" << coNet.nodes.size()
-    //       << " edges=" << coNet.edges.size() << "\n";
-    // exportGraphToJsonSimple(coNet, jsonOut.string());
-
 
     analyzeColocalizations(g, adjacency);
-    // analyzeColocalizationsCollectively(g, adjacency);
+    analyzeColocalizationsCollectively(g, adjacency);
 
-    /**************************************** Most Prominent Genes ***********************************/
+    // /**************************************** Most Prominent Genes ***********************************/
     mostProminentEntities(g);
 
-    /************************************* Graph Visualization ***********************************/
+    // /************************************* Graph Visualization ***********************************/
     Graph coNet = g;
     exportToDot(coNet, "conet.dot");
     exportParentTemporalGraphDot(coNet, "conet_parent_temporal.dot", true);
