@@ -41,3 +41,17 @@ Step 4: Run the executable
 ```
 ./CoNet.exe
 ```
+
+
+
+### Manually Run
+g++ -std=c++17 -Wall -Iinclude -Ithird_party src/*.cpp -o CoNet.exe
+
+./CoNet.exe
+
+
+cd viz
+python3 -m http.server 8080
+
+Check 
+http://localhost:8080/index.html

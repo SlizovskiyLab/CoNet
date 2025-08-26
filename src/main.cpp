@@ -9,7 +9,7 @@
 #include "../include/export.h"
 #include "../include/graph_utils.h"
 #include "../include/graph_analysis.h"
-// #include "../include/export_graph_json.h"   
+#include "../include/export_graph_json.h"   
 
 /* Main entry point: parse arguments, load data, call functions */
 
@@ -25,13 +25,28 @@ fs::path data_file = "data/patientwise_colocalization_by_timepoint.csv";
 //     return fs::create_directories(parent, ec);
 // }
 
+// static void logGraph(const Graph& g, const char* tag) {
+//     std::cerr << "[graph] " << tag
+//               << " nodes=" << g.nodes.size()
+//               << " edges=" << g.edges.size() << "\n";
+// }
+
+// static void rebuildNodesFromEdges(Graph& g) {
+//     for (const auto& e : g.edges) {
+//         g.nodes.insert(e.source);
+//         g.nodes.insert(e.target);
+//     }
+// }
+
+
 int main() {
     Graph g;
     std::map<int, std::string> patientToDiseaseMap;
     std::unordered_map<Node, std::unordered_set<Node>> adjacency;
 
     // parse the data file and construct the graph (true to exclude ARGs requiring SNP confirmation, true to exclude metals)
-    parseData(data_file, g, patientToDiseaseMap, true, false); 
+    parseData(data_file, g, patientToDiseaseMap, true, false);
+
     addTemporalEdges(g);  
     buildAdjacency(g, adjacency);
 
@@ -59,8 +74,10 @@ int main() {
     mostProminentEntities(g);
 
     // /************************************* Graph Visualization ***********************************/
+
     Graph coNet = g;
     exportToDot(coNet, "conet.dot");
+    exportGraphToJsonSimple(coNet, "viz/graph.json");
     exportParentTemporalGraphDot(coNet, "conet_parent_temporal.dot", true);
 
     Graph rCDI = filterGraphByDisease(g, "rCDI", patientToDiseaseMap);
@@ -68,10 +85,12 @@ int main() {
     exportParentTemporalGraphDot(rCDI, "rcdi_parent_temporal.dot", true);
     
     Graph melanoma = filterGraphByDisease(g, "Melanoma", patientToDiseaseMap);
+    // exportGraphToJsonSimple(melanoma, "viz/graph.json");
     exportToDot(melanoma, "melanoma.dot");
     exportParentTemporalGraphDot(melanoma, "melanoma_parent_temporal.dot", true);
 
     Graph mdrb = filterGraphByDisease(g, "MDRB", patientToDiseaseMap);
+    // exportGraphToJsonSimple(mdrb, "viz/graph.json");
     exportToDot(mdrb, "mdrb.dot");
     exportParentTemporalGraphDot(mdrb, "mdrb_temporal.dot", true);
 

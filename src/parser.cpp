@@ -30,7 +30,7 @@ void addEdge(Graph& graph, const Node& src, const Node& tgt, bool isColo, int pa
             graph.edges.insert(search_edge);
         }
     } else {
-        Edge search_edge = {src, tgt, false};
+        Edge search_edge = {src, tgt, false, {}, 0};
         auto it = graph.edges.find(search_edge);
         if (it != graph.edges.end()) {
             Edge modified_edge = *it;
