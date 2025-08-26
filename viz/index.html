@@ -1,91 +1,143 @@
 <!doctype html>
 <meta charset="utf-8"/>
-<title>D3 Graph</title>
+<title>D3 Graph with Dropdown</title>
 <style>
   html, body, svg { width:100%; height:100%; margin:0 }
-  line.link { stroke-opacity:.6 }
+  path.link { stroke-opacity:.6; fill:none }
   path.node { cursor:grab }
   text.label { font:12px system-ui; pointer-events:none }
+  #menu { position:absolute; top:10px; left:10px; background:white; padding:5px; z-index:10; }
 </style>
-<svg id="graph" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet"></svg>
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script>
-const svg = d3.select("#graph");
-const g = svg.append("g");
+<body>
+  <div id="menu">
+    Graph View:
+    <select id="dataset">
+      <option value="graph1.json">ARG-MGE Interaction View</option>
+      <option value="graph2.json">Colocalization View</option>
+    </select>
+  </div>
 
-// zoom/pan
-svg.call(d3.zoom().scaleExtent([0.2, 5]).on("zoom", (e) => g.attr("transform", e.transform)));
+  <svg id="graph" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet"></svg>
 
-fetch("./graph.json")
-  .then(r => r.json())
-  .then(data => {
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script>
+  const svg = d3.select("#graph");
+  const g = svg.append("g");
 
-    // ---- links ----
-    const link = g.selectAll("line.link")
-      .data(data.links)
-      .join("line")
-      .attr("class", "link")
-      .attr("stroke", d => d.color || "#999")
-      .attr("stroke-width", d => Math.max(1, d.penwidth || 1))
-      .attr("stroke-dasharray", d => d.isColo ? null : "4 2"); 
-      // colocalization = solid, temporal/other = dashed
+  // zoom/pan
+  svg.call(d3.zoom().scaleExtent([0.2, 5])
+    .on("zoom", (e) => g.attr("transform", e.transform)));
 
-    // ---- node shapes ----
-    const shapeMap = {
-      circle: d3.symbolCircle,
-      box: d3.symbolSquare,
-      triangle: d3.symbolTriangle,
-      diamond: d3.symbolDiamond,
-      hexagon: d3.symbolHexagon,
-      octagon: d3.symbolOctagon,
-      parallelogram: d3.symbolWye,   // D3 doesn’t have direct parallelogram
-      trapezium: d3.symbolWye        // use Wye as placeholder
-    };
+  const shapeMap = {
+    circle: d3.symbolCircle,
+    box: d3.symbolSquare,
+    triangle: d3.symbolTriangle,
+    diamond: d3.symbolDiamond,
+    hexagon: d3.symbolCross,
+    octagon: d3.symbolStar,
+    parallelogram: d3.symbolWye,
+    trapezium: d3.symbolWye
+  };
 
-    const node = g.selectAll(".node")
-      .data(data.nodes)
-      .join("path")
-      .attr("class", "node")
-      .attr("d", d3.symbol()
-        .type(d => shapeMap[d.shape] || d3.symbolCircle)
-        .size(300))
-      .attr("fill", d => d.color)
-      .call(d3.drag()
-        .on("start", dragstart)
-        .on("drag",  dragged)
-        .on("end",   dragend)
-      );
+  const arcScale = { licensing: 1.5, suit: 0.1 };
 
-    node.append("title").text(d => `${d.id}`);
+  // --- arc generator with duplicate handling ---
+  function linkArc(d, scale = 1) {
+    const dx = d.target.x - d.source.x;
+    const dy = d.target.y - d.source.y;
+    const baseR = Math.hypot(dx, dy) * scale;
 
-    const label = g.selectAll("text.label")
-      .data(data.nodes)
-      .join("text")
-      .attr("class", "label")
-      .attr("dy", -12)
-      .text(d => d.label);
+    // offset duplicates: spread them across multiple radii
+    const step = 20; // spacing between arcs
+    const offset = (d.linknum - (d.linkcount - 1) / 2) * step;
 
-    // ---- simulation ----
-    const sim = d3.forceSimulation(data.nodes)
-      .force("link", d3.forceLink(data.links)
-        .id(d => d.id)
-        .distance(d => d.isColo ? 40 : 50))
-      .force("charge", d3.forceManyBody()
-        .strength(d => -(40 + (d.degree || 0) * 15))) // repel more if high degree
-      .force("center", d3.forceCenter(500, 350))
-      .force("collision", d3.forceCollide().radius(20))
-      .force("x", d3.forceX(500).strength(0.05))   // weak global attraction
-      .force("y", d3.forceY(350).strength(0.05))
-      .on("tick", () => {
-        link
-          .attr("x1", d => d.source.x).attr("y1", d => d.source.y)
-          .attr("x2", d => d.target.x).attr("y2", d => d.target.y);
-        node.attr("transform", d => `translate(${d.x},${d.y})`);
-        label.attr("x", d => d.x).attr("y", d => d.y);
+    const r = baseR + offset;
+
+    return `M${d.source.x},${d.source.y}
+            A${r},${r} 0 0,1 ${d.target.x},${d.target.y}`;
+  }
+
+  // --- render function ---
+  function renderGraph(file) {
+    d3.json(file).then(data => {
+      g.selectAll("*").remove(); // clear old
+
+      // --- assign linknum for duplicates ---
+      const linkGroups = d3.groups(data.links, d => {
+        const s = typeof d.source === "object" ? d.source.id : d.source;
+        const t = typeof d.target === "object" ? d.target.id : d.target;
+        return s + "-" + t;
+      });
+      linkGroups.forEach(([key, links]) => {
+        links.forEach((l, i) => {
+          l.linknum = i;
+          l.linkcount = links.length;
+        });
       });
 
-    function dragstart(e, d){ if(!e.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; }
-    function dragged(e, d){ d.fx=e.x; d.fy=e.y; }
-    function dragend(e, d){ if(!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }
+      // ---- links ----
+      const link = g.selectAll("path.link")
+        .data(data.links)
+        .join("path")
+        .attr("class", "link")
+        .attr("stroke", d => d.color || "#999")
+        .attr("stroke-width", d => Math.max(1, d.penwidth || 1))
+        .attr("stroke-dasharray", d => d.isColo ? null : "4 2");
+
+      // ---- nodes ----
+      const node = g.selectAll(".node")
+        .data(data.nodes)
+        .join("path")
+        .attr("class", "node")
+        .attr("d", d3.symbol()
+          .type(d => shapeMap[d.shape] || d3.symbolCircle)
+          .size(300))
+        .attr("fill", d => d.color)
+        .call(d3.drag()
+          .on("start", dragstart)
+          .on("drag", dragged)
+          .on("end", dragend)
+        );
+
+      node.append("title").text(d => `${d.id}`);
+
+      // ---- labels ----
+      const label = g.selectAll("text.label")
+        .data(data.nodes)
+        .join("text")
+        .attr("class", "label")
+        .attr("dy", -12)
+        .text(d => d.label);
+
+      // ---- simulation ----
+      const sim = d3.forceSimulation(data.nodes)
+        .force("link", d3.forceLink(data.links)
+          .id(d => d.id)
+          .distance(d => d.isColo ? 40 : 50))
+        .force("charge", d3.forceManyBody()
+          .strength(d => -(40 + (d.degree || 0) * 15)))
+        .force("center", d3.forceCenter(500, 350))
+        .force("collision", d3.forceCollide().radius(20))
+        .force("x", d3.forceX(500).strength(0.05))
+        .force("y", d3.forceY(350).strength(0.05))
+        .on("tick", () => {
+          link.attr("d", d => linkArc(d, arcScale[d.type] || 1));
+          node.attr("transform", d => `translate(${d.x},${d.y})`);
+          label.attr("x", d => d.x).attr("y", d => d.y);
+        });
+
+      function dragstart(e, d){ if(!e.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; }
+      function dragged(e, d){ d.fx=e.x; d.fy=e.y; }
+      function dragend(e, d){ if(!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }
+    });
+  }
+
+  // default load
+  renderGraph("graph1.json");
+
+  // dropdown event
+  d3.select("#dataset").on("change", function() {
+    renderGraph(this.value);
   });
-</script>
+  </script>
+</body>

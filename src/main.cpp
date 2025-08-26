@@ -77,7 +77,7 @@ int main() {
 
     Graph coNet = g;
     exportToDot(coNet, "conet.dot");
-    exportGraphToJsonSimple(coNet, "viz/graph.json");
+    exportGraphToJsonSimple(coNet, "viz/graph1.json");
     exportParentTemporalGraphDot(coNet, "conet_parent_temporal.dot", true);
 
     Graph rCDI = filterGraphByDisease(g, "rCDI", patientToDiseaseMap);
@@ -85,7 +85,7 @@ int main() {
     exportParentTemporalGraphDot(rCDI, "rcdi_parent_temporal.dot", true);
     
     Graph melanoma = filterGraphByDisease(g, "Melanoma", patientToDiseaseMap);
-    // exportGraphToJsonSimple(melanoma, "viz/graph.json");
+    exportGraphToJsonSimple(melanoma, "viz/graph2.json");
     exportToDot(melanoma, "melanoma.dot");
     exportParentTemporalGraphDot(melanoma, "melanoma_parent_temporal.dot", true);
 
