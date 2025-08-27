@@ -24,6 +24,12 @@ static std::string getTimepointColor(const Timepoint& tp) {
     return "green"; // fallback
 }
 
+auto timepointOrder = [](Timepoint tp) -> int {
+    if (tp == Timepoint::Donor) return -1;       // Donor comes first
+    if (tp == Timepoint::PreFMT) return 0;       // PreFMT next
+    return static_cast<int>(tp);               
+};
+
 std::string getLabel(const Node& node) {
     std::string label = node.isARG ? getARGName(node.id) : getMGENameForLabel(node.id);
     label += "\n" + toString(node.timepoint);
@@ -126,6 +132,114 @@ bool exportGraphToJsonSimple(const Graph& g, const std::string& outPathStr) {
     out << j.dump(2) << '\n';
 
     std::cerr << "[exportGraphToJsonSimple] Wrote nodes=" << j["nodes"].size()
+              << " links=" << j["links"].size()
+              << " to " << outPathStr << "\n";
+    return true;
+}
+
+
+bool exportParentGraphToJson(const Graph& g, const std::string& outPathStr, bool showLabels) {
+    json j;
+    j["nodes"] = json::array();
+    j["links"] = json::array();
+
+    struct ParentNodeInfo {
+        std::string name;
+        Timepoint tp;
+        int argId;
+        int mgeId;
+    };
+
+    int colocCounter = 0;
+    std::map<std::tuple<int,int,Timepoint>, std::string> uniqueParents;
+    std::map<std::pair<int,int>, std::vector<ParentNodeInfo>> colocMap;
+
+    // --- create parent nodes ---
+    for (const Edge& edge : g.edges) {
+        if (!edge.isColo) continue;  // only colocalization edges define parent nodes
+
+        const Node& argNode = edge.source.isARG ? edge.source : edge.target;
+        const Node& mgeNode = edge.source.isARG ? edge.target : edge.source;
+
+        int argId = argNode.id;
+        int mgeId = mgeNode.id;
+        Timepoint tp = argNode.timepoint;
+
+        auto key = std::make_tuple(argId, mgeId, tp);
+        if (!uniqueParents.count(key)) {
+            std::string parentName = "Parent_" + std::to_string(++colocCounter);
+            uniqueParents[key] = parentName;
+
+            std::string color = getTimepointColor(tp);
+            std::string groupName = getMGEGroupName(mgeId);
+            std::string shape = getMGEGroupShape(groupName);
+            std::string label = showLabels
+                ? (getARGName(argId) + "\n" + getMGENameForLabel(mgeId) + "\n" + toString(tp))
+                : "";
+
+            // write JSON node
+            j["nodes"].push_back({
+                {"id", parentName},
+                {"label", label},
+                {"argId", argId},
+                {"mgeId", mgeId},
+                {"timepoint", static_cast<int>(tp)},
+                {"color", color},
+                {"shape", shape}
+            });
+        }
+
+        auto pairKey = std::make_pair(argId, mgeId);
+        colocMap[pairKey].push_back({uniqueParents[key], tp, argId, mgeId});
+    }
+
+    // --- add temporal edges between parent nodes ---
+    for (auto& entry : colocMap) {
+        auto& parentNodes = entry.second;
+
+        std::sort(parentNodes.begin(), parentNodes.end(),
+                  [&](const ParentNodeInfo& a, const ParentNodeInfo& b) {
+                      return timepointOrder(a.tp) < timepointOrder(b.tp);
+                  });
+
+        for (size_t i = 0; i + 1 < parentNodes.size(); ++i) {
+            if (parentNodes[i].tp == parentNodes[i+1].tp ||
+                parentNodes[i].name == parentNodes[i+1].name) {
+                continue;
+            }
+
+            Timepoint src_tp = parentNodes[i].tp;
+            Timepoint tgt_tp = parentNodes[i+1].tp;
+
+            bool src_is_post = (src_tp != Timepoint::Donor && src_tp != Timepoint::PreFMT);
+            bool tgt_is_post = (tgt_tp != Timepoint::Donor && tgt_tp != Timepoint::PreFMT);
+
+            std::string color;
+            if (src_tp == Timepoint::Donor && tgt_tp == Timepoint::PreFMT)      color = "#006400";
+            else if (src_tp == Timepoint::Donor && tgt_is_post)                 color = "#4B0082";
+            else if (src_tp == Timepoint::PreFMT && tgt_is_post)                color = "orange";
+            else                                                                color = "black";
+
+            j["links"].push_back({
+                {"source", parentNodes[i].name},
+                {"target", parentNodes[i+1].name},
+                {"style", "dashed"},
+                {"color", color},
+                {"penwidth", 5.0},
+                {"isColo", false},
+                {"type", "temporal"}
+            });
+        }
+    }
+
+    std::ofstream out(outPathStr);
+    if (!out) {
+        std::cerr << "[exportParentGraphToJson] Cannot open " << outPathStr << " for write\n";
+        return false;
+    }
+    out << j.dump(2) << '\n';
+
+    std::cerr << "[exportParentGraphToJson] Wrote parent-nodes=" << j["nodes"].size()
               << " links=" << j["links"].size()
               << " to " << outPathStr << "\n";
     return true;
