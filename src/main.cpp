@@ -85,10 +85,10 @@ int main() {
     // exportToDot(rCDI, "rcdi.dot");
     // exportParentTemporalGraphDot(rCDI, "rcdi_parent_temporal.dot", true);
     
-    // Graph melanoma = filterGraphByDisease(g, "Melanoma", patientToDiseaseMap);
-    // exportGraphToJsonSimple(melanoma, "viz/graph2.json");
+    Graph melanoma = filterGraphByDisease(g, "Melanoma", patientToDiseaseMap);
     // exportToDot(melanoma, "melanoma.dot");
     // exportParentTemporalGraphDot(melanoma, "melanoma_parent_temporal.dot", true);
+    exportGraphToJsonSimple(melanoma, "viz/melanoma.json");
 
     // Graph mdrb = filterGraphByDisease(g, "MDRB", patientToDiseaseMap);
     // exportGraphToJsonSimple(mdrb, "viz/graph.json");

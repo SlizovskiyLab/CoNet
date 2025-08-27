@@ -8,25 +8,35 @@
     path.link { stroke-opacity:.6; fill:none }
     path.node { cursor:grab }
     text.label { font:12px system-ui; pointer-events:none }
-    #menu { position:absolute; top:10px; left:10px; background:white; padding:5px; z-index:10; }
   </style>
 </head>
 <body>
+
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="graph.js"></script>
+
 <div id="menu">
-  <div>
-    Graph View:
+  <span id="collapseArrow">▼</span>   
+  <div id="menuContent">
+    <strong>Graph :</strong>
     <select id="dataset">
       <option value="graph1.json">ARG-MGE Interaction View</option>
       <option value="graph2.json">Colocalization View</option>
     </select>
-  </div>
-  <div style="margin-top:8px;">
-    <strong>Filter:</strong><br>
-    <label><input type="checkbox" checked> RCDI</label><br>
-    <label><input type="checkbox" checked> Melanoma</label><br>
-    <label><input type="checkbox" checked> MDRB</label>
+    <label>
+      <input type="checkbox" id="toggleLabels" checked>
+      Display Labels
+    </label>
+
+    <!-- <div style="margin-top:8px;">
+      <strong>Filter:</strong><br>
+      <label><input type="radio" name="filter" checked> RCDI</label>
+      <label><input type="radio" name="filter"> Melanoma</label>
+      <label><input type="radio" name="filter"> MDRB</label>
+    </div> -->
   </div>
 </div>
+
   <svg id="graph" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet"></svg>
 
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
@@ -131,6 +141,13 @@
         .attr("class", "label")
         .attr("dy", -12)
         .text(d => d.label);
+      
+        // --- attach checkbox event ---
+        d3.select("#toggleLabels").on("change", function() {
+          const checked = this.checked;
+          g.selectAll("text.label")
+            .style("display", checked ? "block" : "none");
+        });
 
       // ---- simulation ----
       const sim = d3.forceSimulation(data.nodes)
@@ -153,6 +170,7 @@
       function dragged(e, d){ d.fx=e.x; d.fy=e.y; }
       function dragend(e, d){ if(!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }
     });
+    g.selectAll("text.label").style("display", document.getElementById("toggleLabels").checked ? "block" : "none");
   }
 
   // default load
