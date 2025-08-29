@@ -1,35 +1,65 @@
 #menu {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
   background: white;
-  padding: 8px;
   border-bottom: 1px solid #ccc;
-  z-index: 10;
   font-family: system-ui, sans-serif;
   font-size: 14px;
-  box-sizing: border-box;
+}
+
+/* Row 1: Title + Arrow */
+#menuHeader {
+  display: flex;
+  justify-content: space-between; /* Title left, arrow right */
+  align-items: center;
+  padding: 6px 12px;
+}
+
+#menuTitle {
+  font-size: 18px;
+  font-weight: 700;
 }
 
 #collapseArrow {
-  float: right;
   cursor: pointer;
+  padding: 6px;
   font-size: 18px;
-  margin-left: 10px;
-  user-select: none; /* prevent text selection */
+  user-select: none;
+  transition: transform 0.3s ease;
 }
 
+/* Row 2: Controls (left) + Legend (right) */
+#menuContent {
+  display: flex;
+  justify-content: space-between; /* controls on left, legend on right */
+  align-items: center;
+  padding: 8px 12px;
+  gap: 20px;
+}
+
+#controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+#legend {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+#legend .box {
+  width: 14px;
+  height: 14px;
+  display: inline-block;
+  border-radius: 3px;
+}
+
+/* Collapse */
+#menu.collapsed #collapseArrow {
+  transform: rotate(180deg);
+}
 #menu.collapsed #menuContent {
   display: none;
-}
-
-#menu.collapsed #collapseArrow {
-  transform: rotate(-90deg);
-}
-
-#menu label {
-  display: block;
 }
 
 

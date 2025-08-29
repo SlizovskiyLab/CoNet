@@ -15,18 +15,55 @@
   <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
   <script src="graph.js"></script>
 
-<div id="menu">
-  <span id="collapseArrow">▼</span>   
-  <div id="menuContent">
+<div id="menu" style="display:flex; align-items:center; gap:20px; padding:6px;">
+  <div id="menuHeader" >
+    <div id="menuTitle">CoNet</div> 
+    <span id="collapseArrow">▼</span> 
+  </div>
+  <div id="menuContent" >
+    <div id="controls" > 
     <strong>Graph :</strong>
     <select id="dataset">
-      <option value="graph1.json">ARG-MGE Interaction View</option>
+      <option value="melanoma.json">ARG-MGE Interaction View</option>
       <option value="graph2.json">Colocalization View</option>
     </select>
+
     <label>
       <input type="checkbox" id="toggleLabels" checked>
       Display Labels
     </label>
+    </div>
+
+    <!-- Legend -->
+    <div id="legend" style="display:flex; align-items:center; gap:10px; margin-left:auto;">
+      <div style="display:flex; align-items:center; gap:4px;">
+        <span style="width:14px; height:14px; background:yellow; display:inline-block; border-radius:3px;"></span> Donor
+      </div>
+      <div style="display:flex; align-items:center; gap:4px;">
+        <span style="width:14px; height:14px; background:red; display:inline-block; border-radius:3px;"></span> PreFMT
+      </div>
+      <div style="display:flex; align-items:center; gap:4px;">
+        <span style="width:14px; height:14px; background:#99D2FF; display:inline-block; border-radius:3px;"></span> PostFMT (1-30 days)
+      </div>
+      <div style="display:flex; align-items:center; gap:4px;">
+        <span style="width:14px; height:14px; background:#4D9DFF; display:inline-block; border-radius:3px;"></span> PostFMT (31-60 days)
+      </div>
+      <div style="display:flex; align-items:center; gap:4px;">
+        <span style="width:14px; height:14px; background:#3A6EFF; display:inline-block; border-radius:3px;"></span> PostFMT (61+ days)
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="tooltip" style="position:absolute; 
+  background:#fff; 
+  border:1px solid #ccc; 
+  padding:4px 8px; 
+  border-radius:4px; 
+  pointer-events:none; 
+  font-size:12px; 
+  display:none;">
+</div>
 
     <!-- <div style="margin-top:8px;">
       <strong>Filter:</strong><br>
@@ -34,8 +71,7 @@
       <label><input type="radio" name="filter"> Melanoma</label>
       <label><input type="radio" name="filter"> MDRB</label>
     </div> -->
-  </div>
-</div>
+
 
   <svg id="graph" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet"></svg>
 
@@ -94,6 +130,7 @@
           l.linkcount = links.length;
         });
       });
+
       svg.append("defs").append("marker")
         .attr("id", "arrow")
         .attr("viewBox", "0 -5 10 10")
@@ -106,16 +143,40 @@
         .append("path")
         .attr("d", "M0,-5L10,0L0,5")
         .attr("fill", "currentColor"); 
+
+      const colors = [...new Set(data.links.map(d => d.color || "#999"))];
+
+      const defs = svg.append("defs");
+
+      colors.forEach(c => {
+        defs.append("marker")
+          .attr("id", `arrow-${c.replace("#","")}`)
+          .attr("viewBox", "0 -5 10 10")
+          .attr("refX", 12)
+          .attr("refY", 0)
+          .attr("markerWidth", 3)
+          .attr("markerHeight", 3)
+          .attr("orient", "auto")
+          .attr("markerUnits", "strokeWidth")
+          .append("path")
+          .attr("d", "M0,-5L10,0L0,5")
+          .attr("fill", c);
+      });
+
       // ---- links ----
       const link = g.selectAll("path.link")
         .data(data.links)
         .join("path")
         .attr("class", "link")
         .attr("stroke", d => d.color || "#999")
-        .attr("color", d => d.color || "#999")   
-        .attr("marker-end", d => d.isColo ? null : "url(#arrow)")
+        .attr("marker-end", d => d.isColo ? null : `url(#arrow-${(d.color || "#999").replace("#","")})`)
         .attr("stroke-width", d => Math.max(1, d.penwidth || 1))
         .attr("stroke-dasharray", d => d.isColo ? null : "4 2");
+        // .append("title")  // attach tooltip to each path
+        // .text(d => d.type === "colocalization" ? `Individual count: ${d.individualCount}` : "");
+
+
+
 
       // ---- nodes ----
       const node = g.selectAll(".node")
@@ -126,6 +187,8 @@
           .type(d => shapeMap[d.shape] || d3.symbolCircle)
           .size(300))
         .attr("fill", d => d.color)
+        .attr("stroke", "grey")       // outline color
+        .attr("stroke-width", 1.5)    // thickness of outline
         .call(d3.drag()
           .on("start", dragstart)
           .on("drag", dragged)
@@ -147,6 +210,11 @@
           const checked = this.checked;
           g.selectAll("text.label")
             .style("display", checked ? "block" : "none");
+        });
+
+        d3.select("#collapseArrow").on("click", function() {
+          const menu = d3.select("#menu");
+          menu.classed("collapsed", !menu.classed("collapsed"));
         });
 
       // ---- simulation ----
@@ -174,7 +242,7 @@
   }
 
   // default load
-  renderGraph("graph1.json");
+  renderGraph("melanoma.json");
 
   // dropdown event
   d3.select("#dataset").on("change", function() {
