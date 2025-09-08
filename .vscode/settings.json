@@ -58,6 +58,8 @@
         "iostream": "cpp",
         "deque": "cpp",
         "queue": "cpp",
+        "fstream": "cpp",
+        "iomanip": "cpp",
         "bit": "cpp",
         "chrono": "cpp",
         "compare": "cpp",
@@ -65,9 +67,7 @@
         "filesystem": "cpp",
         "format": "cpp",
         "forward_list": "cpp",
-        "fstream": "cpp",
         "functional": "cpp",
-        "iomanip": "cpp",
         "iterator": "cpp",
         "list": "cpp",
         "memory": "cpp",
@@ -90,6 +90,10 @@
         "xstring": "cpp",
         "xtr1common": "cpp",
         "xtree": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "any": "cpp",
+        "complex": "cpp",
+        "span": "cpp",
+        "valarray": "cpp"
     }
 }

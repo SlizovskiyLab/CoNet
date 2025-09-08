@@ -13,6 +13,8 @@
 #include <fstream>
 #include <iostream>
 
+std::string getMGEGroupName(int id);
+
 /************************************************************************************************/
 bool isPostFMT(Timepoint tp) {
     return toString(tp).find("post") != std::string::npos;
@@ -311,7 +313,7 @@ void writeTemporalDynamicsCountsForDisease(
     }
 
 
-    const std::string filename = "output/" + disease + "_colocalizations" + ".csv";
+    const std::string filename = "output/Disease/" + disease + "_colocalizations" + ".csv";
     std::ofstream out(filename);
     if (!out.is_open()) {
         std::cerr << "Error opening file: " << filename << "\n";
@@ -343,4 +345,56 @@ void writeAllDiseases_TemporalDynamicsCounts(
     for (const auto& [pid, dz] : patientToDiseaseMap) diseases.insert(dz);
     for (const auto& dz : diseases)
         writeTemporalDynamicsCountsForDisease(dz, colocalizationByIndividual, patientToDiseaseMap);
+}
+
+
+
+// -------- write per-MGE-group temporal dynamics --------
+void writeTemporalDynamicsCountsForMGEGroup(
+    const std::map<std::tuple<int,int,int>, std::set<Timepoint>>& colocalizationByIndividual
+) {
+    // Outer map: MGE group -> inner stats
+    std::unordered_map<std::string,
+        std::map<std::tuple<int,int,int,int,int>, int>> groupedCounts;
+
+    for (const auto& [key, tps] : colocalizationByIndividual) {
+        const int patientID = std::get<0>(key);
+        const int argID     = std::get<1>(key);
+        const int mgeID     = std::get<2>(key);
+
+        const std::string group = getMGEGroupName(mgeID);
+
+        const bool hasDonor = std::any_of(tps.begin(), tps.end(),
+                            [](Timepoint tp){ return tp == Timepoint::Donor; });
+        const bool hasPre   = std::any_of(tps.begin(), tps.end(),
+                            [](Timepoint tp){ return isPreFMT(tp); });
+        const bool hasPost  = std::any_of(tps.begin(), tps.end(),
+                            [](Timepoint tp){ return isPostFMT(tp); });
+
+        auto& comboCounts = groupedCounts[group];
+        comboCounts[std::make_tuple(argID, mgeID,
+                                    hasDonor ? 1 : 0,
+                                    hasPre   ? 1 : 0,
+                                    hasPost  ? 1 : 0)] += 1;
+    }
+
+    // Write one CSV per MGE group
+    for (auto& [group, comboCounts] : groupedCounts) {
+        const std::string filename = "output/MGE_Group/" + group + ".csv";
+        std::ofstream out(filename);
+        if (!out.is_open()) {
+            std::cerr << "Error opening file: " << filename << "\n";
+            continue;
+        }
+        out << "ARG_ID,MGE_ID,Donor,Pre,Post,PatientCount\n";
+        for (const auto& [k, cnt] : comboCounts) {
+            int argID, mgeID, donor, pre, post;
+            std::tie(argID, mgeID, donor, pre, post) = k;
+            out << getARGName(argID) << ',' << getMGEName(mgeID) << ','
+                << donor << ',' << pre << ',' << post << ','
+                << cnt << '\n';
+        }
+        out.close();
+        std::cout << "Data written to " << filename << "\n";
+    }
 }

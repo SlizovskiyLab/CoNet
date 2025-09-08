@@ -65,6 +65,7 @@ int main() {
 
     /********************************* Colocalizations by Timepoints ************************************/
     writeAllDiseases_TemporalDynamicsCounts(colocalizationByIndividual, patientToDiseaseMap);
+    writeTemporalDynamicsCountsForMGEGroup(colocalizationByIndividual);
 
 
     analyzeColocalizations(g, adjacency);
@@ -85,23 +86,21 @@ int main() {
     // exportToDot(rCDI, "rcdi.dot");
     // exportParentTemporalGraphDot(rCDI, "rcdi_parent_temporal.dot", true);
     
-    Graph melanoma = filterGraphByDisease(g, "Melanoma", patientToDiseaseMap);
-    // exportToDot(melanoma, "melanoma.dot");
+    // Graph melanoma = filterGraphByDisease(g, "Melanoma", patientToDiseaseMap);
+    // exportToDot(melanoma, "melanoma.dot", false);
     // exportParentTemporalGraphDot(melanoma, "melanoma_parent_temporal.dot", true);
-    exportGraphToJsonSimple(melanoma, "viz/melanoma.json");
 
     // Graph mdrb = filterGraphByDisease(g, "MDRB", patientToDiseaseMap);
-    // exportGraphToJsonSimple(mdrb, "viz/graph.json");
-    // exportToDot(mdrb, "mdrb.dot");
+    // exportToDot(mdrb, "mdrb.dot", false);
     // exportParentTemporalGraphDot(mdrb, "mdrb_temporal.dot", true);
 
     // Graph sub = filterGraphByARGName(g, "A16S");
     // exportToDot(sub, "A16S_subgraph.dot");
     // exportParentTemporalGraphDot(sub, "A16S_subgraph_parent_temporal.dot", true);
 
-    // Graph sub2 = filterGraphByARGName(g, "CFX");
-    // exportToDot(sub2, "CFX.dot");
-    // exportParentTemporalGraphDot(sub2, "CFX_parent_temporal.dot", true);
+    // Graph sub2 = filterGraphByARGName(g, "ERMB");
+    // exportToDot(sub2, "ERMB.dot", false);
+    // exportParentTemporalGraphDot(sub2, "CFX_parent_temporal.dot", false);
 
     // Graph sub3 = filterGraphByMGEGroup(g, "virus");
     // exportToDot(sub3, "virus.dot");

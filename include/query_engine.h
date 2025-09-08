@@ -50,4 +50,9 @@ void writeAllDiseases_TemporalDynamicsCounts(
     const std::map<int, std::string>& patientToDiseaseMap
 );
 
+void writeTemporalDynamicsCountsForMGEGroup(
+    const std::map<std::tuple<int,int,int>, std::set<Timepoint>>& colocalizationByIndividual
+);
+
+
 #endif
