@@ -68,3 +68,31 @@
   /* height: 600px; */
   border: 1px solid #ddd;
 }
+
+.full-width {
+  width: 100%;
+  max-width: none;    /* override global container limits */
+  margin: 0;
+  padding: 0;
+}
+
+section.full-width svg#graph {
+  width: 100% !important;
+  height: 100vh !important;
+  display: block !important;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  table, th, td {
+    border: 1px solid black;
+  }
+  th, td {
+    padding: 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
