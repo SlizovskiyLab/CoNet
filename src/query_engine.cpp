@@ -358,7 +358,7 @@ void writeTemporalDynamicsCountsForMGEGroup(
         std::map<std::tuple<int,int,int,int,int>, int>> groupedCounts;
 
     for (const auto& [key, tps] : colocalizationByIndividual) {
-        const int patientID = std::get<0>(key);
+        // const int patientID = std::get<0>(key);
         const int argID     = std::get<1>(key);
         const int mgeID     = std::get<2>(key);
 

@@ -80,7 +80,7 @@ bool exportGraphToJsonSimple(const Graph& g, const std::string& outPathStr) {
             Timepoint src_tp = edge.source.timepoint;
             Timepoint tgt_tp = edge.target.timepoint;
 
-            bool src_is_post = (src_tp != Timepoint::Donor && src_tp != Timepoint::PreFMT);
+            // bool src_is_post = (src_tp != Timepoint::Donor && src_tp != Timepoint::PreFMT);
             bool tgt_is_post = (tgt_tp != Timepoint::Donor && tgt_tp != Timepoint::PreFMT);
 
             if (src_tp == Timepoint::Donor && tgt_tp == Timepoint::PreFMT)      color = "#006400";
@@ -211,7 +211,7 @@ bool exportParentGraphToJson(const Graph& g, const std::string& outPathStr, bool
             Timepoint src_tp = parentNodes[i].tp;
             Timepoint tgt_tp = parentNodes[i+1].tp;
 
-            bool src_is_post = (src_tp != Timepoint::Donor && src_tp != Timepoint::PreFMT);
+            // bool src_is_post = (src_tp != Timepoint::Donor && src_tp != Timepoint::PreFMT);
             bool tgt_is_post = (tgt_tp != Timepoint::Donor && tgt_tp != Timepoint::PreFMT);
 
             std::string color;
