@@ -47,18 +47,21 @@
   <div id="menuContent">
     <!-- Controls -->
     <div id="controls" class="col-md-6"> 
+    <!-- Graph row: dropdown + checkbox inline -->
+    <div style="display:flex; align-items:center; gap:10px; margin-top:4px;">
       <strong>Graph :</strong>
-      <div style="display:flex; align-items:center; gap:10px; margin-top:4px;">
-        <select id="dataset">
-          <option value="coNet/graph1.json">ARG-MGE Interaction View</option>
-          <option value="coNet/graph2.json">Colocalization View</option>
-        </select>
-        <label>
-          <input type="checkbox" id="toggleLabels" checked>
-          Display Labels
-        </label>
-      </div>
+      <select id="dataset">
+        <option value="coNet/Melanoma.json">ARG-MGE Interaction View</option>
+        <option value="coNet/graph2.json">Colocalization View</option>
+      </select>
+      <label style="margin-left:20px;">
+        <input type="checkbox" id="toggleLabels" checked>
+        Display Labels
+      </label>
     </div>
+
+  </div>
+
 
     <!-- Legend (now below controls) -->
     <div class="col-md-6" style="margin-top:12px;">
@@ -84,7 +87,7 @@
             </div>
           </div>
 
-          <p class="card-text mb-2" style="margin-top:10px;"> Edge colors indicate interaction type</p>
+          <!-- <p class="card-text mb-2" style="margin-top:10px;"> Edge colors indicate interaction type</p>
           <div id="legend" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
             <div style="display:flex; align-items:center; gap:4px;">
               <span style="width:14px; height:14px; background:gray; display:inline-block; border-radius:3px;"></span> Colocalization
@@ -101,7 +104,7 @@
             <div style="display:flex; align-items:center; gap:4px;">
               <span style="width:14px; height:14px; background:black; display:inline-block; border-radius:3px;"></span> PostFMT → PostFMT
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -303,7 +306,7 @@
   }
 
   // default load
-  renderGraph("coNet/graph1.json");
+  renderGraph("coNet/Melanoma.json");
 
   // dropdown event
   d3.select("#dataset").on("change", function() {

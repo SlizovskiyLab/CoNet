@@ -77,8 +77,8 @@ int main() {
     // /************************************* Graph Visualization ***********************************/
 
     Graph coNet = g;
-    exportGraphToJsonSimple(coNet, "viz/graph1.json");
-    exportParentGraphToJson(coNet, "viz/graph2.json", true);
+    exportGraphToJsonSimple(coNet, "viz/json/graph1.json");
+    exportParentGraphToJson(coNet, "viz/json/graph2.json", true);
     // exportToDot(coNet, "conet.dot");
     // exportParentTemporalGraphDot(coNet, "conet_parent_temporal.dot", true);
 
