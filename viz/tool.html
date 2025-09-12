@@ -6,10 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./assets/css/site.css">
     <title>AMR-GraphNet</title>
-    <!-- <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/apple-touch-icon.png"> -->
-    <!-- <link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon-32x32.png"> -->
-    <!-- <link rel="icon" type="image/png" sizes="16x16" href="./assets/img/favicon-16x16.png"> -->
-    <link rel="manifest" href="./site.webmanifest">
     <link rel="manifest" href="./site.webmanifest">
     <link rel="stylesheet" href="style.css">
   <style>
@@ -35,35 +31,33 @@
         <li><a href="./downloads.html" class="nav-link px-2 link-dark nav-downloads">Downloads</a></li>
         <li><a href="./contact.html" class="nav-link px-2 link-dark nav-contact">Contact</a></li>
     </ul>
-
 </header>
 
 <body>
 
-  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <script src="graph.js"></script>
-
 <div id="menu" style="display:block; padding:6px;">
   <div id="menuContent">
-    <!-- Controls -->
     <div id="controls" class="col-md-6"> 
-    <!-- Graph row: dropdown + checkbox inline -->
-    <div style="display:flex; align-items:center; gap:10px; margin-top:4px;">
-      <strong>Graph :</strong>
-      <select id="dataset">
-        <option value="coNet/Melanoma.json">ARG-MGE Interaction View</option>
-        <option value="coNet/graph2.json">Colocalization View</option>
-      </select>
-      <label style="margin-left:20px;">
-        <input type="checkbox" id="toggleLabels" checked>
-        Display Labels
-      </label>
+      <div style="display:flex; align-items:center; gap:15px; margin-top:4px;">
+        <strong>Graph Controls:</strong>
+        <select id="dataset">
+          <option value="coNet/graph1.json">ARG-MGE Interaction View</option>
+          <option value="coNet/graph2.json">Colocalization View</option>
+        </select>
+          <label style="margin-left:20px;">
+          <input type="checkbox" id="toggleLabels" checked>
+          Display Labels
+        </label>
+        <label>
+          <input type="checkbox" id="toggleColo" checked>
+          Colocalization
+        </label>
+        <label>
+          <input type="checkbox" id="toggleTemporal" checked>
+          Temporal
+        </label>
+      </div>
     </div>
-
-  </div>
-
-
-    <!-- Legend (now below controls) -->
     <div class="col-md-6" style="margin-top:12px;">
       <div class="card mb-2" style="width:100%;">
         <div class="card-body p-2">
@@ -112,28 +106,11 @@
   </div>
 </div>
 
-
-
-
 </body>
 
-<div id="tooltip" style="position:absolute; 
-  background:#fff; 
-  border:1px solid #ccc; 
-  padding:4px 8px; 
-  border-radius:4px; 
-  pointer-events:none; 
-  font-size:12px; 
-  display:none;">
+<div id="tooltip" style="position:absolute; background:#fff; border:1px solid #ccc; padding:4px 8px; border-radius:4px; pointer-events:none; font-size:12px; display:none;">
 </div>
 </div>
-
-    <!-- <div style="margin-top:8px;">
-      <strong>Filter:</strong><br>
-      <label><input type="radio" name="filter" checked> RCDI</label>
-      <label><input type="radio" name="filter"> Melanoma</label>
-      <label><input type="radio" name="filter"> MDRB</label>
-    </div> -->
 
   <section class="full-width">
     <svg id="graph" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet"></svg>
@@ -144,173 +121,125 @@
   const svg = d3.select("#graph");
   const g = svg.append("g");
 
-  // zoom/pan
   svg.call(d3.zoom().scaleExtent([0.2, 5])
     .on("zoom", (e) => g.attr("transform", e.transform)));
 
-  const shapeMap = {
-    circle: d3.symbolCircle,
-    box: d3.symbolSquare,
-    triangle: d3.symbolTriangle,
-    diamond: d3.symbolDiamond,
-    hexagon: d3.symbolCross,
-    octagon: d3.symbolStar,
-    parallelogram: d3.symbolWye,
-    trapezium: d3.symbolWye
-  };
-
+  const shapeMap = { circle: d3.symbolCircle, box: d3.symbolSquare, triangle: d3.symbolTriangle, diamond: d3.symbolDiamond, hexagon: d3.symbolCross, octagon: d3.symbolStar, parallelogram: d3.symbolWye, trapezium: d3.symbolWye };
   const arcScale = { licensing: 1.5, suit: 0.1 };
 
-  // --- arc generator with duplicate handling ---
   function linkArc(d, scale = 1) {
     const dx = d.target.x - d.source.x;
     const dy = d.target.y - d.source.y;
     const baseR = Math.hypot(dx, dy) * scale;
-
-    // offset duplicates: spread them across multiple radii
-    const step = 20; // spacing between arcs
+    const step = 20;
     const offset = (d.linknum - (d.linkcount - 1) / 2) * step;
-
     const r = baseR + offset;
-
-    return `M${d.source.x},${d.source.y}
-            A${r},${r} 0 0,1 ${d.target.x},${d.target.y}`;
+    return `M${d.source.x},${d.source.y} A${r},${r} 0 0,1 ${d.target.x},${d.target.y}`;
   }
 
-  // --- render function ---
-  function renderGraph(file) {
+  let originalData;
+
+  function loadAndRenderGraph(file) {
     d3.json(file).then(data => {
-      g.selectAll("*").remove(); // clear old
-
-      // --- assign linknum for duplicates ---
-      const linkGroups = d3.groups(data.links, d => {
-        const s = typeof d.source === "object" ? d.source.id : d.source;
-        const t = typeof d.target === "object" ? d.target.id : d.target;
-        return s + "-" + t;
-      });
-      linkGroups.forEach(([key, links]) => {
-        links.forEach((l, i) => {
-          l.linknum = i;
-          l.linkcount = links.length;
-        });
-      });
-
-      svg.append("defs").append("marker")
-        .attr("id", "arrow")
-        .attr("viewBox", "0 -5 10 10")
-        .attr("refX", 12)
-        .attr("refY", 0)
-        .attr("markerWidth", 3)
-        .attr("markerHeight", 3)
-        .attr("orient", "auto")
-        .attr("markerUnits", "strokeWidth")
-        .append("path")
-        .attr("d", "M0,-5L10,0L0,5")
-        .attr("fill", "currentColor"); 
-
-      const colors = [...new Set(data.links.map(d => d.color || "#999"))];
-
-      const defs = svg.append("defs");
-
-      colors.forEach(c => {
-        defs.append("marker")
-          .attr("id", `arrow-${c.replace("#","")}`)
-          .attr("viewBox", "0 -5 10 10")
-          .attr("refX", 12)
-          .attr("refY", 0)
-          .attr("markerWidth", 3)
-          .attr("markerHeight", 3)
-          .attr("orient", "auto")
-          .attr("markerUnits", "strokeWidth")
-          .append("path")
-          .attr("d", "M0,-5L10,0L0,5")
-          .attr("fill", c);
-      });
-
-      // ---- links ----
-      const link = g.selectAll("path.link")
-        .data(data.links)
-        .join("path")
-        .attr("class", "link")
-        .attr("stroke", d => d.color || "#999")
-        .attr("marker-end", d => d.isColo ? null : `url(#arrow-${(d.color || "#999").replace("#","")})`)
-        .attr("stroke-width", d => Math.max(1, d.penwidth || 1))
-        .attr("stroke-dasharray", d => d.isColo ? null : "4 2");
-        // .append("title")  // attach tooltip to each path
-        // .text(d => d.type === "colocalization" ? `Individual count: ${d.individualCount}` : "");
-
-
-
-
-      // ---- nodes ----
-      const node = g.selectAll(".node")
-        .data(data.nodes)
-        .join("path")
-        .attr("class", "node")
-        .attr("d", d3.symbol()
-          .type(d => shapeMap[d.shape] || d3.symbolCircle)
-          .size(300))
-        .attr("fill", d => d.color)
-        .attr("stroke", "grey")       // outline color
-        .attr("stroke-width", 1.5)    // thickness of outline
-        .call(d3.drag()
-          .on("start", dragstart)
-          .on("drag", dragged)
-          .on("end", dragend)
-        );
-
-      node.append("title").text(d => `${d.id}`);
-
-      // ---- labels ----
-      const label = g.selectAll("text.label")
-        .data(data.nodes)
-        .join("text")
-        .attr("class", "label")
-        .attr("dy", -12)
-        .text(d => d.label);
-      
-        // --- attach checkbox event ---
-        d3.select("#toggleLabels").on("change", function() {
-          const checked = this.checked;
-          g.selectAll("text.label")
-            .style("display", checked ? "block" : "none");
-        });
-
-        d3.select("#collapseArrow").on("click", function() {
-          const menu = d3.select("#menu");
-          menu.classed("collapsed", !menu.classed("collapsed"));
-        });
-
-      // ---- simulation ----
-      const sim = d3.forceSimulation(data.nodes)
-        .force("link", d3.forceLink(data.links)
-          .id(d => d.id)
-          .distance(d => d.isColo ? 40 : 50))
-        .force("charge", d3.forceManyBody()
-          .strength(d => -(40 + (d.degree || 0) * 15)))
-        .force("center", d3.forceCenter(500, 350))
-        .force("collision", d3.forceCollide().radius(20))
-        .force("x", d3.forceX(500).strength(0.05))
-        .force("y", d3.forceY(350).strength(0.05))
-        .on("tick", () => {
-          link.attr("d", d => linkArc(d, arcScale[d.type] || 1));
-          node.attr("transform", d => `translate(${d.x},${d.y})`);
-          label.attr("x", d => d.x).attr("y", d => d.y);
-        });
-
-      function dragstart(e, d){ if(!e.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; }
-      function dragged(e, d){ d.fx=e.x; d.fy=e.y; }
-      function dragend(e, d){ if(!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }
+      originalData = data;
+      applyFiltersAndDraw();
     });
-    g.selectAll("text.label").style("display", document.getElementById("toggleLabels").checked ? "block" : "none");
+  }
+
+  function applyFiltersAndDraw() {
+    if (!originalData) return;
+
+    const showColo = d3.select("#toggleColo").property("checked");
+    const showTemporal = d3.select("#toggleTemporal").property("checked");
+
+    const filteredLinks = originalData.links.filter(link => {
+        if (link.isColo === true) return showColo;
+        if (link.isColo === false) return showTemporal;
+        return true;
+    });
+    
+    const filteredData = { nodes: originalData.nodes, links: filteredLinks };
+
+    updateVisualization(filteredData);
+  }
+
+  function updateVisualization(data) {
+    g.selectAll("*").remove();
+
+    const linkGroups = d3.groups(data.links, d => {
+      const s = typeof d.source === "object" ? d.source.id : d.source;
+      const t = typeof d.target === "object" ? d.target.id : d.target;
+      return s + "-" + t;
+    });
+    linkGroups.forEach(([key, links]) => {
+      links.forEach((l, i) => { l.linknum = i; l.linkcount = links.length; });
+    });
+
+    svg.select("defs").remove(); 
+    const defs = svg.append("defs");
+    const colors = [...new Set(data.links.map(d => d.color || "#999"))];
+    
+    colors.forEach(c => {
+      defs.append("marker")
+        .attr("id", `arrow-${c.replace("#","")}`)
+        .attr("viewBox", "0 -5 10 10").attr("refX", 12).attr("refY", 0)
+        .attr("markerWidth", 3).attr("markerHeight", 3).attr("orient", "auto")
+        .attr("markerUnits", "strokeWidth").append("path")
+        .attr("d", "M0,-5L10,0L0,5").attr("fill", c);
+    });
+
+    const link = g.selectAll("path.link")
+      .data(data.links).join("path")
+      .attr("class", "link")
+      .attr("stroke", d => d.color || "#999")
+      .attr("marker-end", d => d.isColo ? null : `url(#arrow-${(d.color || "#999").replace("#","")})`)
+      .attr("stroke-width", d => Math.max(1, d.penwidth || 1))
+      .attr("stroke-dasharray", d => d.isColo ? null : "4 2");
+
+    const node = g.selectAll(".node")
+      .data(data.nodes).join("path")
+      .attr("class", "node")
+      .attr("d", d3.symbol().type(d => shapeMap[d.shape] || d3.symbolCircle).size(300))
+      .attr("fill", d => d.color).attr("stroke", "grey").attr("stroke-width", 1.5)
+      .call(d3.drag().on("start", dragstart).on("drag", dragged).on("end", dragend));
+
+    node.append("title").text(d => `${d.id}`);
+
+    const label = g.selectAll("text.label")
+      .data(data.nodes).join("text")
+      .attr("class", "label").attr("dy", -12).text(d => d.label);
+
+    g.selectAll("text.label").style("display", d3.select("#toggleLabels").property("checked") ? "block" : "none");
+
+    const sim = d3.forceSimulation(data.nodes)
+      .force("link", d3.forceLink(data.links).id(d => d.id).distance(d => d.isColo ? 40 : 50))
+      .force("charge", d3.forceManyBody().strength(d => -(40 + (d.degree || 0) * 15)))
+      .force("center", d3.forceCenter(500, 350))
+      .force("collision", d3.forceCollide().radius(20))
+      .force("x", d3.forceX(500).strength(0.05)).force("y", d3.forceY(350).strength(0.05))
+      .on("tick", () => {
+        link.attr("d", d => linkArc(d, arcScale[d.type] || 1));
+        node.attr("transform", d => `translate(${d.x},${d.y})`);
+        label.attr("x", d => d.x).attr("y", d => d.y);
+      });
+
+    function dragstart(e, d){ if(!e.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; }
+    function dragged(e, d){ d.fx=e.x; d.fy=e.y; }
+    function dragend(e, d){ if(!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }
   }
 
   // default load
   renderGraph("coNet/Melanoma.json");
 
-  // dropdown event
   d3.select("#dataset").on("change", function() {
-    renderGraph(this.value);
+    loadAndRenderGraph(this.value);
   });
+
+  d3.select("#toggleLabels").on("change", function() {
+    g.selectAll("text.label").style("display", this.checked ? "block" : "none");
+  });
+
+  d3.select("#toggleColo").on("change", applyFiltersAndDraw);
+  d3.select("#toggleTemporal").on("change", applyFiltersAndDraw);
   </script>
 </body>
