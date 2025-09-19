@@ -19,7 +19,9 @@ void getPatientwiseColocalizationsByCriteria(
     bool donorStatus,
     bool preFMTStatus,
     bool postFMTStatus,
-    const std::string& label
+    const std::string& label,
+    const std::string& csvFile = "",
+    bool append = false
 );
 
 void getTopARGMGEPairsByFrequency(const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizations, int topN = -1);
@@ -45,12 +47,23 @@ void writeTemporalDynamicsCountsForDisease(
     const std::map<int, std::string>& patientToDiseaseMap
 );
 
-void writeAllDiseases_TemporalDynamicsCounts(
+void writeAllDiseasesTemporalDynamicsCounts(
     std::map<std::tuple<int,int,int>, std::set<Timepoint>>& colocalizationByIndividual,
     const std::map<int, std::string>& patientToDiseaseMap
 );
 
 void writeTemporalDynamicsCountsForMGEGroup(
+    const std::map<std::tuple<int,int,int>, std::set<Timepoint>>& colocalizationByIndividual
+);
+
+void writeColocalizationsToCSV(
+    const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocs,
+    const std::string& filename,
+    const std::string& label,
+    bool append = false
+);
+
+void exportColocalizations(const Graph& g,
     const std::map<std::tuple<int,int,int>, std::set<Timepoint>>& colocalizationByIndividual
 );
 

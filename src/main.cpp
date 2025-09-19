@@ -9,37 +9,29 @@
 #include "../include/export.h"
 #include "../include/graph_utils.h"
 #include "../include/graph_analysis.h"
-#include "../include/export_graph_json.h"   
+#include "../include/export_graph_json.h" 
+#include "../include/config_loader.h"  
 
 /* Main entry point: parse arguments, load data, call functions */
 
 namespace fs = std::filesystem;
 
-fs::path data_file = "data/patientwise_colocalization_by_timepoint.csv";
-
-// static bool ensure_parent_dir(const fs::path& p) {
-//     std::error_code ec;
-//     fs::path parent = p.parent_path();
-//     if (parent.empty()) return true;
-//     if (fs::exists(parent, ec)) return !ec;
-//     return fs::create_directories(parent, ec);
-// }
-
-// static void logGraph(const Graph& g, const char* tag) {
-//     std::cerr << "[graph] " << tag
-//               << " nodes=" << g.nodes.size()
-//               << " edges=" << g.edges.size() << "\n";
-// }
-
-// static void rebuildNodesFromEdges(Graph& g) {
-//     for (const auto& e : g.edges) {
-//         g.nodes.insert(e.source);
-//         g.nodes.insert(e.target);
-//     }
-// }
+fs::path data_file;
+fs::path interaction_json_path;
+fs::path parent_json_path;
 
 
 int main() {
+    try {
+        Config cfg = loadConfig("config/paths.json");
+        data_file = fs::path(cfg.input_data_path);
+        interaction_json_path = fs::path(cfg.viz_interaction);
+        parent_json_path = fs::path(cfg.viz_parent);
+
+    } catch (const std::exception& e) {
+        std::cerr << "Config error: " << e.what() << "\n";
+        return 1;
+    }
     Graph g;
     std::map<int, std::string> patientToDiseaseMap;
     std::unordered_map<Node, std::unordered_set<Node>> adjacency;
@@ -64,21 +56,17 @@ int main() {
     
 
     /********************************* Colocalizations by Timepoints ************************************/
-    writeAllDiseases_TemporalDynamicsCounts(colocalizationByIndividual, patientToDiseaseMap);
+    writeAllDiseasesTemporalDynamicsCounts(colocalizationByIndividual, patientToDiseaseMap);
     writeTemporalDynamicsCountsForMGEGroup(colocalizationByIndividual);
 
-
-    analyzeColocalizations(g, adjacency);
-    analyzeColocalizationsCollectively(g, adjacency);
-
-    // /**************************************** Most Prominent Genes ***********************************/
-    mostProminentEntities(g);
+    exportColocalizations(g, colocalizationByIndividual);
 
     // /************************************* Graph Visualization ***********************************/
 
     Graph coNet = g;
-    exportGraphToJsonSimple(coNet, "viz/json/graph1.json");
-    exportParentGraphToJson(coNet, "viz/json/graph2.json", true);
+    exportGraphToJsonSimple(coNet, interaction_json_path);
+    exportParentGraphToJson(coNet, parent_json_path);
+
     // exportToDot(coNet, "conet.dot");
     // exportParentTemporalGraphDot(coNet, "conet_parent_temporal.dot", true);
 

@@ -1,0 +1,20 @@
+{
+  "input": {
+    "input_data": "data/patientwise_colocalization_by_timepoint.csv"
+  },
+  "output": {
+    "base": "output",
+    "disease_type": "output/disease_type",
+    "temporal_dynamics": {
+      "emerge": "output/temporal_dynamics/emerge.csv",
+      "disappear": "output/temporal_dynamics/disappear.csv",
+      "transfer": "output/temporal_dynamics/transfer.csv",
+      "persist": "output/temporal_dynamics/persist.csv"
+    },
+    "mge_group": "output/mge_group"
+  },
+  "viz": {
+    "interaction_json": "viz/json/graph1.json",
+    "parent_json": "viz/json/graph2.json"
+  }
+}

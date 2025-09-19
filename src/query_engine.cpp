@@ -9,11 +9,21 @@
 #include "Timepoint.h"
 #include "query_engine.h"
 #include "id_maps.h"
+#include "config_loader.h"
+#include <filesystem>
 #include <algorithm>
 #include <fstream>
 #include <iostream>
 
 std::string getMGEGroupName(int id);
+namespace fs = std::filesystem;
+fs::path temporal_dynamics_emerge;
+fs::path temporal_dynamics_disappear;
+fs::path temporal_dynamics_transfer;
+fs::path temporal_dynamics_persist;
+fs::path disease_type_path;
+fs::path mge_group_path;
+Config cfg;
 
 /************************************************************************************************/
 bool isPostFMT(Timepoint tp) {
@@ -35,7 +45,9 @@ void getPatientwiseColocalizationsByCriteria(
     bool donorStatus,
     bool preFMTStatus,
     bool postFMTStatus,
-    const std::string& label
+    const std::string& label,
+    const std::string& csvFile,
+    bool append
 ) {
     std::map<std::tuple<int, int, int>, std::set<Timepoint>> filteredColocs;
 
@@ -57,7 +69,12 @@ void getPatientwiseColocalizationsByCriteria(
     }
 
     std::cout << "Colocalizations (" << label << "): " << filteredColocs.size() << "\n";
-    getTopARGMGEPairsByFrequency(filteredColocs);
+    // getTopARGMGEPairsByFrequency(filteredColocs);
+
+
+    if (!csvFile.empty()) {
+        writeColocalizationsToCSV(filteredColocs, csvFile, label, append);
+    }
 }
 
 /***************************************** Colocalizations ****************************************/
@@ -147,7 +164,7 @@ void getTopARGMGEPairsByUniquePatients(
         std::cout << ",Patients: " << count << "\n";
     }
 
-    std::cout << "Total unique colocalizations: " << freqList.size() << "\n";
+    // std::cout << "Total unique colocalizations: " << freqList.size() << "\n";
 }
 
 /********************************* Prominent Colocalizations by Frequency ********************************/
@@ -312,8 +329,8 @@ void writeTemporalDynamicsCountsForDisease(
         comboCounts[std::make_tuple(argID, mgeID, hasDonor, hasPreFMT, postBin)] += 1;
     }
 
-
-    const std::string filename = "output/Disease/" + disease + "_colocalizations" + ".csv";
+    disease_type_path = fs::path(cfg.output_disease);
+    fs::path filename = disease_type_path / (disease + ".csv");
     std::ofstream out(filename);
     if (!out.is_open()) {
         std::cerr << "Error opening file: " << filename << "\n";
@@ -336,8 +353,8 @@ void writeTemporalDynamicsCountsForDisease(
 }
 
 
-/* Optional: write a CSV for every disease present in the map */
-void writeAllDiseases_TemporalDynamicsCounts(
+/* write a CSV for every disease present in the map */
+void writeAllDiseasesTemporalDynamicsCounts(
     std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizationByIndividual,
     const std::map<int, std::string>& patientToDiseaseMap
 ) {
@@ -380,7 +397,8 @@ void writeTemporalDynamicsCountsForMGEGroup(
 
     // Write one CSV per MGE group
     for (auto& [group, comboCounts] : groupedCounts) {
-        const std::string filename = "output/MGE_Group/" + group + ".csv";
+
+        const std::string filename = "output/mge_group/" + group + ".csv";
         std::ofstream out(filename);
         if (!out.is_open()) {
             std::cerr << "Error opening file: " << filename << "\n";
@@ -393,8 +411,94 @@ void writeTemporalDynamicsCountsForMGEGroup(
             out << getARGName(argID) << ',' << getMGEName(mgeID) << ','
                 << donor << ',' << pre << ',' << post << ','
                 << cnt << '\n';
+            
         }
         out.close();
         std::cout << "Data written to " << filename << "\n";
     }
 }
+
+
+void writeColocalizationsToCSV(
+    const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocs,
+    const std::string& filename,
+    const std::string& label,
+    bool append
+) {
+    // Aggregation: (ARG_ID, MGE_ID) → unique patients
+    std::map<std::pair<int,int>, std::set<int>> aggregated;
+
+    for (const auto& [tuple, tps] : colocs) {
+        int argId     = std::get<1>(tuple);
+        int mgeId     = std::get<2>(tuple);
+        int patientId = std::get<0>(tuple);
+
+        aggregated[{argId, mgeId}].insert(patientId);
+    }
+
+    // Convert map to vector for sorting
+    std::vector<std::tuple<int,int,size_t>> entries; 
+    for (const auto& [key, patients] : aggregated) {
+        entries.emplace_back(key.first, key.second, patients.size());
+    }
+
+    // Sort by patient count
+    std::sort(entries.begin(), entries.end(),
+        [](const auto& a, const auto& b) {
+            return std::get<2>(a) > std::get<2>(b);
+        }
+    );
+
+    std::ofstream file;
+    if (append) {
+        file.open(filename, std::ios::app);
+    } else {
+        file.open(filename);
+        file << "ARG_Name,MGE_Name,PatientCount,Label\n"; // header
+    }
+
+    for (const auto& [argId, mgeId, patientCount] : entries) {
+        std::string argName = getARGName(argId);
+        std::string mgeName = getMGEName(mgeId);
+
+        if (argName.empty()) argName = "Unknown_ARG_" + std::to_string(argId);
+        if (mgeName.empty()) mgeName = "Unknown_MGE_" + std::to_string(mgeId);
+
+        file << argName << ","
+             << mgeName << ","
+             << patientCount << ","
+             << label << "\n";
+    }
+}
+
+
+
+void exportColocalizations(const Graph& g,
+    const std::map<std::tuple<int,int,int>, std::set<Timepoint>>& colocalizationByIndividual) 
+{
+    temporal_dynamics_emerge = fs::path(cfg.output_emerge);
+    temporal_dynamics_transfer = fs::path(cfg.output_transfer);
+    temporal_dynamics_disappear = fs::path(cfg.output_disappear);
+    temporal_dynamics_persist = fs::path(cfg.output_persist);
+    // Emerge
+    
+    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual,
+        false, false, true, "PostFMT Only", temporal_dynamics_emerge);
+    // Disappear
+    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual,
+        false, true, false, "PreFMT Only", temporal_dynamics_disappear, false);
+    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual,
+        true, true, false, "Donor & PreFMT Only", temporal_dynamics_disappear, true);
+    // Transfer
+    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual,
+        true, false, true, "Donor & PostFMT Only", temporal_dynamics_transfer, true);
+    // Persist
+    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual,
+        false, true, true, "PreFMT & PostFMT Only", temporal_dynamics_persist, false);
+    getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual,
+        true, true, true, "PreFMT, Donor & PostFMT", temporal_dynamics_persist, true);
+}
+
+
+
+
