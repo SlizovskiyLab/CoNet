@@ -1,115 +1,122 @@
 <!doctype html>
-<meta charset="utf-8"/>
-<title>AMR-GraphNet</title>
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="./assets/css/site.css">
-  <title>AMR-GraphNet</title>
-  <link rel="manifest" href="./site.webmanifest">
-  <link rel="stylesheet" href="./assets/css/style.css">
-  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-  <script src="assets/js/graph.js" defer></script>
-  <style>
-    html, body, svg { width:100%; height:100%; margin:0 }
-    path.link { stroke-opacity:.6; fill:none }
-    path.node { cursor:grab }
-    text.label { font:12px system-ui; pointer-events:none }
-  </style>
+    <meta charset="utf-8"/>
+    <title>AMR-GraphNet :: Tool</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./assets/css/site.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <style>
+        /* Basic styling for the graph layout */
+        html, body { width:100%; height:100%; margin:0; }
+        svg { width: 100%; height: 100%; }
+        path.link { stroke-opacity:.6; fill:none; }
+        path.node { cursor:grab; }
+        text.label { font:12px system-ui; pointer-events:none; }
+    </style>
 </head>
 
 <body>
-  <div class="col-md-8 mx-auto">
+<div class="col-md-8 mx-auto">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <a href="index.html" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+            <img src="assets/img/Logo.svg" alt="AMR-GraphNet Logo" width="35" height="35" class="d-inline-block align-text-middle">
+            <span class="fs-4 ms-2"> AMR-GraphNet </span>
+        </a>
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 tool">
+            <li><a href="./index.html" class="nav-link px-2 link-dark nav-about">About</a></li>
+            <li><a href="./tool.html" class="nav-link px-2 link-dark nav-tool">Tool</a></li>
+            <li><a href="./downloads.html" class="nav-link px-2 link-dark nav-downloads">Downloads</a></li>
+            <li><a href="./contact.html" class="nav-link px-2 link-dark nav-contact">Contact</a></li>
+        </ul>
+    </header>
 
-    <header
-    class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-    <a href="index.html" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-        <img src="assets/img/Logo.svg" alt="" width="35" height="35" class="d-inline-block align-text-middle">
-        <span class="fs-4 ms-2"> AMR-GraphNet </span>
-    </a>
-    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 about">
-        <li><a href="./index.html" class="nav-link px-2 link-dark nav-about">About</a></li>
-        <li><a href="./tool.html" class="nav-link px-2 link-dark nav-tool">Tool</a></li>
-        <li><a href="./downloads.html" class="nav-link px-2 link-dark nav-downloads">Downloads</a></li>
-        <li><a href="./contact.html" class="nav-link px-2 link-dark nav-contact">Contact</a></li>
-    </ul>
-</header>
+    <div id="menu" class="card p-2 mb-3">
+        <div class="row g-3 align-items-end">
+            <!-- Graph View Selection -->
+            <div class="col-md-4 col-lg-3">
+                <label for="dataset" class="form-label"><strong>Graph View</strong></label>
+                <select id="dataset" class="form-select">
+                    <option value="json/graph1.json">ARG-MGE Interaction View</option>
+                    <option value="json/graph2.json">Colocalization View</option>
+                </select>
+            </div>
 
-<body>
-<div id="menu" style="display:block; padding:6px;">
-  <div id="menuContent">
-    <div id="controls" class="col-md-6"> 
-      <div style="display:flex; align-items:center; gap:15px; margin-top:4px;">
-        <strong>Graph Controls:</strong>
-        <select id="dataset">
-          <option value="json/graph1.json">ARG-MGE Interaction View</option>
-          <option value="json/graph2.json">Colocalization View</option>
-        </select>
-          <label style="margin-left:20px;">
-          <input type="checkbox" id="toggleLabels" checked>
-          Display Labels
-        </label>
-        <label>
-          <input type="checkbox" id="toggleColo" checked>
-          Colocalization
-        </label>
-        <label>
-          <input type="checkbox" id="toggleTemporal" checked>
-          Temporal
-        </label>
-      </div>
-    </div>
-    <div class="col-md-6" style="margin-top:12px;">
-      <div class="card mb-2" style="width:100%;">
-        <div class="card-body p-2">
-          <h6 class="card-subtitle mb-0 mt-0 text-muted">Legend</h6>
-          <p class="card-text mb-2"> Node colors indicate sample type</p>
-          <div id="legend" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-            <div style="display:flex; align-items:center; gap:4px;">
-              <span style="width:14px; height:14px; background:yellow; display:inline-block; border-radius:3px;"></span> Donor
+            <!-- Disease Filter -->
+            <div class="col-md-4 col-lg-2">
+                <label for="diseaseFilter" class="form-label"><strong>Disease</strong></label>
+                <select id="diseaseFilter" class="form-select">
+                    <option value="all" selected>All Diseases</option>
+                    <option value="Melanoma">Melanoma</option>
+                    <option value="MDRB">MDRB</option>
+                    <option value="rCDI">rCDI</option>
+                </select>
             </div>
-            <div style="display:flex; align-items:center; gap:4px;">
-              <span style="width:14px; height:14px; background:red; display:inline-block; border-radius:3px;"></span> PreFMT
-            </div>
-            <div style="display:flex; align-items:center; gap:4px;">
-              <span style="width:14px; height:14px; background:#99D2FF; display:inline-block; border-radius:3px;"></span> PostFMT (1-30 days)
-            </div>
-            <div style="display:flex; align-items:center; gap:4px;">
-              <span style="width:14px; height:14px; background:#4D9DFF; display:inline-block; border-radius:3px;"></span> PostFMT (31-60 days)
-            </div>
-            <div style="display:flex; align-items:center; gap:4px;">
-              <span style="width:14px; height:14px; background:#3A6EFF; display:inline-block; border-radius:3px;"></span> PostFMT (61+ days)
-            </div>
-          </div>
 
-          <!-- <p class="card-text mb-2" style="margin-top:10px;"> Edge colors indicate interaction type</p>
-          <div id="legend" style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
-            <div style="display:flex; align-items:center; gap:4px;">
-              <span style="width:14px; height:14px; background:gray; display:inline-block; border-radius:3px;"></span> Colocalization
+            <!-- MGE Group Filter -->
+            <div class="col-md-4 col-lg-2">
+                <label for="mgeGroupFilter" class="form-label"><strong>MGE Group</strong></label>
+                <select id="mgeGroupFilter" class="form-select">
+                    <option value="all" selected>All Groups</option>
+                    <!-- Options will be populated by JavaScript -->
+                </select>
             </div>
-            <div style="display:flex; align-items:center; gap:4px;">
-              <span style="width:14px; height:14px; background:greenyellow; display:inline-block; border-radius:3px;"></span> Donor → PreFMT
+
+            <!-- Timepoint Filter -->
+            <div class="col-md-4 col-lg-2">
+                <label for="timepointFilter" class="form-label"><strong>Patient Stage</strong></label>
+                <select id="timepointFilter" class="form-select">
+                    <option value="all" selected>All Stages</option>
+                    <option value="donor">Donor</option>
+                    <option value="pre">Pre-FMT</option>
+                    <option value="post1">Post-FMT (1-30d)</option>
+                    <option value="post2">Post-FMT (31-60d)</option>
+                    <option value="post3">Post-FMT (61+d)</option>
+                </select>
             </div>
-            <div style="display:flex; align-items:center; gap:4px;">
-              <span style="width:14px; height:14px; background:purple; display:inline-block; border-radius:3px;"></span> Donor → PostFMT
+
+            <!-- Search by Label -->
+            <div class="col-md-8 col-lg-3">
+                <label for="searchBox" class="form-label"><strong>Search Label</strong></label>
+                <div class="input-group">
+                    <input type="text" id="searchBox" class="form-control" placeholder="e.g., tet(M), virus, etc.">
+                    <button class="btn btn-outline-secondary" type="button" id="searchBtn">Search</button>
+                    <button class="btn btn-outline-secondary" type="button" id="resetBtn">Reset</button>
+                </div>
             </div>
-            <div style="display:flex; align-items:center; gap:4px;">
-              <span style="width:14px; height:14px; background:orange; display:inline-block; border-radius:3px;"></span> PreFMT → PostFMT
+            
+             <!-- Display Toggles -->
+            <div class="col-12">
+                <div class="d-flex align-items-center gap-3 mt-2">
+                    <strong>Display Toggles:</strong>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="toggleLabels" checked>
+                        <label class="form-check-label" for="toggleLabels">Labels</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="toggleColo" checked>
+                        <label class="form-check-label" for="toggleColo">Colocalization Links</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="toggleTemporal" checked>
+                        <label class="form-check-label" for="toggleTemporal">Temporal Links</label>
+                    </div>
+                </div>
             </div>
-            <div style="display:flex; align-items:center; gap:4px;">
-              <span style="width:14px; height:14px; background:black; display:inline-block; border-radius:3px;"></span> PostFMT → PostFMT
-            </div>
-          </div> -->
         </div>
-      </div>
     </div>
-  </div>
+    
+    <div id="graph-container">
+        <svg id="graph" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+    
+    <div id="tooltip" style="position:absolute; background:rgba(255,255,255,0.9); border:1px solid #ccc; padding:4px 8px; border-radius:4px; pointer-events:none; font-size:12px; display:none;"></div>
 </div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+<script src="assets/js/graph.js"></script>
+<script type="module" src="./assets/js/site.js"></script>
+
 </body>
-<div id="tooltip" style="position:absolute; background:#fff; border:1px solid #ccc; padding:4px 8px; border-radius:4px; pointer-events:none; font-size:12px; display:none;">
-</div>
-</div>
-  <section class="full-width">
-    <svg id="graph" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet"></svg>
-  </section>
-</body>
+</html>

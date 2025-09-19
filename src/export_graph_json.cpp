@@ -36,7 +36,7 @@ auto timepointOrder = [](Timepoint tp) -> int {
 
 std::string getLabel(const Node& node) {
     std::string label = node.isARG ? getARGName(node.id) : getMGENameForLabel(node.id);
-    label += "\n" + toString(node.timepoint);
+    label;
     return label;
 }
 

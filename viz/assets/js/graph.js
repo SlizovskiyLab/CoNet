@@ -1,169 +1,267 @@
-// Javascript code for D3.js graph visualization 
+// --- D3 Setup ---
 const svg = d3.select("#graph");
 const g = svg.append("g");
+const tooltip = d3.select("#tooltip");
 
-svg.call(d3.zoom().scaleExtent([0.2, 5])
-  .on("zoom", (e) => g.attr("transform", e.transform)));
+svg.call(d3.zoom().scaleExtent([0.2, 8])
+    .on("zoom", (e) => g.attr("transform", e.transform)));
+
+// --- DATA MAPPINGS ---
+const TIMEPOINT_CATEGORIES = {
+    "donor": "donor",
+    "pre": "pre",
+    "post1": { category: "post", range: [1, 30] },
+    "post2": { category: "post", range: [31, 60] },
+    "post3": { category: "post", range: [61, Infinity] }
+};
 
 const shapeMap = { circle: d3.symbolCircle, box: d3.symbolSquare, triangle: d3.symbolTriangle, diamond: d3.symbolDiamond, hexagon: d3.symbolCross, octagon: d3.symbolStar, parallelogram: d3.symbolWye, trapezium: d3.symbolWye };
-const arcScale = { licensing: 1.5, suit: 0.1 };
 
-function linkArc(d, scale = 1) {
-  const dx = d.target.x - d.source.x;
-  const dy = d.target.y - d.source.y;
-  const baseR = Math.hypot(dx, dy) * scale;
-  const step = 20;
-  const offset = (d.linknum - (d.linkcount - 1) / 2) * step;
-  const r = baseR + offset;
-  return `M${d.source.x},${d.source.y} A${r},${r} 0 0,1 ${d.target.x},${d.target.y}`;
+// --- GLOBAL STATE ---
+let originalData = {}; 
+let currentGraphKey = "json/graph1.json"; 
+
+// --- DATA LOADING & INITIALIZATION ---
+function loadAndRenderGraph(fileKey) {
+    currentGraphKey = fileKey;
+    if (originalData[fileKey]) {
+        populateFilters(originalData[fileKey]);
+        applyFiltersAndDraw();
+    } else {
+        d3.json(fileKey).then(data => {
+            originalData[fileKey] = data;
+            populateFilters(data);
+            applyFiltersAndDraw();
+        });
+    }
 }
 
-let originalData;
+function populateFilters(data) {
+    const mgeGroupSelect = d3.select("#mgeGroupFilter");
+    const nodeSource = (currentGraphKey.includes('graph1')) ? data.nodes.filter(n => !n.isARG) : data.nodes;
+    const groupKey = (currentGraphKey.includes('graph1')) ? 'group' : 'mgeGroup';
+    
+    const mgeGroups = [...new Set(nodeSource.map(n => n[groupKey]))].sort();
 
-function loadAndRenderGraph(file) {
-  d3.json(file).then(data => {
-    originalData = data;
+    mgeGroupSelect.selectAll("option.dynamic-option").remove();
+    
+    mgeGroups.forEach(group => {
+        if (group) {
+            mgeGroupSelect.append("option")
+                .attr("class", "dynamic-option")
+                .attr("value", group)
+                .text(group);
+        }
+    });
+}
+
+function resetFilters() {
+    d3.select("#diseaseFilter").property("value", "all");
+    d3.select("#mgeGroupFilter").property("value", "all");
+    d3.select("#timepointFilter").property("value", "all");
+    d3.select("#searchBox").property("value", "");
     applyFiltersAndDraw();
-  });
 }
 
+
+// --- CORE FILTERING LOGIC ---
 function applyFiltersAndDraw() {
-  if (!originalData) return;
+    if (!originalData[currentGraphKey]) return;
 
-  const showColo = d3.select("#toggleColo").property("checked");
-  const showTemporal = d3.select("#toggleTemporal").property("checked");
+    let data = JSON.parse(JSON.stringify(originalData[currentGraphKey])); 
 
-  const filteredLinks = originalData.links.filter(link => {
-      if (link.isColo === true) return showColo;
-      if (link.isColo === false) return showTemporal;
-      return true;
-  });
-  
-  const filteredData = { nodes: originalData.nodes, links: filteredLinks };
+    const filters = {
+        disease: d3.select("#diseaseFilter").property("value"),
+        mgeGroup: d3.select("#mgeGroupFilter").property("value"),
+        timepoint: d3.select("#timepointFilter").property("value"),
+        searchTerm: d3.select("#searchBox").property("value").trim().toLowerCase(),
+        showColo: d3.select("#toggleColo").property("checked"),
+        showTemporal: d3.select("#toggleTemporal").property("checked")
+    };
 
-  updateVisualization(filteredData);
+    let { nodes, links } = data;
+    
+    ({ nodes, links } = filterByProperties({ nodes, links }, filters));
+    
+    if (filters.searchTerm) {
+        ({ nodes, links } = filterBySearch({ nodes, links }, filters.searchTerm));
+    }
+    
+    links = links.filter(link => (link.isColo && filters.showColo) || (!link.isColo && filters.showTemporal));
+    
+    updateVisualization({ nodes, links });
 }
 
-function updateVisualization(data) {
-  g.selectAll("*").remove();
+function filterByProperties({ nodes, links }, filters) {
+    let visibleNodeIds = new Set(nodes.map(n => n.id));
 
-  const linkGroups = d3.groups(data.links, d => {
-    const s = typeof d.source === "object" ? d.source.id : d.source;
-    const t = typeof d.target === "object" ? d.target.id : d.target;
-    return s + "-" + t;
-  });
-  linkGroups.forEach(([key, links]) => {
-    links.forEach((l, i) => { l.linknum = i; l.linkcount = links.length; });
-  });
+    // Timepoint Filter
+    if (filters.timepoint !== 'all') {
+        const timepointInfo = TIMEPOINT_CATEGORIES[filters.timepoint];
+        const timepointFilteredIds = new Set(
+            nodes.filter(node => {
+                if (node.timepointCategory === timepointInfo) return true;
+                if (timepointInfo.category && node.timepointCategory === timepointInfo.category) {
+                    return node.timepoint >= timepointInfo.range[0] && node.timepoint <= timepointInfo.range[1];
+                }
+                return false;
+            }).map(n => n.id)
+        );
+        visibleNodeIds = new Set([...visibleNodeIds].filter(id => timepointFilteredIds.has(id)));
+    }
+    
+    // MGE Group Filter
+    if (filters.mgeGroup !== 'all') {
+        const groupKey = currentGraphKey.includes('graph1') ? 'group' : 'mgeGroup';
+        const mgeFilteredIds = new Set(nodes.filter(n => n[groupKey] === filters.mgeGroup).map(n => n.id));
 
-  svg.select("defs").remove(); 
-  const defs = svg.append("defs");
-  const colors = [...new Set(data.links.map(d => d.color || "#999"))];
-  
-  colors.forEach(c => {
-    defs.append("marker")
-      .attr("id", `arrow-${c.replace("#","")}`)
-      .attr("viewBox", "0 -5 10 10").attr("refX", 12).attr("refY", 0)
-      .attr("markerWidth", 3).attr("markerHeight", 3).attr("orient", "auto")
-      .attr("markerUnits", "strokeWidth").append("path")
-      .attr("d", "M0,-5L10,0L0,5").attr("fill", c);
-  });
-
-  const link = g.selectAll("path.link")
-    .data(data.links).join("path")
-    .attr("class", "link")
-    .attr("stroke", d => d.color || "#999")
-    .attr("marker-end", d => d.isColo ? null : `url(#arrow-${(d.color || "#999").replace("#","")})`)
-    .attr("stroke-width", d => Math.max(1, d.penwidth || 1))
-    .attr("stroke-dasharray", d => d.isColo ? null : "4 2");
-
-  const node = g.selectAll(".node")
-    .data(data.nodes).join("path")
-    .attr("class", "node")
-    .attr("d", d3.symbol().type(d => shapeMap[d.shape] || d3.symbolCircle).size(300))
-    .attr("fill", d => d.color).attr("stroke", "grey").attr("stroke-width", 1.5)
-    .call(d3.drag().on("start", dragstart).on("drag", dragged).on("end", dragend));
-
-  node.append("title").text(d => `${d.id}`);
-
-  const label = g.selectAll("text.label")
-    .data(data.nodes).join("text")
-    .attr("class", "label").attr("dy", -12).text(d => d.label);
-
-  g.selectAll("text.label").style("display", d3.select("#toggleLabels").property("checked") ? "block" : "none");
-
-  const sim = d3.forceSimulation(data.nodes)
-    .force("link", d3.forceLink(data.links).id(d => d.id).distance(d => d.isColo ? 40 : 50))
-    .force("charge", d3.forceManyBody().strength(d => -(40 + (d.degree || 0) * 15)))
-    .force("center", d3.forceCenter(500, 350))
-    .force("collision", d3.forceCollide().radius(20))
-    .force("x", d3.forceX(500).strength(0.05)).force("y", d3.forceY(350).strength(0.05))
-    .on("tick", () => {
-      link.attr("d", d => linkArc(d, arcScale[d.type] || 1));
-      node.attr("transform", d => `translate(${d.x},${d.y})`);
-      label.attr("x", d => d.x).attr("y", d => d.y);
+        if (currentGraphKey.includes('graph1')) {
+            // In graph1, we also need to keep the ARGs connected to these MGEs
+            const connectedArgIds = new Set();
+            links.forEach(link => {
+                if (link.isColo) {
+                    const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
+                    const targetId = typeof link.target === 'object' ? link.target.id : link.target;
+                    if (mgeFilteredIds.has(sourceId)) connectedArgIds.add(targetId);
+                    if (mgeFilteredIds.has(targetId)) connectedArgIds.add(sourceId);
+                }
+            });
+            const allVisible = new Set([...mgeFilteredIds, ...connectedArgIds]);
+            visibleNodeIds = new Set([...visibleNodeIds].filter(id => allVisible.has(id)));
+        } else {
+             visibleNodeIds = new Set([...visibleNodeIds].filter(id => mgeFilteredIds.has(id)));
+        }
+    }
+    
+    // Disease Filter
+    if (filters.disease !== 'all') {
+        let diseaseFilteredIds = new Set();
+        if (currentGraphKey.includes('graph1')) { // Disease is on links
+            links.forEach(link => {
+                if (link.isColo && link.diseases && link.diseases.includes(filters.disease)) {
+                    diseaseFilteredIds.add(typeof link.source === 'object' ? link.source.id : link.source);
+                    diseaseFilteredIds.add(typeof link.target === 'object' ? link.target.id : link.target);
+                }
+            });
+        } else { // Disease is on nodes for graph2
+            nodes.forEach(node => {
+                if (node.diseases && node.diseases.includes(filters.disease)) {
+                    diseaseFilteredIds.add(node.id);
+                }
+            });
+        }
+        visibleNodeIds = new Set([...visibleNodeIds].filter(id => diseaseFilteredIds.has(id)));
+    }
+    
+    const finalNodes = nodes.filter(n => visibleNodeIds.has(n.id));
+    const finalLinks = links.filter(l => {
+        const sourceId = typeof l.source === 'object' ? l.source.id : l.source;
+        const targetId = typeof l.target === 'object' ? l.target.id : l.target;
+        return visibleNodeIds.has(sourceId) && visibleNodeIds.has(targetId);
     });
 
-  function dragstart(e, d){ if(!e.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; }
-  function dragged(e, d){ d.fx=e.x; d.fy=e.y; }
-  function dragend(e, d){ if(!e.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }
+    return { nodes: finalNodes, links: finalLinks };
 }
 
-// default load
-loadAndRenderGraph("json/melanoma.json");
+function filterBySearch({ nodes, links }, searchTerm) {
+    if (!searchTerm) return { nodes, links };
+    
+    const nameKey = currentGraphKey.includes('graph1') ? 'name' : 'label';
+    const seedNodeIds = new Set(
+        nodes.filter(n => n[nameKey] && n[nameKey].toLowerCase().includes(searchTerm)).map(n => n.id)
+    );
 
-d3.select("#dataset").on("change", function() {
-  loadAndRenderGraph(this.value);
-});
+    if (seedNodeIds.size === 0) return { nodes: [], links: [] };
 
-d3.select("#toggleLabels").on("change", function() {
-  g.selectAll("text.label").style("display", this.checked ? "block" : "none");
-});
+    const neighborIds = new Set();
+    links.forEach(link => {
+        const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
+        const targetId = typeof link.target === 'object' ? link.target.id : link.target;
+        if (seedNodeIds.has(sourceId)) neighborIds.add(targetId);
+        if (seedNodeIds.has(targetId)) neighborIds.add(sourceId);
+    });
+    
+    const visibleNodeIds = new Set([...seedNodeIds, ...neighborIds]);
+    
+    const finalNodes = nodes.filter(n => visibleNodeIds.has(n.id));
+    const finalLinks = links.filter(l => {
+        const sourceId = typeof l.source === 'object' ? l.source.id : l.source;
+        const targetId = typeof l.target === 'object' ? l.target.id : l.target;
+        return visibleNodeIds.has(sourceId) && visibleNodeIds.has(targetId);
+    });
+    
+    return { nodes: finalNodes, links: finalLinks };
+}
 
+
+// --- D3 RENDERING ---
+function updateVisualization(data) {
+    g.selectAll("*").remove();
+    if (!data.nodes.length) return;
+
+    let simNodes = data.nodes.map(d => ({...d}));
+    let simLinks = data.links.map(d => ({...d}));
+
+    const link = g.selectAll("path.link")
+        .data(simLinks, d => `${d.source.id}-${d.target.id}-${d.type}`).join("path")
+        .attr("class", "link")
+        .attr("stroke", d => d.color || "#999")
+        .attr("marker-end", d => d.isColo ? null : `url(#arrow-${(d.color || "#999").replace("#","")})`)
+        .attr("stroke-width", d => Math.max(1, d.penwidth || 1))
+        .attr("stroke-dasharray", d => d.isColo ? null : "4 2");
+
+    const node = g.selectAll("path.node")
+        .data(simNodes, d => d.id).join("path")
+        .attr("class", "node")
+        .attr("d", d3.symbol().type(d => shapeMap[d.shape] || d3.symbolCircle).size(300))
+        .attr("fill", d => d.color).attr("stroke", "grey").attr("stroke-width", 1.5)
+        .call(d3.drag().on("start", dragstart).on("drag", dragged).on("end", dragend));
+
+    node.append("title").text(d => d.label.replace(/\\n/g, '\n'));
+
+    const label = g.selectAll("text.label")
+        .data(simNodes, d => d.id).join("text")
+        .attr("class", "label")
+        .attr("dy", -12)
+        .text(d => d.name || d.label.split('\n')[0]);
+
+    g.selectAll("text.label").style("display", d3.select("#toggleLabels").property("checked") ? "block" : "none");
+
+    const sim = d3.forceSimulation(simNodes)
+        .force("link", d3.forceLink(simLinks).id(d => d.id).distance(d => d.isColo ? 70 : 130).strength(0.5))
+        .force("charge", d3.forceManyBody().strength(-500))
+        .force("center", d3.forceCenter(500, 350))
+        .force("collision", d3.forceCollide().radius(30))
+        .on("tick", ticked);
+    
+    function ticked() {
+        link.attr("d", d => linkArc(d));
+        node.attr("transform", d => `translate(${d.x},${d.y})`);
+        label.attr("x", d => d.x).attr("y", d => d.y);
+    }
+    
+    function dragstart(event, d){ if(!event.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; }
+    function dragged(event, d){ d.fx=event.x; d.fy=event.y; }
+    function dragend(event, d){ if(!event.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }
+}
+
+function linkArc(d) {
+    const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
+    return `M${d.source.x},${d.source.y}A${r},${r} 0 0,1 ${d.target.x},${d.target.y}`;
+}
+
+// --- EVENT LISTENERS ---
+d3.select("#dataset").on("change", function() { loadAndRenderGraph(this.value); });
+d3.select("#diseaseFilter").on("change", applyFiltersAndDraw);
+d3.select("#mgeGroupFilter").on("change", applyFiltersAndDraw);
+d3.select("#timepointFilter").on("change", applyFiltersAndDraw);
+d3.select("#searchBtn").on("click", applyFiltersAndDraw);
+d3.select("#resetBtn").on("click", resetFilters);
+d3.select("#searchBox").on("keydown", event => { if (event.key === 'Enter') { applyFiltersAndDraw(); } });
+d3.select("#toggleLabels").on("change", () => g.selectAll("text.label").style("display", d3.select("#toggleLabels").property("checked") ? "block" : "none"));
 d3.select("#toggleColo").on("change", applyFiltersAndDraw);
 d3.select("#toggleTemporal").on("change", applyFiltersAndDraw);
 
-document.getElementById("toggleLabels").addEventListener("change", function(e) {
-  if (e.target.checked) {
-    d3.selectAll("text.label").style("display", "block");
-  } else {
-    d3.selectAll("text.label").style("display", "none");
-  }
-})
 
-
-// document.getElementById("collapseArrow").addEventListener("click", function() {
-//   const menu = document.getElementById("menu");
-//   if (menu.classList.contains("collapsed")) {
-//     menu.classList.remove("collapsed");
-//     this.textContent = "▼"; // down arrow when expanded
-//   } else {
-//     menu.classList.add("collapsed");
-//     this.textContent = "▲"; // up arrow when collapsed
-//   }
-// });
-
-
-// const tooltip = d3.select("#tooltip");
-
-// const link = g.selectAll("path.link")
-//   .data(data.links)
-//   .join("path")
-//   .attr("class", "link")
-//   .attr("stroke", d => d.color || "#999")
-//   .attr("marker-end", d => d.isColo ? null : `url(#arrow-${(d.color || "#999").replace("#","")})`)
-//   .attr("stroke-width", d => Math.max(1, d.penwidth || 1))
-//   .attr("stroke-dasharray", d => d.isColo ? null : "4 2")
-//   .on("mouseover", (event, d) => {
-//     if (d.type === "colocalization") {
-//       tooltip.style("display", "block")
-//              .html(`Individual count: <b>${d.individualCount}</b>`);
-//     }
-//   })
-//   .on("mousemove", (event) => {
-//     tooltip.style("left", (event.pageX + 10) + "px")
-//            .style("top", (event.pageY + 10) + "px");
-//   })
-//   .on("mouseout", () => {
-//     tooltip.style("display", "none");
-//   });
+// --- INITIAL LOAD ---
+loadAndRenderGraph(currentGraphKey);
