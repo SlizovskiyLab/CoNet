@@ -64,8 +64,10 @@ int main() {
     // /************************************* Graph Visualization ***********************************/
 
     Graph coNet = g;
-    exportGraphToJsonSimple(coNet, interaction_json_path);
-    exportParentGraphToJson(coNet, parent_json_path);
+    // exportGraphToJsonSimple(coNet, );
+    // exportParentGraphToJson(coNet, );
+    exportGraphToJsonSimple(coNet, interaction_json_path, patientToDiseaseMap);
+    exportParentGraphToJson(coNet, parent_json_path, patientToDiseaseMap, true);
 
     // exportToDot(coNet, "conet.dot");
     // exportParentTemporalGraphDot(coNet, "conet_parent_temporal.dot", true);

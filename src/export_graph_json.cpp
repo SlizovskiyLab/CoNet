@@ -3,12 +3,16 @@
 #include <string>
 #include <filesystem>
 #include <algorithm>
+#include <map>
+#include <set> 
 #include "../include/graph.h"
-#include "../include/id_maps.h"     // getARGName, getMGENameForLabel, getMGEGroupName
-#include "../include/export.h"      // toString(Timepoint) if you need it elsewhere
+#include "../include/id_maps.h"
+#include "../include/export.h"
 #include "../external/json.hpp"
 #include "../include/graph.h"
 #include "../include/Timepoint.h"
+
+#include "../include/parser.h" 
 
 using nlohmann::json;
 namespace fs = std::filesystem;
@@ -25,19 +29,19 @@ static std::string getTimepointColor(const Timepoint& tp) {
 }
 
 auto timepointOrder = [](Timepoint tp) -> int {
-    if (tp == Timepoint::Donor) return -1;       // Donor comes first
-    if (tp == Timepoint::PreFMT) return 0;       // PreFMT next
-    return static_cast<int>(tp);               
+    if (tp == Timepoint::Donor) return -1;
+    if (tp == Timepoint::PreFMT) return 0;
+    return static_cast<int>(tp);
 };
 
 std::string getLabel(const Node& node) {
     std::string label = node.isARG ? getARGName(node.id) : getMGENameForLabel(node.id);
-    label += "\n" + toString(node.timepoint);
+    label;
     return label;
 }
 
 
-bool exportGraphToJsonSimple(const Graph& g, const std::string& outPathStr) {
+bool exportGraphToJsonSimple(const Graph& g, const std::string& outPathStr, const std::map<int, std::string>& patientToDiseaseMap) {
     json j;
     j["nodes"] = json::array();
     j["links"] = json::array();
@@ -55,6 +59,8 @@ bool exportGraphToJsonSimple(const Graph& g, const std::string& outPathStr) {
         std::string color;
         double penwidth = 4.0;
         std::string type = "other";
+        
+        json diseases = json::array();
 
         if (edge.isColo) {
             auto canon = std::minmax(edge.source, edge.target);
@@ -64,6 +70,18 @@ bool exportGraphToJsonSimple(const Graph& g, const std::string& outPathStr) {
             style = "solid";
             color = "#696969";
             type  = "colocalization";
+
+            std::set<std::string> diseaseSet; 
+            for (int patientID : edge.individuals) {
+                auto it = patientToDiseaseMap.find(patientID);
+                if (it != patientToDiseaseMap.end()) {
+                    diseaseSet.insert(it->second); 
+                }
+            }
+        
+            for (const auto& diseaseName : diseaseSet) {
+                diseases.push_back(diseaseName);
+            }
 
             int count = static_cast<int>(edge.individuals.size());
             if (count > 1) penwidth = 4.0 + (count - 1) * 2.0;
@@ -79,8 +97,7 @@ bool exportGraphToJsonSimple(const Graph& g, const std::string& outPathStr) {
 
             Timepoint src_tp = edge.source.timepoint;
             Timepoint tgt_tp = edge.target.timepoint;
-
-            // bool src_is_post = (src_tp != Timepoint::Donor && src_tp != Timepoint::PreFMT);
+            
             bool tgt_is_post = (tgt_tp != Timepoint::Donor && tgt_tp != Timepoint::PreFMT);
 
             if (src_tp == Timepoint::Donor && tgt_tp == Timepoint::PreFMT)      color = "#006400";
@@ -101,7 +118,8 @@ bool exportGraphToJsonSimple(const Graph& g, const std::string& outPathStr) {
             {"color", color},
             {"penwidth", penwidth},
             {"isColo", edge.isColo},
-            {"type", type}
+            {"type", type},
+            {"diseases", diseases}
         });
     }
 
@@ -115,7 +133,7 @@ bool exportGraphToJsonSimple(const Graph& g, const std::string& outPathStr) {
         }
 
         j["nodes"].push_back({
-            {"id",        getNodeName(n)},              // match DOT's nodeName
+            {"id",        getNodeName(n)},
             {"label",     getLabel(n)},
             {"isARG",     n.isARG},
             {"timepoint", static_cast<int>(n.timepoint)},
@@ -138,7 +156,7 @@ bool exportGraphToJsonSimple(const Graph& g, const std::string& outPathStr) {
 }
 
 
-bool exportParentGraphToJson(const Graph& g, const std::string& outPathStr, bool showLabels) {
+bool exportParentGraphToJson(const Graph& g, const std::string& outPathStr, const std::map<int, std::string>& patientToDiseaseMap, bool showLabels) {
     json j;
     j["nodes"] = json::array();
     j["links"] = json::array();
@@ -154,9 +172,8 @@ bool exportParentGraphToJson(const Graph& g, const std::string& outPathStr, bool
     std::map<std::tuple<int,int,Timepoint>, std::string> uniqueParents;
     std::map<std::pair<int,int>, std::vector<ParentNodeInfo>> colocMap;
 
-    // --- create parent nodes ---
     for (const Edge& edge : g.edges) {
-        if (!edge.isColo) continue;  // only colocalization edges define parent nodes
+        if (!edge.isColo) continue;
 
         const Node& argNode = edge.source.isARG ? edge.source : edge.target;
         const Node& mgeNode = edge.source.isARG ? edge.target : edge.source;
@@ -176,8 +193,19 @@ bool exportParentGraphToJson(const Graph& g, const std::string& outPathStr, bool
             std::string label = showLabels
                 ? (getARGName(argId) + "\n" + getMGENameForLabel(mgeId) + "\n" + toString(tp))
                 : "";
+            
+            std::set<std::string> diseaseSet;
+            for (int patientID : edge.individuals) {
+                auto it = patientToDiseaseMap.find(patientID);
+                if (it != patientToDiseaseMap.end()) {
+                    diseaseSet.insert(it->second);
+                }
+            }
+            json diseases = json::array();
+            for (const auto& diseaseName : diseaseSet) {
+                diseases.push_back(diseaseName);
+            }
 
-            // write JSON node
             j["nodes"].push_back({
                 {"id", parentName},
                 {"label", label},
@@ -185,7 +213,8 @@ bool exportParentGraphToJson(const Graph& g, const std::string& outPathStr, bool
                 {"mgeId", mgeId},
                 {"timepoint", static_cast<int>(tp)},
                 {"color", color},
-                {"shape", shape}
+                {"shape", shape},
+                {"diseases", diseases}
             });
         }
 
@@ -193,14 +222,13 @@ bool exportParentGraphToJson(const Graph& g, const std::string& outPathStr, bool
         colocMap[pairKey].push_back({uniqueParents[key], tp, argId, mgeId});
     }
 
-    // --- add temporal edges between parent nodes ---
     for (auto& entry : colocMap) {
         auto& parentNodes = entry.second;
 
         std::sort(parentNodes.begin(), parentNodes.end(),
-                  [&](const ParentNodeInfo& a, const ParentNodeInfo& b) {
-                      return timepointOrder(a.tp) < timepointOrder(b.tp);
-                  });
+            [&](const ParentNodeInfo& a, const ParentNodeInfo& b) {
+                return timepointOrder(a.tp) < timepointOrder(b.tp);
+            });
 
         for (size_t i = 0; i + 1 < parentNodes.size(); ++i) {
             if (parentNodes[i].tp == parentNodes[i+1].tp ||
@@ -211,7 +239,6 @@ bool exportParentGraphToJson(const Graph& g, const std::string& outPathStr, bool
             Timepoint src_tp = parentNodes[i].tp;
             Timepoint tgt_tp = parentNodes[i+1].tp;
 
-            // bool src_is_post = (src_tp != Timepoint::Donor && src_tp != Timepoint::PreFMT);
             bool tgt_is_post = (tgt_tp != Timepoint::Donor && tgt_tp != Timepoint::PreFMT);
 
             std::string color;
