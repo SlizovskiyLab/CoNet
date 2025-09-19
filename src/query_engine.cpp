@@ -329,8 +329,11 @@ void writeTemporalDynamicsCountsForDisease(
         comboCounts[std::make_tuple(argID, mgeID, hasDonor, hasPreFMT, postBin)] += 1;
     }
 
-    disease_type_path = fs::path(cfg.output_disease);
-    fs::path filename = disease_type_path / (disease + ".csv");
+    // disease_type_path = fs::path(cfg.output_disease);
+    // std::cout << "Loaded output_disease = " << disease_type_path << "\n";
+    fs::path filename = "output/disease_type/" + disease + ".csv";
+
+    // std::cout << "Writing to: " << fs::absolute(filename) << "\n";
     std::ofstream out(filename);
     if (!out.is_open()) {
         std::cerr << "Error opening file: " << filename << "\n";

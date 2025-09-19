@@ -228,10 +228,11 @@ function updateVisualization(data) {
     g.selectAll("text.label").style("display", d3.select("#toggleLabels").property("checked") ? "block" : "none");
 
     const sim = d3.forceSimulation(simNodes)
-        .force("link", d3.forceLink(simLinks).id(d => d.id).distance(d => d.isColo ? 70 : 130).strength(0.5))
-        .force("charge", d3.forceManyBody().strength(-500))
+        .force("link", d3.forceLink(simLinks).id(d => d.id).distance(d => d.isColo ? 40 : 60))
+        .force("charge", d3.forceManyBody().strength(d => -(40 + (d.degree || 0) * 15)))
         .force("center", d3.forceCenter(500, 350))
-        .force("collision", d3.forceCollide().radius(30))
+        .force("collision", d3.forceCollide().radius(20))
+        .force("x", d3.forceX(500).strength(0.05)).force("y", d3.forceY(350).strength(0.05))
         .on("tick", ticked);
     
     function ticked() {
