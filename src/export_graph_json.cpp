@@ -191,7 +191,7 @@ bool exportParentGraphToJson(const Graph& g, const std::string& outPathStr, cons
             std::string groupName = getMGEGroupName(mgeId);
             std::string shape = getMGEGroupShape(groupName);
             std::string label = showLabels
-                ? (getARGName(argId) + "\n" + getMGENameForLabel(mgeId) + "\n" + toString(tp))
+                ? (getARGName(argId) + "+" + getMGENameForLabel(mgeId))
                 : "";
             
             std::set<std::string> diseaseSet;

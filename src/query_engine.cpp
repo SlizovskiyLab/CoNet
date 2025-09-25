@@ -486,20 +486,20 @@ void exportColocalizations(const Graph& g,
     // Emerge
     
     getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual,
-        false, false, true, "PostFMT Only", temporal_dynamics_emerge);
+        false, false, true, "PostFMT Only", temporal_dynamics_emerge.string());
     // Disappear
     getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual,
-        false, true, false, "PreFMT Only", temporal_dynamics_disappear, false);
+        false, true, false, "PreFMT Only", temporal_dynamics_disappear.string(), false);
     getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual,
-        true, true, false, "Donor & PreFMT Only", temporal_dynamics_disappear, true);
+        true, true, false, "Donor & PreFMT Only", temporal_dynamics_disappear.string(), true);
     // Transfer
     getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual,
-        true, false, true, "Donor & PostFMT Only", temporal_dynamics_transfer, true);
+        true, false, true, "Donor & PostFMT Only", temporal_dynamics_transfer.string(), true);
     // Persist
     getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual,
-        false, true, true, "PreFMT & PostFMT Only", temporal_dynamics_persist, false);
+        false, true, true, "PreFMT & PostFMT Only", temporal_dynamics_persist.string(), false);
     getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual,
-        true, true, true, "PreFMT, Donor & PostFMT", temporal_dynamics_persist, true);
+        true, true, true, "PreFMT, Donor & PostFMT", temporal_dynamics_persist.string(), true);
 }
 
 
