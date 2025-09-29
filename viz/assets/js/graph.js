@@ -6,24 +6,16 @@ const tooltip = d3.select("#tooltip");
 svg.call(d3.zoom().scaleExtent([0.2, 8])
     .on("zoom", (e) => g.attr("transform", e.transform)));
 
-// --- DATA MAPPINGS ---
-const TIMEPOINT_CATEGORIES = {
-    "donor": "donor",
-    "pre": "pre",
-    "post1": { category: "post", range: [1, 30] },
-    "post2": { category: "post", range: [31, 60] },
-    "post3": { category: "post", range: [61, Infinity] }
-};
-
-const shapeMap = { circle: d3.symbolCircle, box: d3.symbolSquare, triangle: d3.symbolTriangle, diamond: d3.symbolDiamond, hexagon: d3.symbolCross, octagon: d3.symbolStar, parallelogram: d3.symbolWye, trapezium: d3.symbolWye };
-
-// --- GLOBAL STATE ---
 let originalData = {}; 
 let currentGraphKey = "json/graph1.json"; 
+
+const shapeMap = { circle: d3.symbolCircle, box: d3.symbolSquare, triangle: d3.symbolTriangle, diamond: d3.symbolDiamond, hexagon: d3.symbolCross, octagon: d3.symbolStar, parallelogram: d3.symbolWye, trapezium: d3.symbolWye };
 
 // --- DATA LOADING & INITIALIZATION ---
 function loadAndRenderGraph(fileKey) {
     currentGraphKey = fileKey;
+    resetFilters(false);
+
     if (originalData[fileKey]) {
         populateFilters(originalData[fileKey]);
         applyFiltersAndDraw();
@@ -32,37 +24,35 @@ function loadAndRenderGraph(fileKey) {
             originalData[fileKey] = data;
             populateFilters(data);
             applyFiltersAndDraw();
-        });
+        }).catch(error => console.error("Error loading JSON:", error));
     }
 }
 
 function populateFilters(data) {
     const mgeGroupSelect = d3.select("#mgeGroupFilter");
     const nodeSource = (currentGraphKey.includes('graph1')) ? data.nodes.filter(n => !n.isARG) : data.nodes;
-    const groupKey = (currentGraphKey.includes('graph1')) ? 'group' : 'mgeGroup';
     
-    const mgeGroups = [...new Set(nodeSource.map(n => n[groupKey]))].sort();
+    const mgeGroups = [...new Set(nodeSource.map(n => n.mgeGroup).filter(g => g))].sort();
 
     mgeGroupSelect.selectAll("option.dynamic-option").remove();
     
     mgeGroups.forEach(group => {
-        if (group) {
-            mgeGroupSelect.append("option")
-                .attr("class", "dynamic-option")
-                .attr("value", group)
-                .text(group);
-        }
+        mgeGroupSelect.append("option")
+            .attr("class", "dynamic-option")
+            .attr("value", group)
+            .text(group);
     });
 }
 
-function resetFilters() {
+function resetFilters(redraw = true) {
     d3.select("#diseaseFilter").property("value", "all");
     d3.select("#mgeGroupFilter").property("value", "all");
     d3.select("#timepointFilter").property("value", "all");
     d3.select("#searchBox").property("value", "");
-    applyFiltersAndDraw();
+    if (redraw) {
+        applyFiltersAndDraw();
+    }
 }
-
 
 // --- CORE FILTERING LOGIC ---
 function applyFiltersAndDraw() {
@@ -81,69 +71,58 @@ function applyFiltersAndDraw() {
 
     let { nodes, links } = data;
     
-    ({ nodes, links } = filterByProperties({ nodes, links }, filters));
-    
-    if (filters.searchTerm) {
-        ({ nodes, links } = filterBySearch({ nodes, links }, filters.searchTerm));
+    // --- FILTERING PIPELINE ---
+
+    let strictlyFilteredNodeIds = getStrictlyFilteredNodeIds(nodes, links, filters);
+
+    let seedNodeIds = getSeedNodeIds(nodes, filters, strictlyFilteredNodeIds);
+
+    let finalVisibleNodeIds;
+    if (filters.mgeGroup !== 'all' || filters.searchTerm) {
+        if (seedNodeIds.size === 0) {
+            finalVisibleNodeIds = new Set(); // No seeds mean no results
+        } else {
+            const neighborIds = getNeighborIds(links, seedNodeIds);
+            finalVisibleNodeIds = new Set([...seedNodeIds, ...neighborIds]);
+        }
+    } else {
+        finalVisibleNodeIds = strictlyFilteredNodeIds;
     }
+
+    const finalNodes = nodes.filter(n => finalVisibleNodeIds.has(n.id));
+    let finalLinks = links.filter(l => {
+        const sourceId = typeof l.source === 'object' ? l.source.id : l.source;
+        const targetId = typeof l.target === 'object' ? l.target.id : l.target;
+        return finalVisibleNodeIds.has(sourceId) && finalVisibleNodeIds.has(targetId);
+    });
     
-    links = links.filter(link => (link.isColo && filters.showColo) || (!link.isColo && filters.showTemporal));
+    finalLinks = finalLinks.filter(link => (link.isColo && filters.showColo) || (!link.isColo && filters.showTemporal));
     
-    updateVisualization({ nodes, links });
+    updateVisualization({ nodes: finalNodes, links: finalLinks });
 }
 
-function filterByProperties({ nodes, links }, filters) {
+function getStrictlyFilteredNodeIds(nodes, links, filters) {
     let visibleNodeIds = new Set(nodes.map(n => n.id));
 
     // Timepoint Filter
     if (filters.timepoint !== 'all') {
-        const timepointInfo = TIMEPOINT_CATEGORIES[filters.timepoint];
         const timepointFilteredIds = new Set(
-            nodes.filter(node => {
-                if (node.timepointCategory === timepointInfo) return true;
-                if (timepointInfo.category && node.timepointCategory === timepointInfo.category) {
-                    return node.timepoint >= timepointInfo.range[0] && node.timepoint <= timepointInfo.range[1];
-                }
-                return false;
-            }).map(n => n.id)
+            nodes.filter(node => node.timepointCategory === filters.timepoint).map(n => n.id)
         );
         visibleNodeIds = new Set([...visibleNodeIds].filter(id => timepointFilteredIds.has(id)));
-    }
-    
-    // MGE Group Filter
-    if (filters.mgeGroup !== 'all') {
-        const groupKey = currentGraphKey.includes('graph1') ? 'group' : 'mgeGroup';
-        const mgeFilteredIds = new Set(nodes.filter(n => n[groupKey] === filters.mgeGroup).map(n => n.id));
-
-        if (currentGraphKey.includes('graph1')) {
-            // In graph1, we also need to keep the ARGs connected to these MGEs
-            const connectedArgIds = new Set();
-            links.forEach(link => {
-                if (link.isColo) {
-                    const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
-                    const targetId = typeof link.target === 'object' ? link.target.id : link.target;
-                    if (mgeFilteredIds.has(sourceId)) connectedArgIds.add(targetId);
-                    if (mgeFilteredIds.has(targetId)) connectedArgIds.add(sourceId);
-                }
-            });
-            const allVisible = new Set([...mgeFilteredIds, ...connectedArgIds]);
-            visibleNodeIds = new Set([...visibleNodeIds].filter(id => allVisible.has(id)));
-        } else {
-             visibleNodeIds = new Set([...visibleNodeIds].filter(id => mgeFilteredIds.has(id)));
-        }
     }
     
     // Disease Filter
     if (filters.disease !== 'all') {
         let diseaseFilteredIds = new Set();
-        if (currentGraphKey.includes('graph1')) { // Disease is on links
+        if (currentGraphKey.includes('graph1')) {
             links.forEach(link => {
                 if (link.isColo && link.diseases && link.diseases.includes(filters.disease)) {
                     diseaseFilteredIds.add(typeof link.source === 'object' ? link.source.id : link.source);
                     diseaseFilteredIds.add(typeof link.target === 'object' ? link.target.id : link.target);
                 }
             });
-        } else { // Disease is on nodes for graph2
+        } else {
             nodes.forEach(node => {
                 if (node.diseases && node.diseases.includes(filters.disease)) {
                     diseaseFilteredIds.add(node.id);
@@ -153,26 +132,44 @@ function filterByProperties({ nodes, links }, filters) {
         visibleNodeIds = new Set([...visibleNodeIds].filter(id => diseaseFilteredIds.has(id)));
     }
     
-    const finalNodes = nodes.filter(n => visibleNodeIds.has(n.id));
-    const finalLinks = links.filter(l => {
-        const sourceId = typeof l.source === 'object' ? l.source.id : l.source;
-        const targetId = typeof l.target === 'object' ? l.target.id : l.target;
-        return visibleNodeIds.has(sourceId) && visibleNodeIds.has(targetId);
-    });
-
-    return { nodes: finalNodes, links: finalLinks };
+    return visibleNodeIds;
 }
 
-function filterBySearch({ nodes, links }, searchTerm) {
-    if (!searchTerm) return { nodes, links };
-    
-    const nameKey = currentGraphKey.includes('graph1') ? 'name' : 'label';
-    const seedNodeIds = new Set(
-        nodes.filter(n => n[nameKey] && n[nameKey].toLowerCase().includes(searchTerm)).map(n => n.id)
-    );
+function getSeedNodeIds(nodes, filters, availableNodeIds) {
+    let mgeGroupSeedIds = new Set();
+    let searchSeedIds = new Set();
 
-    if (seedNodeIds.size === 0) return { nodes: [], links: [] };
+    const availableNodes = nodes.filter(n => availableNodeIds.has(n.id));
 
+    if (filters.mgeGroup !== 'all') {
+        availableNodes.forEach(n => {
+            if (n.mgeGroup === filters.mgeGroup) {
+                mgeGroupSeedIds.add(n.id);
+            }
+        });
+    }
+
+    if (filters.searchTerm) {
+        availableNodes.forEach(n => {
+            if (n.label && n.label.toLowerCase().includes(filters.searchTerm)) {
+                searchSeedIds.add(n.id);
+            }
+        });
+    }
+
+    if (filters.mgeGroup !== 'all' && filters.searchTerm) {
+        return new Set([...mgeGroupSeedIds].filter(id => searchSeedIds.has(id)));
+    }
+    if (filters.mgeGroup !== 'all') {
+        return mgeGroupSeedIds;
+    }
+    if (filters.searchTerm) {
+        return searchSeedIds;
+    }
+    return new Set();
+}
+
+function getNeighborIds(links, seedNodeIds) {
     const neighborIds = new Set();
     links.forEach(link => {
         const sourceId = typeof link.source === 'object' ? link.source.id : link.source;
@@ -180,17 +177,7 @@ function filterBySearch({ nodes, links }, searchTerm) {
         if (seedNodeIds.has(sourceId)) neighborIds.add(targetId);
         if (seedNodeIds.has(targetId)) neighborIds.add(sourceId);
     });
-    
-    const visibleNodeIds = new Set([...seedNodeIds, ...neighborIds]);
-    
-    const finalNodes = nodes.filter(n => visibleNodeIds.has(n.id));
-    const finalLinks = links.filter(l => {
-        const sourceId = typeof l.source === 'object' ? l.source.id : l.source;
-        const targetId = typeof l.target === 'object' ? l.target.id : l.target;
-        return visibleNodeIds.has(sourceId) && visibleNodeIds.has(targetId);
-    });
-    
-    return { nodes: finalNodes, links: finalLinks };
+    return neighborIds;
 }
 
 
@@ -199,6 +186,17 @@ function updateVisualization(data) {
     g.selectAll("*").remove();
     if (!data.nodes.length) return;
 
+    const defs = svg.append("defs");
+    const colors = [...new Set(data.links.map(d => d.color || "#999"))];
+    colors.forEach(c => {
+        defs.append("marker")
+            .attr("id", `arrow-${c.replace("#","")}`)
+            .attr("viewBox", "0 -5 10 10").attr("refX", 12).attr("refY", 0)
+            .attr("markerWidth", 3).attr("markerHeight", 3).attr("orient", "auto")
+            .attr("markerUnits", "strokeWidth").append("path")
+            .attr("d", "M0,-5L10,0L0,5").attr("fill", c);
+    });
+    
     let simNodes = data.nodes.map(d => ({...d}));
     let simLinks = data.links.map(d => ({...d}));
 
@@ -217,13 +215,13 @@ function updateVisualization(data) {
         .attr("fill", d => d.color).attr("stroke", "grey").attr("stroke-width", 1.5)
         .call(d3.drag().on("start", dragstart).on("drag", dragged).on("end", dragend));
 
-    node.append("title").text(d => d.label.replace(/\\n/g, '\n'));
+    node.append("title").text(d => d.label);
 
     const label = g.selectAll("text.label")
         .data(simNodes, d => d.id).join("text")
         .attr("class", "label")
         .attr("dy", -12)
-        .text(d => d.name || d.label.split('\n')[0]);
+        .text(d => d.label);
 
     g.selectAll("text.label").style("display", d3.select("#toggleLabels").property("checked") ? "block" : "none");
 
@@ -262,7 +260,6 @@ d3.select("#searchBox").on("keydown", event => { if (event.key === 'Enter') { ap
 d3.select("#toggleLabels").on("change", () => g.selectAll("text.label").style("display", d3.select("#toggleLabels").property("checked") ? "block" : "none"));
 d3.select("#toggleColo").on("change", applyFiltersAndDraw);
 d3.select("#toggleTemporal").on("change", applyFiltersAndDraw);
-
 
 // --- INITIAL LOAD ---
 loadAndRenderGraph(currentGraphKey);
