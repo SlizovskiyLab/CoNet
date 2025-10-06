@@ -65,8 +65,6 @@ function applyFiltersAndDraw() {
         mgeGroup: d3.select("#mgeGroupFilter").property("value"),
         timepoint: d3.select("#timepointFilter").property("value"),
         searchTerm: d3.select("#searchBox").property("value").trim().toLowerCase(),
-        showColo: d3.select("#toggleColo").property("checked"),
-        showTemporal: d3.select("#toggleTemporal").property("checked")
     };
 
     let { nodes, links } = data;
@@ -95,9 +93,7 @@ function applyFiltersAndDraw() {
         const targetId = typeof l.target === 'object' ? l.target.id : l.target;
         return finalVisibleNodeIds.has(sourceId) && finalVisibleNodeIds.has(targetId);
     });
-    
-    finalLinks = finalLinks.filter(link => (link.isColo && filters.showColo) || (!link.isColo && filters.showTemporal));
-    
+        
     updateVisualization({ nodes: finalNodes, links: finalLinks });
 }
 
@@ -242,11 +238,27 @@ function updateVisualization(data) {
     function dragstart(event, d){ if(!event.active) sim.alphaTarget(0.3).restart(); d.fx=d.x; d.fy=d.y; }
     function dragged(event, d){ d.fx=event.x; d.fy=event.y; }
     function dragend(event, d){ if(!event.active) sim.alphaTarget(0); d.fx=null; d.fy=null; }
+
+    updateLinkVisibility();
 }
 
 function linkArc(d) {
     const r = Math.hypot(d.target.x - d.source.x, d.target.y - d.source.y);
     return `M${d.source.x},${d.source.y}A${r},${r} 0 0,1 ${d.target.x},${d.target.y}`;
+}
+
+function updateLinkVisibility() {
+    const showColo = d3.select("#toggleColo").property("checked");
+    const showTemporal = d3.select("#toggleTemporal").property("checked");
+
+    g.selectAll("path.link")
+        .style("display", d => {
+            if (d.isColo) {
+                return showColo ? "inline" : "none";
+            } else {
+                return showTemporal ? "inline" : "none";
+            }
+        });
 }
 
 // --- EVENT LISTENERS ---
@@ -258,8 +270,8 @@ d3.select("#searchBtn").on("click", applyFiltersAndDraw);
 d3.select("#resetBtn").on("click", resetFilters);
 d3.select("#searchBox").on("keydown", event => { if (event.key === 'Enter') { applyFiltersAndDraw(); } });
 d3.select("#toggleLabels").on("change", () => g.selectAll("text.label").style("display", d3.select("#toggleLabels").property("checked") ? "block" : "none"));
-d3.select("#toggleColo").on("change", applyFiltersAndDraw);
-d3.select("#toggleTemporal").on("change", applyFiltersAndDraw);
+d3.select("#toggleColo").on("change", updateLinkVisibility);
+d3.select("#toggleTemporal").on("change", updateLinkVisibility);
 
 // --- INITIAL LOAD ---
 loadAndRenderGraph(currentGraphKey);
