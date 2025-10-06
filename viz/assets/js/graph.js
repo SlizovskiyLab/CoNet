@@ -48,7 +48,8 @@ function resetFilters(redraw = true) {
     d3.select("#diseaseFilter").property("value", "all");
     d3.select("#mgeGroupFilter").property("value", "all");
     d3.select("#timepointFilter").property("value", "all");
-    d3.select("#searchBox").property("value", "");
+    d3.select("#argSearch").property("value", "");
+    d3.select("#mgeSearch").property("value", ""); 
     if (redraw) {
         applyFiltersAndDraw();
     }
@@ -64,7 +65,8 @@ function applyFiltersAndDraw() {
         disease: d3.select("#diseaseFilter").property("value"),
         mgeGroup: d3.select("#mgeGroupFilter").property("value"),
         timepoint: d3.select("#timepointFilter").property("value"),
-        searchTerm: d3.select("#searchBox").property("value").trim().toLowerCase(),
+        argSearchTerm: d3.select("#argSearch").property("value").trim().toLowerCase(),
+        mgeSearchTerm: d3.select("#mgeSearch").property("value").trim().toLowerCase(),
     };
 
     let { nodes, links } = data;
@@ -76,7 +78,7 @@ function applyFiltersAndDraw() {
     let seedNodeIds = getSeedNodeIds(nodes, filters, strictlyFilteredNodeIds);
 
     let finalVisibleNodeIds;
-    if (filters.mgeGroup !== 'all' || filters.searchTerm) {
+    if (filters.mgeGroup !== 'all' || filters.argSearchTerm || filters.mgeSearchTerm) {
         if (seedNodeIds.size === 0) {
             finalVisibleNodeIds = new Set(); // No seeds mean no results
         } else {
@@ -145,23 +147,34 @@ function getSeedNodeIds(nodes, filters, availableNodeIds) {
         });
     }
 
-    if (filters.searchTerm) {
+    const hasArgSearch = !!filters.argSearchTerm;
+    const hasMgeSearch = !!filters.mgeSearchTerm;
+
+    if (hasArgSearch || hasMgeSearch) {
         availableNodes.forEach(n => {
-            if (n.label && n.label.toLowerCase().includes(filters.searchTerm)) {
+            const label = n.label ? n.label.toLowerCase() : "";
+            if (hasArgSearch && n.isARG && label.includes(filters.argSearchTerm)) {
+                searchSeedIds.add(n.id);
+            }
+            if (hasMgeSearch && !n.isARG && label.includes(filters.mgeSearchTerm)) {
                 searchSeedIds.add(n.id);
             }
         });
     }
 
-    if (filters.mgeGroup !== 'all' && filters.searchTerm) {
+    const isMgeGroupFiltered = filters.mgeGroup !== 'all';
+    const isSearchFiltered = hasArgSearch || hasMgeSearch;
+
+    if (isMgeGroupFiltered && isSearchFiltered) {
         return new Set([...mgeGroupSeedIds].filter(id => searchSeedIds.has(id)));
     }
-    if (filters.mgeGroup !== 'all') {
+    if (isMgeGroupFiltered) {
         return mgeGroupSeedIds;
     }
-    if (filters.searchTerm) {
+    if (isSearchFiltered) {
         return searchSeedIds;
     }
+    
     return new Set();
 }
 
@@ -268,7 +281,8 @@ d3.select("#mgeGroupFilter").on("change", applyFiltersAndDraw);
 d3.select("#timepointFilter").on("change", applyFiltersAndDraw);
 d3.select("#searchBtn").on("click", applyFiltersAndDraw);
 d3.select("#resetBtn").on("click", resetFilters);
-d3.select("#searchBox").on("keydown", event => { if (event.key === 'Enter') { applyFiltersAndDraw(); } });
+d3.select("#argSearch").on("keydown", event => { if (event.key === 'Enter') { applyFiltersAndDraw(); } });
+d3.select("#mgeSearch").on("keydown", event => { if (event.key === 'Enter') { applyFiltersAndDraw(); } });
 d3.select("#toggleLabels").on("change", () => g.selectAll("text.label").style("display", d3.select("#toggleLabels").property("checked") ? "block" : "none"));
 d3.select("#toggleColo").on("change", updateLinkVisibility);
 d3.select("#toggleTemporal").on("change", updateLinkVisibility);
