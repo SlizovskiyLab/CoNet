@@ -17,7 +17,7 @@
 </head>
 
 <body>
-<div class="col-md-8 mx-auto">
+<div class="container-fluid">
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <a href="index.html" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
             <img src="assets/img/Logo.svg" alt="AMR-GraphNet Logo" width="35" height="35" class="d-inline-block align-text-middle">
@@ -76,13 +76,18 @@
             </div>
 
             <!-- Search by Label -->
-            <div class="col-md-8 col-lg-3">
-                <label for="searchBox" class="form-label"><strong>Search Label</strong></label>
-                <div class="input-group">
-                    <input type="text" id="searchBox" class="form-control" placeholder="e.g., tet(M), virus, etc.">
-                    <button class="btn btn-outline-secondary" type="button" id="searchBtn">Search</button>
-                    <button class="btn btn-outline-secondary" type="button" id="resetBtn">Reset</button>
-                </div>
+            <div class="col-md-4 col-lg-3">
+                <label for="argSearch" class="form-label"><strong>Search ARGs</strong></label>
+                <input type="text" id="argSearch" class="form-control" placeholder="e.g., tet(M)">
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+                <label for="mgeSearch" class="form-label"><strong>Search MGEs</strong></label>
+                <input type="text" id="mgeSearch" class="form-control" placeholder="e.g., virus, plasmid">
+            </div>
+            
+            <div class="col-md-4 col-lg-2 d-flex align-items-end">
+                <button class="btn btn-outline-secondary w-100" type="button" id="resetBtn">Reset Filters</button>
             </div>
             
              <!-- Display Toggles -->
