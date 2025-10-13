@@ -63,16 +63,30 @@
             </div>
 
             <!-- Timepoint Filter -->
-            <div class="col-md-4 col-lg-2">
-                <label for="timepointFilter" class="form-label"><strong>Patient Stage</strong></label>
-                <select id="timepointFilter" class="form-select">
-                    <option value="all" selected>All Stages</option>
-                    <option value="donor">Donor</option>
-                    <option value="pre">Pre-FMT</option>
-                    <option value="post1">Post-FMT (1-30d)</option>
-                    <option value="post2">Post-FMT (31-60d)</option>
-                    <option value="post3">Post-FMT (61+d)</option>
-                </select>
+            <div class="col-md-4 col-lg-3">
+                <label class="form-label"><strong>Patient Stages</strong></label>
+                <div id="timepointFilter" class="d-flex flex-wrap gap-2">
+                    <div class="form-check">
+                        <input class="form-check-input timepoint-checkbox" type="checkbox" value="donor" id="stage-donor" checked>
+                        <label class="form-check-label" for="stage-donor">Donor</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input timepoint-checkbox" type="checkbox" value="pre" id="stage-pre" checked>
+                        <label class="form-check-label" for="stage-pre">Pre-FMT</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input timepoint-checkbox" type="checkbox" value="post1" id="stage-post1" checked>
+                        <label class="form-check-label" for="stage-post1">Post-FMT (1–30d)</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input timepoint-checkbox" type="checkbox" value="post2" id="stage-post2" checked>
+                        <label class="form-check-label" for="stage-post2">Post-FMT (31–60d)</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input timepoint-checkbox" type="checkbox" value="post3" id="stage-post3" checked>
+                        <label class="form-check-label" for="stage-post3">Post-FMT (61+d)</label>
+                    </div>
+                </div>
             </div>
 
             <!-- Search by Label -->
