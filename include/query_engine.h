@@ -9,9 +9,9 @@
 #include "graph.h"
 #include "Timepoint.h"
 
-bool isPostFMT(const std::string& tp);
-bool isPreFMT(const std::string& tp);
-bool isDonor(const std::string& tp);
+bool isPostFMT(const Timepoint& tp);
+bool isPreFMT(const Timepoint& tp);
+bool isDonor(const Timepoint& tp);
 
 void getPatientwiseColocalizationsByCriteria(
     const Graph& graph,

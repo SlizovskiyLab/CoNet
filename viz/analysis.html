@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="./assets/css/site.css">
+    <title>ARG–MGE Longitudinal Visualization</title>
+    <!-- <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/apple-touch-icon.png"> -->
+    <!-- <link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon-32x32.png"> -->
+    <!-- <link rel="icon" type="image/png" sizes="16x16" href="./assets/img/favicon-16x16.png"> -->
+    <link rel="manifest" href="./site.webmanifest">
+    <link rel="stylesheet" href="./assets/css/style.css">
+  <style>
+  </style>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+    <div class="col-md-8 mx-auto">
+
+        <header
+    class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+    <a href="index.html" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+        <img src="assets/img/Logo.svg" alt="" width="35" height="35" class="d-inline-block align-text-middle">
+        <span class="fs-4 ms-2"> AMR-GraphNet </span>
+    </a>
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 analysis">
+        <li><a href="./index.html" class="nav-link px-2 link-dark nav-about">About</a></li>
+        <li><a href="./tool.html" class="nav-link px-2 link-dark nav-tool">Tool</a></li>
+        <li><a href="./analysis.html" class="nav-link px-2 link-dark nav-analysis">Analysis</a></li>
+        <li><a href="./downloads.html" class="nav-link px-2 link-dark nav-downloads">Downloads</a></li>
+        <li><a href="./contact.html" class="nav-link px-2 link-dark nav-contact">Contact</a></li>
+    </ul>
+</header>
+
+<h1 class="h2 fw-light">ARG–MGE Colocalization Dynamics Across Diseases</h1>
+<div id="plots" class="d-flex flex-column gap-4"></div>
+</div>
+<div id="plots"></div>
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script>
+const width = 900, height = 420;
+const margin = { top: 60, right: 40, bottom: 120, left: 80 };
+const colorMap = {
+  persisted:   "#1f77b4",
+  emerged:     "#ff7f0e",
+  disappeared: "#2E8B57",
+  transferred: "#F4B400"
+};
+const keys = Object.keys(colorMap);
+const pageSize = 25;
+
+// -------------------- Load data --------------------
+d3.json("json/temporal_dynamics_disease.json").then(rawData => {
+  const diseases = Object.keys(rawData);
+  const container = d3.select("#plots");
+  container.selectAll("*").remove();
+
+  diseases.forEach(disease => {
+    const panelDiv = container.append("div")
+      .attr("class", "card shadow-sm border-0 mb-5");
+
+    const header = panelDiv.append("div")
+      .attr("class", "d-flex justify-content-between align-items-center p-2 px-3 border-bottom bg-light");
+
+
+     const diseaseTitle = header.append("div")
+      .attr("class", "fw-semibold text-dark fs-5 d-flex align-items-baseline gap-1");
+
+
+    diseaseTitle.append("span").text(disease);
+  
+
+    const btnGroup = header.append("div")
+      .attr("class", "btn-group btn-group-sm") 
+      .html(`
+        <button id="prev-${disease}" class="btn btn-outline-dark">◀ Prev</button>
+        <button id="next-${disease}" class="btn btn-outline-dark">Next ▶</button>
+      `);
+
+     // --- SVG container for D3 chart ---
+    const svg = panelDiv.append("svg")
+      .attr("width", "100%")
+      .attr("height", height)
+      .style("background", "#fff")
+      .style("border-radius", "0.375rem")
+      .style("box-shadow", "0 0.125rem 0.25rem rgba(0,0,0,.075)");
+
+    const g = svg.append("g")
+      .attr("transform", `translate(${margin.left},${margin.top})`);
+
+    // --- Aggregate all data ---
+    const data = rawData[disease].map(d => ({
+      colocalization: d.colocalization,
+      status: (d.status || "").toLowerCase(),
+      patients: +d.patients || 0
+    }));
+
+    const aggPairs = d3.rollups(
+      data,
+      v => d3.sum(v, d => d.patients),
+      d => d.colocalization,
+      d => d.status
+    );
+
+    const combined = aggPairs.map(([coloc, statusMap]) => {
+      const obj = { colocalization: coloc };
+      statusMap.forEach(([s, c]) => obj[s] = c);
+      obj.total = d3.sum(statusMap, ([, c]) => c);
+      return obj;
+    }).filter(d => d.total > 0);
+
+    const sorted = combined.sort((a, b) => d3.descending(a.total, b.total));
+    const totalPages = Math.ceil(sorted.length / pageSize);
+    let currentPage = 0;
+
+    const diseaseMax = d3.max(sorted, d => d.total) || 1;
+    const yDomainMax = Math.max(diseaseMax, 5); 
+
+    // -------------- Draw page function --------------
+    function drawPage() {
+      g.selectAll("*").remove();
+
+      const start = currentPage * pageSize;
+      const pageData = sorted.slice(start, start + pageSize);
+
+      const stacked = d3.stack().keys(keys)(pageData);
+
+      const x = d3.scaleBand()
+        .domain(pageData.map(d => d.colocalization))
+        .range([0, width - margin.left - margin.right])
+        .padding(0.2);
+
+      const y = d3.scaleLinear()
+        .domain([0, yDomainMax])
+        .nice()
+        .range([height - margin.top - margin.bottom, 0]);
+
+      // X-axis
+      g.append("g")
+        .attr("transform", `translate(0,${height - margin.top - margin.bottom})`)
+        .call(d3.axisBottom(x))
+        .selectAll("text")
+        .attr("transform", "rotate(-40)")
+        .style("text-anchor", "end");
+
+      // Y-axis
+      g.append("g")
+        .call(d3.axisLeft(y).ticks(6).tickFormat(d3.format("d")));
+      
+      // Y-label
+      g.append("text")
+        .attr("text-anchor", "middle")
+        .attr("transform", `translate(${-50}, ${(height - margin.top - margin.bottom) / 2}) rotate(-90)`)
+        .style("font-size", "13px")
+        .text("Number of Patients");
+
+      // Stacked bars
+      const layer = g.selectAll(".layer")
+        .data(stacked)
+        .join("g")
+        .attr("fill", d => colorMap[d.key]);
+
+      layer.selectAll("rect")
+        .data(d => d)
+        .join("rect")
+        .attr("x", d => x(d.data.colocalization))
+        .attr("y", d => y(d[1]))
+        .attr("height", d => y(d[0]) - y(d[1]))
+        .attr("width", x.bandwidth())
+        .append("title")
+        .text(d => `${d.data.colocalization}\n${Math.round(d[1] - d[0])} patients`);
+
+      // Title
+      g.append("text")
+        .attr("x", (width - margin.left - margin.right) / 2)
+        .attr("y", -20)
+        .attr("class", "fw-bold text-center text-uppercase")
+        .style("font-size", "16px")
+        .attr("text-anchor", "middle")
+        .text(`${disease} (${currentPage + 1}/${totalPages})`);
+
+      // Legend
+      const legend = svg.append("g")
+        .attr("transform", `translate(${width - 200}, 25)`);
+      keys.forEach((k, i) => {
+        legend.append("rect")
+          .attr("x", 0).attr("y", i * 22)
+          .attr("width", 16).attr("height", 16)
+          .attr("fill", colorMap[k]);
+        legend.append("text")
+          .attr("x", 24).attr("y", i * 22 + 12)
+          .attr("class", "text-dark small fw-medium")
+          .text(k.charAt(0).toUpperCase() + k.slice(1));
+      });
+
+      // Disable buttons at limits
+      d3.select(`#prev-${disease}`).attr("disabled", currentPage === 0 ? true : null);
+      d3.select(`#next-${disease}`).attr("disabled", currentPage >= totalPages - 1 ? true : null);
+    }
+
+    // Pagination buttons
+    d3.select(`#next-${disease}`).on("click", () => {
+      if (currentPage < totalPages - 1) {
+        currentPage++;
+        drawPage();
+      }
+    });
+
+    d3.select(`#prev-${disease}`).on("click", () => {
+      if (currentPage > 0) {
+        currentPage--;
+        drawPage();
+      }
+    });
+
+    // Initial draw
+    drawPage();
+  });
+});
+</script>

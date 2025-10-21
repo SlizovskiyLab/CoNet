@@ -19,6 +19,7 @@ namespace fs = std::filesystem;
 fs::path data_file;
 fs::path interaction_json_path;
 fs::path parent_json_path;
+fs::path temporal_dynamics_json_path;
 
 
 int main() {
@@ -27,6 +28,7 @@ int main() {
         data_file = fs::path(cfg.input_data_path);
         interaction_json_path = fs::path(cfg.viz_interaction);
         parent_json_path = fs::path(cfg.viz_parent);
+        temporal_dynamics_json_path = fs::path(cfg.viz_temporal_dynamics);
 
     } catch (const std::exception& e) {
         std::cerr << "Config error: " << e.what() << "\n";
@@ -63,12 +65,16 @@ int main() {
 
     // /************************************* Graph Visualization ***********************************/
 
-    Graph coNet = g;
+    Graph amrGraphNet = g;
     // exportGraphToJsonSimple(coNet, );
     // exportParentGraphToJson(coNet, );
-    exportGraphToJsonSimple(coNet, interaction_json_path.string(), patientToDiseaseMap);
-    exportParentGraphToJson(coNet, parent_json_path.string(), patientToDiseaseMap, true);
+    exportGraphToJsonSimple(amrGraphNet, interaction_json_path.string(), patientToDiseaseMap);
+    exportParentGraphToJson(amrGraphNet, parent_json_path.string(), patientToDiseaseMap, true);
+    exportColocalizationsToJSONByDisease(colocalizationByIndividual, patientToDiseaseMap, temporal_dynamics_json_path.string());
 
+    
+   
+    
     // exportToDot(coNet, "conet.dot");
     // exportParentTemporalGraphDot(coNet, "conet_parent_temporal.dot", true);
 

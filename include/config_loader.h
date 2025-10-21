@@ -19,6 +19,7 @@ struct Config {
 
     std::string viz_interaction;
     std::string viz_parent;
+    std::string viz_temporal_dynamics;
 };
 
 Config loadConfig(const std::string& filename);

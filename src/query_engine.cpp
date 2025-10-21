@@ -26,15 +26,15 @@ fs::path mge_group_path;
 Config cfg;
 
 /************************************************************************************************/
-bool isPostFMT(Timepoint tp) {
+bool isPostFMT(const Timepoint& tp) {
     return toString(tp).find("post") != std::string::npos;
 }
 
-bool isPreFMT(Timepoint tp) {
+bool isPreFMT(const Timepoint& tp) {
     return toString(tp).find("pre") != std::string::npos;
 }
 
-bool isDonor(Timepoint tp) {
+bool isDonor(const Timepoint& tp) {
     return toString(tp).find("donor") != std::string::npos;
 }
 
@@ -501,6 +501,7 @@ void exportColocalizations(const Graph& g,
     getPatientwiseColocalizationsByCriteria(g, colocalizationByIndividual,
         true, true, true, "PreFMT, Donor & PostFMT", temporal_dynamics_persist.string(), true);
 }
+
 
 
 

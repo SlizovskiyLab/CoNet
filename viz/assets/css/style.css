@@ -110,3 +110,12 @@ table {
     border-radius: 0.4rem;
     position: relative;
 }
+
+#plots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+#plots > div {
+  flex: 1 1 45%;
+}

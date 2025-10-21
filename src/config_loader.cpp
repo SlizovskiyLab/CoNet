@@ -22,6 +22,7 @@ Config loadConfig(const std::string& filename) {
     cfg.output_mge_group = j["output"]["mge_group"];
     cfg.viz_interaction = j["viz"]["interaction_json"];
     cfg.viz_parent = j["viz"]["parent_json"];
+    cfg.viz_temporal_dynamics = j["viz"]["temporal_dynamics_disease"];
 
     return cfg;
 }

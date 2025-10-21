@@ -11,7 +11,7 @@
 #include "../external/json.hpp"
 #include "../include/graph.h"
 #include "../include/Timepoint.h"
-
+#include "../include/query_engine.h"
 #include "../include/parser.h" 
 
 using nlohmann::json;
@@ -269,4 +269,132 @@ bool exportParentGraphToJson(const Graph& g, const std::string& outPathStr, cons
               << " links=" << j["links"].size()
               << " to " << outPathStr << "\n";
     return true;
+}
+
+
+
+// void exportColocalizationsToJSONByDisease(
+//     const Graph& g,
+//     const std::map<std::tuple<int,int,int>, std::set<Timepoint>>& colocalizationByIndividual,
+//     const std::map<int, std::string>& patientToDiseaseMap,
+//     const std::string& jsonOutputDir
+// ) {
+//     // Create map: disease -> (colocalization pair -> status counts)
+//     std::map<std::string, std::map<std::string, std::map<std::string, int>>> diseaseColocCounts;
+
+//     for (const auto& [tuple, tps] : colocalizationByIndividual) {
+//         auto [arg, mge, patient] = tuple;
+
+//         auto diseaseIt = patientToDiseaseMap.find(patient);
+//         if (diseaseIt == patientToDiseaseMap.end()) continue;
+//         const std::string& disease = diseaseIt->second;
+
+//         std::string pairName = getARGName(arg) + "–" + getMGEName(mge);
+
+//         bool hasDonor = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) { return isDonor(tp); });
+//         bool hasPre = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) { return isPreFMT(tp); });
+//         bool hasPost = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp) { return isPostFMT(tp); });
+
+
+//         std::string status;
+//         if (hasPost && !hasPre && !hasDonor) status = "emerged";
+//         else if (hasPre && !hasPost && !hasDonor) status = "disappeared";
+//         else if (hasDonor && hasPost && !hasPre) status = "transferred";
+//         else if (hasPre && hasPost) status = "persisted";
+//         else continue; // skip other patterns
+
+//         diseaseColocCounts[disease][pairName][status]++;
+//     }
+
+//     // Build JSON structure
+//     json rootJson = json::array();
+
+//     for (const auto& [disease, colocMap] : diseaseColocCounts) {
+//         json diseaseEntry;
+//         diseaseEntry["disease"] = disease;
+//         diseaseEntry["data"] = json::array();
+
+//         for (const auto& [pair, statusMap] : colocMap) {
+//             for (const auto& [status, count] : statusMap) {
+//                 json entry;
+//                 entry["colocalization"] = pair;
+//                 entry["status"] = status;
+//                 entry["patients"] = count;
+//                 diseaseEntry["data"].push_back(entry);
+//             }
+//         }
+
+//         rootJson.push_back(diseaseEntry);
+
+//         // // Write per-disease JSON
+//         // std::filesystem::path outFile = std::filesystem::path(jsonOutputDir) / (disease + "_colocalizations.json");
+//         // std::ofstream ofs(outFile);
+//         // ofs << std::setw(2) << diseaseEntry << std::endl;
+//     }
+
+//     std::filesystem::path outFile(jsonOutputDir);
+//     std::ofstream all(outFile.string()); 
+//     if (!all.is_open()) {
+//         throw std::runtime_error("Failed to open output JSON file: " + outFile.string());
+//     }
+//     all << std::setw(2) << rootJson << std::endl;
+//     all.close();
+// }
+
+
+void exportColocalizationsToJSONByDisease(
+    const std::map<std::tuple<int,int,int>, std::set<Timepoint>>& colocalizationByIndividual,
+    const std::map<int, std::string>& patientToDiseaseMap,
+    const std::string& jsonOutputPath  // path to the final JSON file
+) {
+    std::map<std::string, std::map<std::string, std::map<std::string, int>>> diseaseColocCounts;
+
+    // Build counts by disease → colocalization → status
+    for (const auto& [tuple, tps] : colocalizationByIndividual) {
+        const int patientID = std::get<0>(tuple);
+        const int argID     = std::get<1>(tuple);
+        const int mgeID     = std::get<2>(tuple);
+        std::string disease = patientToDiseaseMap.at(patientID);
+
+        bool hasDonor = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp){ return isDonor(tp); });
+        bool hasPre   = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp){ return isPreFMT(tp); });
+        bool hasPost  = std::any_of(tps.begin(), tps.end(), [](const Timepoint& tp){ return isPostFMT(tp); });
+
+        std::string status;
+        if (hasPost && !hasPre && !hasDonor) status = "emerged";
+        else if (hasPre && !hasPost && !hasDonor) status = "disappeared";
+        else if (hasDonor && hasPost && !hasPre) status = "transferred";
+        else if (hasPre && hasPost) status = "persisted";
+        else continue; // skip other patterns
+
+        std::string pairName = getARGName(argID) + "–" + getMGEName(mgeID);
+        diseaseColocCounts[disease][pairName][status]++;
+    }
+
+    // Build JSON structure
+    json rootJson = json::object();  // use object instead of array
+
+    for (const auto& [disease, colocMap] : diseaseColocCounts) {
+        json diseaseArray = json::array();
+
+        for (const auto& [pair, statusMap] : colocMap) {
+            for (const auto& [status, count] : statusMap) {
+                diseaseArray.push_back({
+                    {"colocalization", pair},
+                    {"status", status},
+                    {"patients", count}
+                });
+            }
+        }
+
+        rootJson[disease] = diseaseArray;
+    }
+
+    std::filesystem::path outFile(jsonOutputPath);
+    std::ofstream all(outFile.string());  
+    if (!all.is_open()) {
+        throw std::runtime_error("Failed to open output JSON file: " + outFile.string());
+    }
+    all << std::setw(2) << rootJson << std::endl;
+    all.close();
 }

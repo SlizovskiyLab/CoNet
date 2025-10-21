@@ -15,6 +15,7 @@
   },
   "viz": {
     "interaction_json": "viz/json/graph1.json",
-    "parent_json": "viz/json/graph2.json"
+    "parent_json": "viz/json/graph2.json",
+    "temporal_dynamics_disease": "viz/json/temporal_dynamics_disease.json"
   }
 }

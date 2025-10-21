@@ -55,3 +55,28 @@ python3 -m http.server 8080
 
 Check 
 http://localhost:8080/index.html
+
+
+# AMR-GraphNet: Network-based Visualization of ARG–MGE Colocalization Dynamics
+
+AMR-GraphNet is a framework for modeling and visualizing **antimicrobial resistance (AMR) gene – mobile genetic element (MGE) colocalization** across **fecal microbiota transplantation (FMT)** samples.  
+It enables researchers to track **temporal changes** in ARG–MGE interactions across donor, pre-FMT, and post-FMT microbiomes using an **interactive graph-based view**.
+
+---
+
+## Project Overview
+
+The pipeline takes annotated **metagenomic assembly files** as input, identifies **colocalized ARG–MGE pairs**, constructs a **biological network**, and exports both static and interactive visualizations.
+
+
+
+## Features
+
+
+
+---
+
+## Installation
+
+### Prerequisites
+
