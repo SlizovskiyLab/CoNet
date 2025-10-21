@@ -299,5 +299,14 @@ d3.select("#toggleColo").on("change", updateLinkVisibility);
 d3.select("#toggleTemporal").on("change", updateLinkVisibility);
 d3.selectAll(".timepoint-checkbox").on("change", applyFiltersAndDraw);
 
+const legendOverlay = document.getElementById("legendOverlay");
+document.getElementById("toggleLegend").addEventListener("change", function() {
+	if (this.checked) {
+		legendOverlay.classList.add("visible");
+	} else {
+		legendOverlay.classList.remove("visible");
+	}
+});
+
 // --- INITIAL LOAD ---
 loadAndRenderGraph(currentGraphKey);

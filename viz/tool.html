@@ -92,12 +92,12 @@
             <!-- Search by Label -->
             <div class="col-md-4 col-lg-3">
                 <label for="argSearch" class="form-label"><strong>Search ARGs</strong></label>
-                <input type="text" id="argSearch" class="form-control" placeholder="e.g., tet(M)">
+                <input type="text" id="argSearch" class="form-control" placeholder="">
             </div>
 
             <div class="col-md-4 col-lg-3">
                 <label for="mgeSearch" class="form-label"><strong>Search MGEs</strong></label>
-                <input type="text" id="mgeSearch" class="form-control" placeholder="e.g., virus, plasmid">
+                <input type="text" id="mgeSearch" class="form-control" placeholder="">
             </div>
             
             <div class="col-md-4 col-lg-2 d-flex align-items-end">
@@ -120,6 +120,10 @@
                         <input class="form-check-input" type="checkbox" id="toggleTemporal" checked>
                         <label class="form-check-label" for="toggleTemporal">Temporal Links</label>
                     </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" id="toggleLegend">
+                        <label class="form-check-label" for="toggleLegend">Legend</label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -127,6 +131,26 @@
     
     <div id="graph-container">
         <svg id="graph" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+
+    <div id="legendOverlay" class="legend-overlay">
+        <div class="legend-content">
+            <h6><strong>Graph Legend</strong></h6>
+            <div class="legend-section">
+                <p><strong>Nodes:</strong></p>
+                <ul>
+                    <li><span class="legend-symbol arg"></span> ARG Node</li>
+                    <li><span class="legend-symbol mge"></span> MGE Node</li>
+                </ul>
+            </div>
+            <div class="legend-section">
+                <p><strong>Edges:</strong></p>
+                <ul>
+                    <li><span class="legend-line colo"></span> Colocalization Link</li>
+                    <li><span class="legend-line temporal"></span> Temporal Link</li>
+                </ul>
+            </div>
+        </div>
     </div>
     
     <div id="tooltip" style="position:absolute; background:rgba(255,255,255,0.9); border:1px solid #ccc; padding:4px 8px; border-radius:4px; pointer-events:none; font-size:12px; display:none;"></div>
