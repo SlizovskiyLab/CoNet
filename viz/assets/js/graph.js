@@ -50,6 +50,7 @@ function resetFilters(redraw = true) {
     d3.select("#timepointFilter").property("value", "all");
     d3.select("#argSearch").property("value", "");
     d3.select("#mgeSearch").property("value", ""); 
+    d3.selectAll(".timepoint-checkbox").property("checked", true);
     if (redraw) {
         applyFiltersAndDraw();
     }
@@ -64,7 +65,11 @@ function applyFiltersAndDraw() {
     const filters = {
         disease: d3.select("#diseaseFilter").property("value"),
         mgeGroup: d3.select("#mgeGroupFilter").property("value"),
-        timepoint: d3.select("#timepointFilter").property("value"),
+        timepoints: Array.from(
+            d3.selectAll(".timepoint-checkbox").nodes()
+        )
+        .filter(cb => cb.checked)
+        .map(cb => cb.value),
         argSearchTerm: d3.select("#argSearch").property("value").trim().toLowerCase(),
         mgeSearchTerm: d3.select("#mgeSearch").property("value").trim().toLowerCase(),
     };
@@ -78,13 +83,15 @@ function applyFiltersAndDraw() {
     let seedNodeIds = getSeedNodeIds(nodes, filters, strictlyFilteredNodeIds);
 
     let finalVisibleNodeIds;
-    if (filters.mgeGroup !== 'all' || filters.argSearchTerm || filters.mgeSearchTerm) {
-        if (seedNodeIds.size === 0) {
-            finalVisibleNodeIds = new Set(); // No seeds mean no results
-        } else {
-            const neighborIds = getNeighborIds(links, seedNodeIds);
-            finalVisibleNodeIds = new Set([...seedNodeIds, ...neighborIds]);
-        }
+if (filters.mgeGroup !== 'all' || filters.argSearchTerm || filters.mgeSearchTerm) {
+    if (seedNodeIds.size === 0) {
+        finalVisibleNodeIds = new Set();
+    } else {
+        const neighborIds = getNeighborIds(links, seedNodeIds);
+        const allowedNeighbors = [...neighborIds].filter(id => strictlyFilteredNodeIds.has(id));
+        const allowedSeeds = [...seedNodeIds].filter(id => strictlyFilteredNodeIds.has(id));
+        finalVisibleNodeIds = new Set([...allowedSeeds, ...allowedNeighbors]);
+    }
     } else {
         finalVisibleNodeIds = strictlyFilteredNodeIds;
     }
@@ -103,11 +110,15 @@ function getStrictlyFilteredNodeIds(nodes, links, filters) {
     let visibleNodeIds = new Set(nodes.map(n => n.id));
 
     // Timepoint Filter
-    if (filters.timepoint !== 'all') {
-        const timepointFilteredIds = new Set(
-            nodes.filter(node => node.timepointCategory === filters.timepoint).map(n => n.id)
+    if (filters.timepoints && filters.timepoints.length > 0) {
+        const allowedIds = new Set(
+            nodes
+                .filter(node => filters.timepoints.includes(node.timepointCategory))
+                .map(n => n.id)
         );
-        visibleNodeIds = new Set([...visibleNodeIds].filter(id => timepointFilteredIds.has(id)));
+        visibleNodeIds = new Set([...visibleNodeIds].filter(id => allowedIds.has(id)));
+    } else {
+        visibleNodeIds.clear();
     }
     
     // Disease Filter
@@ -286,6 +297,16 @@ d3.select("#mgeSearch").on("keydown", event => { if (event.key === 'Enter') { ap
 d3.select("#toggleLabels").on("change", () => g.selectAll("text.label").style("display", d3.select("#toggleLabels").property("checked") ? "block" : "none"));
 d3.select("#toggleColo").on("change", updateLinkVisibility);
 d3.select("#toggleTemporal").on("change", updateLinkVisibility);
+d3.selectAll(".timepoint-checkbox").on("change", applyFiltersAndDraw);
+
+const legendOverlay = document.getElementById("legendOverlay");
+document.getElementById("toggleLegend").addEventListener("change", function() {
+	if (this.checked) {
+		legendOverlay.classList.add("visible");
+	} else {
+		legendOverlay.classList.remove("visible");
+	}
+});
 
 // --- INITIAL LOAD ---
 loadAndRenderGraph(currentGraphKey);
