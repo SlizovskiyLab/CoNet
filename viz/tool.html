@@ -64,45 +64,36 @@
             </div>
 
             <!-- Timepoint Filter -->
-            <div class="col-md-4 col-lg-3">
+            <div class="col-md-4 col-lg-2 dropdown">
                 <label class="form-label"><strong>Patient Stages</strong></label>
-                <div id="timepointFilter" class="d-flex flex-wrap gap-2">
-                    <div class="form-check">
-                        <input class="form-check-input timepoint-checkbox" type="checkbox" value="donor" id="stage-donor" checked>
-                        <label class="form-check-label" for="stage-donor">Donor</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input timepoint-checkbox" type="checkbox" value="pre" id="stage-pre" checked>
-                        <label class="form-check-label" for="stage-pre">Pre-FMT</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input timepoint-checkbox" type="checkbox" value="post1" id="stage-post1" checked>
-                        <label class="form-check-label" for="stage-post1">Post-FMT (1–30d)</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input timepoint-checkbox" type="checkbox" value="post2" id="stage-post2" checked>
-                        <label class="form-check-label" for="stage-post2">Post-FMT (31–60d)</label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input timepoint-checkbox" type="checkbox" value="post3" id="stage-post3" checked>
-                        <label class="form-check-label" for="stage-post3">Post-FMT (61+d)</label>
-                    </div>
+                <button class="btn btn-light dropdown-toggle w-100 text-start" type="button"
+                        id="timepointFilter" data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                        aria-expanded="false">
+                    All Stages
+                </button>
+                <ul class="dropdown-menu p-2" aria-labelledby="timepointFilter"
+                    style="max-height: 240px; overflow-y: auto;">
+                    <li><label class="dropdown-item"><input type="checkbox" class="me-2 timepoint-checkbox" value="donor" checked> Donor</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" class="me-2 timepoint-checkbox" value="pre" checked> Pre-FMT</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" class="me-2 timepoint-checkbox" value="post1" checked> Post-FMT (1–30 d)</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" class="me-2 timepoint-checkbox" value="post2" checked> Post-FMT (31–60 d)</label></li>
+                    <li><label class="dropdown-item"><input type="checkbox" class="me-2 timepoint-checkbox" value="post3" checked> Post-FMT (61+ d)</label></li>
+                </ul>
                 </div>
-            </div>
 
             <!-- Search by Label -->
-            <div class="col-md-4 col-lg-3">
+            <div class="col-md-4 col-lg-1">
                 <label for="argSearch" class="form-label"><strong>Search ARGs</strong></label>
                 <input type="text" id="argSearch" class="form-control" placeholder="">
             </div>
 
-            <div class="col-md-4 col-lg-3">
+            <div class="col-md-4 col-lg-1">
                 <label for="mgeSearch" class="form-label"><strong>Search MGEs</strong></label>
                 <input type="text" id="mgeSearch" class="form-control" placeholder="">
             </div>
             
-            <div class="col-md-4 col-lg-2 d-flex align-items-end">
-                <button class="btn btn-outline-secondary w-100" type="button" id="resetBtn">Reset Filters</button>
+            <div class="col-md-4 col-lg-1">
+                <button type="button" class="btn btn-outline-dark" type="button" id="resetBtn">Reset</button>
             </div>
             
              <!-- Display Toggles -->
@@ -125,34 +116,75 @@
                         <input class="form-check-input" type="checkbox" id="toggleLegend">
                         <label class="form-check-label" for="toggleLegend">Legend</label>
                     </div>
+                    <div class="col-md-4 col-lg-2 d-flex align-items-end">
+                        <button class="btn btn-outline-dark" type="button" id="downloadSvgBtn">
+                         Download
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     
     <div id="graph-container">
-        <svg id="graph" viewBox="0 0 1000 700" preserveAspectRatio="xMidYMid meet"></svg>
+        <svg id="graph" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet"></svg>
     </div>
 
     <div id="legendOverlay" class="legend-overlay">
-        <div class="legend-content">
-            <h6><strong>Graph Legend</strong></h6>
-            <div class="legend-section">
-                <p><strong>Nodes:</strong></p>
-                <ul>
-                    <li><span class="legend-symbol arg"></span> ARG Node</li>
-                    <li><span class="legend-symbol mge"></span> MGE Node</li>
-                </ul>
-            </div>
-            <div class="legend-section">
-                <p><strong>Edges:</strong></p>
-                <ul>
-                    <li><span class="legend-line colo"></span> Colocalization Link</li>
-                    <li><span class="legend-line temporal"></span> Temporal Link</li>
-                </ul>
-            </div>
+    <div class="legend-content">
+        <button type="button" class="btn-close legend-close" aria-label="Close"></button>
+        <h6 class="mb-3"><strong>Graph Legend</strong></h6>
+
+        <!-- Node section -->
+        <div class="legend-section">
+        <p><strong>Nodes:</strong></p>
+        <ul>
+            <li><span class="legend-symbol arg"></span> AMR (Antimicrobial Resistance Gene)</li>
+            <li><span class="legend-symbol donor"></span> Donor Sample</li>
+            <li><span class="legend-symbol pre"></span> Pre-FMT</li>
+            <li><span class="legend-symbol post1"></span> Post-FMT (1–30 d)</li>
+            <li><span class="legend-symbol post2"></span> Post-FMT (31–60 d)</li>
+            <li><span class="legend-symbol post3"></span> Post-FMT (61+ d)</li>
+        </ul>
+        </div>
+
+        <!-- MGE group section -->
+        <div class="legend-section mt-3">
+        <p><strong>MGE Groups (Shapes):</strong></p>
+        <ul>
+            <li><span class="legend-shape plasmid"></span> Plasmid</li>
+            <li><span class="legend-shape plasmid"></span> Inc_plasmid</li>
+            <li><span class="legend-shape plasmid"></span> Colicin_plasmid</li>
+            <li><span class="legend-shape prophage"></span> Prophage</li>
+            <li><span class="legend-shape prophage"></span> ICE</li>
+            <li><span class="legend-shape transposon"></span> Replicon</li>
+            <li><span class="legend-shape genomic-island"></span> Likely IS/TE</li>
+            <li><span class="legend-shape virus"></span> Virus</li>
+        </ul>
+        </div>
+
+        <!-- Edge section -->
+        <div class="legend-section mt-3">
+        <p><strong>Edges:</strong></p>
+        <ul>
+            <li><span class="legend-line colo"></span> Colocalization Link (ARG–MGE)</li>
+            <li><span class="legend-line temporal"></span> Temporal Link (same ARG/MGE across timepoints)</li>
+        </ul>
+        </div>
+
+        <div class="legend-section mt-3">
+        <p><strong>Temporal Edges:</strong></p>
+        <ul>
+            <li><span class="legend-line temporal-donor-pre"></span> Donor -> PreFMT</li>
+            <li><span class="legend-line temporal-donor-post"></span> Donor -> PostFMT</li>
+            <li><span class="legend-line temporal-pre-post"></span> PreFMT -> PostFMT</li>
+            <li><span class="legend-line temporal-post-post"></span> PostFMT -> PostFMT</li>
+        </ul>
         </div>
     </div>
+    </div>
+
+
     
     <div id="tooltip" style="position:absolute; background:rgba(255,255,255,0.9); border:1px solid #ccc; padding:4px 8px; border-radius:4px; pointer-events:none; font-size:12px; display:none;"></div>
 </div>
