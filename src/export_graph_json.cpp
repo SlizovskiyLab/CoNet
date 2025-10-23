@@ -196,16 +196,29 @@ bool exportParentGraphToJson(const Graph& g, const std::string& outPathStr, cons
             std::string label = showLabels ? (getARGName(argId) + "+" + getMGENameForLabel(mgeId)) : "";
             
             std::set<std::string> diseaseSet;
+            std::map<std::string, std::set<int>> diseaseToIndividualsLocal; // local per colocalization
+
+            // collect diseases + individuals for this edge only
             for (int patientID : edge.individuals) {
                 auto it = patientToDiseaseMap.find(patientID);
                 if (it != patientToDiseaseMap.end()) {
                     diseaseSet.insert(it->second);
+                    diseaseToIndividualsLocal[it->second].insert(patientID);
                 }
             }
+
+            // convert diseases list
             json diseases = json::array();
             for (const auto& diseaseName : diseaseSet) {
                 diseases.push_back(diseaseName);
             }
+
+            // convert to JSON: disease → patient count (for this colocalization/timepoint)
+            json diseaseCounts = json::object();
+            for (const auto& [diseaseName, individuals] : diseaseToIndividualsLocal) {
+                diseaseCounts[diseaseName] = static_cast<int>(individuals.size());
+            }
+
 
             j["nodes"].push_back({
                 {"id",                parentName},
@@ -216,6 +229,7 @@ bool exportParentGraphToJson(const Graph& g, const std::string& outPathStr, cons
                 {"color",             color},
                 {"shape",             shape},
                 {"diseases",          diseases},
+                {"diseaseCounts",     diseaseCounts},
                 {"mgeGroup",          groupName}, 
                 {"timepointCategory", getTimepointCategory(tp)}
             });
