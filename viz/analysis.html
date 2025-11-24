@@ -16,13 +16,13 @@
 </head>
 
 <body>
-    <div class="col-md-8 mx-auto">
+    <div class="container-fluid">
 
         <header
     class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
     <a href="index.html" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
         <img src="assets/img/Logo.svg" alt="" width="35" height="35" class="d-inline-block align-text-middle">
-        <span class="fs-4 ms-2"> AMR-GraphNet </span>
+        <span class="nav-brand-title"> RMOBI </span>
     </a>
     <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 analysis">
         <li><a href="./index.html" class="nav-link px-2 link-dark nav-about">About</a></li>
@@ -33,23 +33,23 @@
     </ul>
 </header>
 
-<h1 class="h2 fw-light">ARG–MGE Colocalization Dynamics Across Diseases</h1>
+<h3 class="h3">ARG–MGE Colocalization State Transition Dynamics</h3>
 <div id="plots" class="d-flex flex-column gap-4"></div>
 </div>
 <div id="plots"></div>
 
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script>
-const width = 900, height = 420;
+const width = 1400, height = 500;
 const margin = { top: 60, right: 40, bottom: 120, left: 80 };
 const colorMap = {
-  persisted:   "#1f77b4",
-  emerged:     "#ff7f0e",
-  disappeared: "#2E8B57",
-  transferred: "#F4B400"
+  persisted:   "#1a5f8f",
+  emerged:     "#cc660b",
+  disappeared: "#236f46",
+  transferred: "#c79100"
 };
 const keys = Object.keys(colorMap);
-const pageSize = 25;
+const pageSize = 50;
 
 // -------------------- Load data --------------------
 d3.json("json/temporal_dynamics_disease.json").then(rawData => {
@@ -64,12 +64,17 @@ d3.json("json/temporal_dynamics_disease.json").then(rawData => {
     const header = panelDiv.append("div")
       .attr("class", "d-flex justify-content-between align-items-center p-2 px-3 border-bottom bg-light");
 
-
      const diseaseTitle = header.append("div")
       .attr("class", "fw-semibold text-dark fs-5 d-flex align-items-baseline gap-1");
 
+      const diseaseNames = {
+        "MDRB": "Multi Drug Resistant Bacteria (MDRB)",
+        "rCDI": "recurrent Clostridioides difficile infection (rCDI)",
+        "Melanoma": "Melanoma"
+      };
 
-    diseaseTitle.append("span").text(disease);
+      const displayName = diseaseNames[disease] || disease;
+      diseaseTitle.append("span").text(displayName);
   
 
     const btnGroup = header.append("div")

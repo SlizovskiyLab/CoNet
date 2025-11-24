@@ -1,5 +1,4 @@
 // --- D3 Setup ---
-
 const svg = d3.select("#graph");
 const g = svg.append("g");
 const tooltip = d3.select("#tooltip");
@@ -17,6 +16,13 @@ function loadAndRenderGraph(fileKey) {
     currentGraphKey = fileKey;
     resetFilters(false);
 
+    const isColoView = fileKey.endsWith("graph2.json");
+
+    if (isColoView) {
+        disableFiltersForColoView();
+    } else {
+        enableAllFilters();
+    }
     if (originalData[fileKey]) {
         populateFilters(originalData[fileKey]);
         applyFiltersAndDraw();
@@ -29,34 +35,86 @@ function loadAndRenderGraph(fileKey) {
     }
 }
 
+// --- POPULATE FILTER DROPDOWNS ---
 function populateFilters(data) {
-    const mgeGroupSelect = d3.select("#mgeGroupFilter");
-    const nodeSource = (currentGraphKey.includes('graph1')) ? data.nodes.filter(n => !n.isARG) : data.nodes;
-    
-    const mgeGroups = [...new Set(nodeSource.map(n => n.mgeGroup).filter(g => g))].sort();
+    const menu = document.querySelector("#mgeGroupMenu");
+    menu.innerHTML = `
+        <li><a class="dropdown-item active" data-value="all">All Groups</a></li>
+    `;
+    const nodeSource = currentGraphKey.includes("graph1")
+        ? data.nodes.filter(n => !n.isARG)
+        : data.nodes;
+    const groups = [...new Set(nodeSource.map(n => n.mgeGroup).filter(Boolean))].sort();
+    groups.forEach(g => {
+        menu.innerHTML += `<li><a class="dropdown-item" data-value="${g}">${g}</a></li>`;
+    });
+    bindCustomDropdownHandlers();
 
-    mgeGroupSelect.selectAll("option.dynamic-option").remove();
-    
-    mgeGroups.forEach(group => {
-        mgeGroupSelect.append("option")
-            .attr("class", "dynamic-option")
-            .attr("value", group)
-            .text(group);
+}
+
+function bindCustomDropdownHandlers() {
+  document
+    .querySelectorAll(".dropdown-select .dropdown-item")
+    .forEach(item => {
+
+      item.onclick = function () {
+        const value = this.dataset.value;
+
+        const dropdown = this.closest(".dropdown");
+        const hiddenSelector = dropdown.dataset.targetInput;
+        const hiddenInput = hiddenSelector ? document.querySelector(hiddenSelector) : null;
+        const button = dropdown.querySelector("button.dropdown-btn");
+
+        hiddenInput.value = value;
+        button.textContent = this.textContent.trim();
+
+        this.closest(".dropdown-menu")
+            .querySelectorAll(".dropdown-item")
+            .forEach(i => i.classList.remove("active"));
+        this.classList.add("active");
+
+        // trigger D3 logic
+        hiddenInput.dispatchEvent(new Event("change", { bubbles: true }));
+      };
     });
 }
 
+
+
 // --- RESET FILTERS ---
 function resetFilters(redraw = true) {
+    // hidden values used by D3
     d3.select("#diseaseFilter").property("value", "all");
     d3.select("#mgeGroupFilter").property("value", "all");
-    d3.select("#timepointFilter").property("value", "all");
     d3.select("#argSearch").property("value", "");
-    d3.select("#mgeSearch").property("value", ""); 
+    d3.select("#mgeSearch").property("value", "");
     d3.selectAll(".timepoint-checkbox").property("checked", true);
+
+    resetSingleDropdown("#diseaseFilter", "All Diseases");
+    resetSingleDropdown("#mgeGroupFilter", "All Groups");
+    updateTimepointButtonText();
+
     if (redraw) {
         applyFiltersAndDraw();
     }
 }
+
+function resetSingleDropdown(hiddenSelector, labelText) {
+    const dropdown = document.querySelector(
+        `.dropdown[data-target-input='${hiddenSelector}']`
+    );
+    if (!dropdown) return;
+
+    const button = dropdown.querySelector(".dropdown-btn");
+    if (button) button.textContent = labelText;
+
+    const menuItems = dropdown.querySelectorAll(".dropdown-item");
+    menuItems.forEach(item => {
+        const isAll = item.dataset.value === "all";
+        item.classList.toggle("active", isAll);
+    });
+}
+
 
 // --- CORE FILTERING LOGIC ---
 function applyFiltersAndDraw() {
@@ -85,15 +143,33 @@ function applyFiltersAndDraw() {
     let seedNodeIds = getSeedNodeIds(nodes, filters, strictlyFilteredNodeIds);
 
     let finalVisibleNodeIds;
-if (filters.mgeGroup !== 'all' || filters.argSearchTerm || filters.mgeSearchTerm) {
-    if (seedNodeIds.size === 0) {
-        finalVisibleNodeIds = new Set();
-    } else {
-        const neighborIds = getNeighborIds(links, seedNodeIds);
-        const allowedNeighbors = [...neighborIds].filter(id => strictlyFilteredNodeIds.has(id));
-        const allowedSeeds = [...seedNodeIds].filter(id => strictlyFilteredNodeIds.has(id));
-        finalVisibleNodeIds = new Set([...allowedSeeds, ...allowedNeighbors]);
+    // Add patientCount to colocalization links (graph1 only)
+    if (currentGraphKey.includes("graph1")) {
+        const activeDisease = d3.select("#diseaseFilter").property("value");
+
+        data.links.forEach(link => {
+            if (!link.isColo) return;
+
+            const dc = link.diseaseCounts || {};
+
+            if (activeDisease !== "all") {
+                link.patientCount = Number(dc[activeDisease]) || 0;
+            } else {
+                link.patientCount = Object.values(dc)
+                    .reduce((sum, v) => sum + (Number(v) || 0), 0);
+            }
+        });
     }
+
+    if (filters.mgeGroup !== 'all' || filters.argSearchTerm || filters.mgeSearchTerm) {
+        if (seedNodeIds.size === 0) {
+            finalVisibleNodeIds = new Set();
+        } else {
+            const neighborIds = getNeighborIds(links, seedNodeIds);
+            const allowedNeighbors = [...neighborIds].filter(id => strictlyFilteredNodeIds.has(id));
+            const allowedSeeds = [...seedNodeIds].filter(id => strictlyFilteredNodeIds.has(id));
+            finalVisibleNodeIds = new Set([...allowedSeeds, ...allowedNeighbors]);
+        }
     } else {
         finalVisibleNodeIds = strictlyFilteredNodeIds;
     }
@@ -107,6 +183,20 @@ if (filters.mgeGroup !== 'all' || filters.argSearchTerm || filters.mgeSearchTerm
         
     updateVisualization({ nodes: finalNodes, links: finalLinks });
 }
+// -- Disable filters for Colocalization View ---
+function disableFiltersForColoView() {
+    d3.select("#argSearch").property("value", "").attr("disabled", true);
+    d3.select("#mgeSearch").property("value", "").attr("disabled", true);
+    d3.select("#toggleColo").property("checked", true).attr("disabled", true);
+}
+
+// -- Enable filters ---
+function enableAllFilters() {
+    d3.select("#argSearch").attr("disabled", null);
+    d3.select("#mgeSearch").attr("disabled", null);
+    d3.select("#toggleColo").attr("disabled", null);
+}
+
 
 // --- FILTERING HELPERS ---
 function getStrictlyFilteredNodeIds(nodes, links, filters) {
@@ -249,9 +339,6 @@ function updateVisualization(data) {
         }
     }
 
-    const MAX_NODE_SIZE = 2000;
-    const MIN_NODE_SIZE = 150;
-
     // --- links ---
     const linkSelection = g.selectAll("path.link")
         .data(simLinks, d => `${d.source.id}-${d.target.id}-${d.type}`)
@@ -260,7 +347,31 @@ function updateVisualization(data) {
         .attr("stroke", d => d.color || "#999")
         .attr("marker-end", d => d.isColo ? null : `url(#arrow-${(d.color || "#999").replace("#", "")})`)
         .attr("stroke-width", d => Math.max(1, d.penwidth || 1))
-        .attr("stroke-dasharray", d => d.isColo ? null : "4 2");
+        .attr("stroke-dasharray", d => d.isColo ? null : "4 2")
+
+        .on("mouseover", function(event, d) {
+            if (!currentGraphKey.includes("graph1")) return;  // Only graph1.json
+
+            const count = d.individualCount ?? d.patientCount ?? 0;
+
+            tooltip
+                .style("opacity", 1)
+                .html(`<strong>Patients:</strong> ${count}`);
+
+            d3.select(this).attr("stroke-width", (d.penwidth || 2) + 2);
+        })
+        .on("mousemove", function(event) {
+            tooltip
+                .style("left", (event.pageX + 10) + "px")
+                .style("top", (event.pageY - 20) + "px");
+        })
+        .on("mouseout", function(event, d) {
+            if (!currentGraphKey.includes("graph1")) return;
+
+            tooltip.style("opacity", 0);
+            d3.select(this).attr("stroke-width", d.penwidth || 2);
+        });
+
 
     // --- nodes ---
     const nodeSelection = g.selectAll("path.node")
@@ -274,8 +385,19 @@ function updateVisualization(data) {
                     return 300;
                 }
                 const count = (typeof d.patientCount === "number") ? d.patientCount : 0;
-                const rawSize = 150 + Math.pow(Math.max(0, count), 1.3) * 80;
-                return Math.min(MAX_NODE_SIZE, Math.max(MIN_NODE_SIZE, rawSize));
+
+                // Smooth scaling between 150 and 4000 for counts 1–30
+                const MIN_COUNT = 1;
+                const MAX_COUNT = 30;
+                const MIN_SIZE = 150;
+                const MAX_SIZE = 4000;
+
+                // Use square-root scaling for gradual increase
+                const scale = d3.scaleSqrt()
+                    .domain([MIN_COUNT, MAX_COUNT])
+                    .range([MIN_SIZE, MAX_SIZE]);
+
+                return scale(Math.max(MIN_COUNT, Math.min(MAX_COUNT, count)));
             })
         )
         .attr("fill", d => d.color)
@@ -344,6 +466,36 @@ function updateLinkVisibility() {
             }
         });
 }
+
+// --- Generic handler for custom single-select dropdowns (e.g., Disease) ---
+document.querySelectorAll(".dropdown-select .dropdown-item").forEach(item => {
+  item.addEventListener("click", function () {
+    const value = this.dataset.value;
+
+    // Find the wrapper <div class="dropdown" ...>
+    const dropdown = this.closest(".dropdown");
+    if (!dropdown) return;
+    const hiddenSelector = dropdown.dataset.targetInput;
+    const hiddenInput = hiddenSelector ? document.querySelector(hiddenSelector) : null;
+    if (!hiddenInput) return;
+
+    const button = dropdown.querySelector("button.dropdown-btn");
+    if (!button) return;
+    hiddenInput.value = value;
+    button.textContent = this.textContent.trim();
+
+    // Mark active item
+    this.closest(".dropdown-menu")
+      .querySelectorAll(".dropdown-item")
+      .forEach(i => i.classList.remove("active"));
+    this.classList.add("active");
+
+    // Fire a real "change" event on the hidden input so D3 listeners run
+    hiddenInput.dispatchEvent(new Event("change", { bubbles: true }));
+  });
+});
+
+
 
 // --- PATIENT STAGES FILTER DROPDOWN HANDLING ---
 function bindTimepointListeners() {

@@ -1,4 +1,52 @@
-# CoNet
+# AMR-GraphNet: AMR Engraftment Network for FMT
+
+AMRGraphNet is a C++ framework for constructing and analyzing large scale heterogeneous temporal networks of antimicrobial resistance gene (ARG) and mobile genetic element (MGE) colocalizations across fecal microbiota transplantation (FMT) phases. The tool models colocalization and temporal relationships from patient metagenomic data, producing structured outputs for interactive visualization using D3.js.
+
+## Project Overview
+
+The goal of AMRGraphNet is to model and visualize the dynamic interactions between ARGs and MGEs before and after FMT treatment. The C++ implementation generates structured JSON files containing node and edge information, representing both colocalization edges and temporal edges that capture ARG–MGE evolution across donor, pre-FMT, and post-FMT phases.
+
+The accompanying web based visualization module, built with D3.js, dynamically renders these networks, enabling users to explore treatment related trends and filter the network interactively based on clinical and biological criteria.
+
+
+## Features
+
+1. Efficient C++ implementation for constructing heterogeneous temporal graphs
+
+2. Outputs JSON files with detailed node and edge metadata
+
+3. Supports multiple categorization modes, including disease type and temporal dynamics
+
+4. Interactive D3.js visualization with real time filtering and multi phase exploration
+
+5. Filter by disease type, patient phase, MGE group, or drill down to individual ARG/MGE nodes
+
+6. Export network visualizations as SVG files for publication or downstream analysis
+
+7. Fully documented workflow and configuration examples for reproducibility
+
+---
+
+## Installation
+
+### Prerequisites
+
+C++17 or later
+
+Make (for build automation)
+
+Standard C++ libraries (<iostream>, <fstream>, <map>, <vector>, etc.)
+
+JSON library (e.g., nlohmann/json)
+
+
+# Clone the repository
+git clone https://github.com/<your-repo>/AMRGraphNet.git
+cd AMRGraphNet
+
+# Build the C++ project
+make
+
 
 To run the program
 
@@ -42,8 +90,6 @@ Step 4: Run the executable
 ./CoNet.exe
 ```
 
-
-
 ### Manually Run
 g++ -std=c++17 -Wall -Iinclude -Ithird_party src/*.cpp -o CoNet.exe
 
@@ -57,26 +103,5 @@ Check
 http://localhost:8080/index.html
 
 
-# AMR-GraphNet: Network-based Visualization of ARG–MGE Colocalization Dynamics
 
-AMR-GraphNet is a framework for modeling and visualizing **antimicrobial resistance (AMR) gene – mobile genetic element (MGE) colocalization** across **fecal microbiota transplantation (FMT)** samples.  
-It enables researchers to track **temporal changes** in ARG–MGE interactions across donor, pre-FMT, and post-FMT microbiomes using an **interactive graph-based view**.
-
----
-
-## Project Overview
-
-The pipeline takes annotated **metagenomic assembly files** as input, identifies **colocalized ARG–MGE pairs**, constructs a **biological network**, and exports both static and interactive visualizations.
-
-
-
-## Features
-
-
-
----
-
-## Installation
-
-### Prerequisites
 

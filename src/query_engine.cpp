@@ -216,12 +216,24 @@ void getTopARGMGEPairsByFrequency(
 
 
 void getTopARGMGEPairsByFrequencyWODonor(
-    const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizations, int topN) {
-    
+    const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizations,
+    int topN,
+    const std::map<int, std::string>& patientToDiseaseMap)
+{
+    // Count of total frequency for each ARG-MGE pair
     std::map<std::pair<int, int>, int> countMap;
 
+    // Disease-specific counts:
+    //    key = {argID, mgeID}
+    //    value = map<disease, count>
+    std::map<std::pair<int, int>, std::map<std::string, int>> diseaseCountMap;
+
     for (const auto& [tuple, tps] : colocalizations) {
-        // Skip if all timepoints are DONOR
+        int patientID = std::get<0>(tuple);
+        int argID     = std::get<1>(tuple);
+        int mgeID     = std::get<2>(tuple);
+
+        // Skip donor-only entries
         bool hasNonDonor = false;
         for (const auto& tp : tps) {
             if (tp != Timepoint::Donor) {
@@ -231,34 +243,57 @@ void getTopARGMGEPairsByFrequencyWODonor(
         }
         if (!hasNonDonor) continue;
 
-        int argID = std::get<1>(tuple);
-        int mgeID = std::get<2>(tuple);
-        countMap[{argID, mgeID}]++;
+        auto key = std::make_pair(argID, mgeID);
+
+        // Increment total frequency
+        countMap[key]++;
+
+        // --- Disease-specific counting ---
+        std::string disease = "Unknown";
+        if (patientToDiseaseMap.count(patientID))
+            disease = patientToDiseaseMap.at(patientID);
+
+        diseaseCountMap[key][disease]++;
     }
 
+    // Convert to sortable list
     std::vector<std::pair<std::pair<int, int>, int>> freqList(countMap.begin(), countMap.end());
-    std::sort(freqList.begin(), freqList.end(), [](const auto& a, const auto& b) {
+    std::sort(freqList.begin(), freqList.end(), [](const auto& a, const auto& b){
         return a.second > b.second;
     });
 
     std::cout << "Top ARG–MGE pairs by frequency (excluding donor-only entries):\n";
-    int countPrinted = 0;
-    for (const auto& [pair, count] : freqList) {
-        if (topN > 0 && countPrinted >= topN) break;
+    int printed = 0;
+
+    for (const auto& [pair, totalCount] : freqList) {
+        if (topN > 0 && printed >= topN) break;
+
         int argID = pair.first;
         int mgeID = pair.second;
+
+        std::cout << "\n---------------------------------------------\n";
         std::cout << "ARG: ";
         if (argIdMap.count(argID)) std::cout << getARGName(argID) << " (" << getARGGroupName(argID) << ")";
-        else std::cout << "Unknown ARG ID " << argID;
-        std::cout << ", MGE: ";
+        else std::cout << "Unknown ARG " << argID;
+
+        std::cout << ",  MGE: ";
         if (mgeIdMap.count(mgeID)) std::cout << getMGEName(mgeID);
-        else std::cout << "Unknown MGE ID " << mgeID;
-        std::cout << ", Count: " << count << "\n";
-        countPrinted++;
+        else std::cout << "Unknown MGE " << mgeID;
+
+        std::cout << "\nTotal Count = " << totalCount << "\n";
+
+        // Print disease-specific breakdown
+        std::cout << "Disease Breakdown:\n";
+        for (const auto& [disease, c] : diseaseCountMap[pair]) {
+            std::cout << "   " << disease << ": " << c << "\n";
+        }
+
+        printed++;
     }
 
-    std::cout << "Total unique ARG–MGE pairs: " << freqList.size() << "\n";
+    std::cout << "\nTotal unique ARG–MGE pairs: " << freqList.size() << "\n";
 }
+
 
 
 /***************************************** Connected MGEs *********************************************/

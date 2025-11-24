@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
-    <title>AMR-GraphNet :: Tool</title>
+    <title>RMOBI :: Tool</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="./assets/css/site.css">
     <link rel="stylesheet" href="./assets/css/style.css">
@@ -21,7 +21,7 @@
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
         <a href="index.html" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
             <img src="assets/img/Logo.svg" alt="AMR-GraphNet Logo" width="35" height="35" class="d-inline-block align-text-middle">
-            <span class="fs-4 ms-2"> AMR-GraphNet </span>
+            <span class="nav-brand-title"> RMOBI </span>
         </a>
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 tool">
             <li><a href="./index.html" class="nav-link px-2 link-dark nav-about">About</a></li>
@@ -32,99 +32,158 @@
         </ul>
     </header>
 
-    <div id="menu" class="card p-2 mb-3">
-        <div class="row g-3 align-items-end">
-            <!-- Graph View Selection -->
-            <div class="col-md-4 col-lg-3">
-                <label for="dataset" class="form-label"><strong>Graph View</strong></label>
-                <select id="dataset" class="form-select">
-                    <option value="json/graph1.json">ARG-MGE Interaction View</option>
-                    <option value="json/graph2.json">Colocalization View</option>
-                </select>
-            </div>
+    <div id="menu" class="card p-3 mb-3">
 
-            <!-- Disease Filter -->
-            <div class="col-md-4 col-lg-2">
-                <label for="diseaseFilter" class="form-label"><strong>Disease</strong></label>
-                <select id="diseaseFilter" class="form-select">
-                    <option value="all" selected>All Diseases</option>
-                    <option value="Melanoma">Melanoma</option>
-                    <option value="MDRB">MDRB</option>
-                    <option value="rCDI">rCDI</option>
-                </select>
-            </div>
+        <div class="row g-3">
 
-            <!-- MGE Group Filter -->
-            <div class="col-md-4 col-lg-2">
-                <label for="mgeGroupFilter" class="form-label"><strong>MGE Group</strong></label>
-                <select id="mgeGroupFilter" class="form-select">
-                    <option value="all" selected>All Groups</option>
-                    <!-- Options will be populated by JavaScript -->
-                </select>
-            </div>
+            <!-- LEFT SIDE: FILTERS CARD -->
+            <div class="col-lg-8">
+                <div class="card p-3 h-100 shadow-sm">
+                    <div class="row g-3">
+                        <!-- Graph View -->
+                        <div class="col-md-4">
+                        <label class="form-label"><strong>Graph View</strong></label>
+                        <div class="dropdown w-100" data-target-input="#dataset">
+                            <button class="btn dropdown-btn w-100 text-start" type="button" data-bs-toggle="dropdown">
+                                ARG-MGE Interaction View
+                            </button>
 
-            <!-- Timepoint Filter -->
-            <div class="col-md-4 col-lg-2 dropdown">
-                <label class="form-label"><strong>Patient Stages</strong></label>
-                <button class="btn btn-light dropdown-toggle w-100 text-start" type="button"
-                        id="timepointFilter" data-bs-toggle="dropdown" data-bs-auto-close="outside"
-                        aria-expanded="false">
-                    All Stages
-                </button>
-                <ul class="dropdown-menu p-2" aria-labelledby="timepointFilter"
-                    style="max-height: 240px; overflow-y: auto;">
-                    <li><label class="dropdown-item"><input type="checkbox" class="me-2 timepoint-checkbox" value="donor" checked> Donor</label></li>
-                    <li><label class="dropdown-item"><input type="checkbox" class="me-2 timepoint-checkbox" value="pre" checked> Pre-FMT</label></li>
-                    <li><label class="dropdown-item"><input type="checkbox" class="me-2 timepoint-checkbox" value="post1" checked> Post-FMT (1–30 d)</label></li>
-                    <li><label class="dropdown-item"><input type="checkbox" class="me-2 timepoint-checkbox" value="post2" checked> Post-FMT (31–60 d)</label></li>
-                    <li><label class="dropdown-item"><input type="checkbox" class="me-2 timepoint-checkbox" value="post3" checked> Post-FMT (61+ d)</label></li>
-                </ul>
+                            <ul class="dropdown-menu dropdown-select w-100">
+                                <li><a class="dropdown-item active" data-value="json/graph1.json">ARG-MGE Interaction View</a></li>
+                                <li><a class="dropdown-item" data-value="json/graph2.json">Colocalization View</a></li>
+                            </ul>
+                        </div>
+                        <input type="hidden" id="dataset" value="json/graph1.json">
+                    </div>
+
+                        <!-- Disease -->
+                        <div class="col-md-4">
+                            <label class="form-label"><strong>Disease</strong></label>
+                            <div class="dropdown w-100" data-target-input="#diseaseFilter">
+                                <button
+                                class="btn dropdown-btn w-100 text-start"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                All Diseases
+                                </button>
+
+                                <ul class="dropdown-menu dropdown-select w-100">
+                                <li><a class="dropdown-item active" data-value="all">All Diseases</a></li>
+                                <li><a class="dropdown-item" data-value="Melanoma">Melanoma</a></li>
+                                <li><a class="dropdown-item" data-value="MDRB">MDRB</a></li>
+                                <li><a class="dropdown-item" data-value="rCDI">rCDI</a></li>
+                                </ul>
+                            </div>
+                            <input type="hidden" id="diseaseFilter" value="all">
+                            </div>
+
+                        <!-- MGE Group -->
+                        <div class="col-md-4">
+                            <label class="form-label"><strong>MGE Group</strong></label>
+                            <div class="dropdown w-100" data-target-input="#mgeGroupFilter">
+                                <button
+                                class="btn dropdown-btn w-100 text-start"
+                                type="button"
+                                data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                All Groups
+                            </button>
+                            <ul class="dropdown-menu dropdown-select w-100" id="mgeGroupMenu">
+                                <li><a class="dropdown-item active" data-value="all">All Groups</a></li>
+                            </ul>
+                            </div>
+                            <input type="hidden" id="mgeGroupFilter" value="all">
+                        </div>
+
+                        <!-- Patient Stages -->
+                        <div class="col-md-4">
+                            <label class="form-label"><strong>Patient Stages</strong></label>
+                            <div class="dropdown w-100 ">
+                            <button class="btn dropdown-btn w-100 text-start"
+                                    id="timepointFilter"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    data-bs-auto-close="outside">
+                                All Stages
+                            </button>
+                            <ul class="dropdown-menu dropdown-select w-100"
+                                aria-labelledby="timepointFilter"
+                                style="max-height: 240px; overflow-y: auto;">
+                                <li><label class="dropdown-item"><input type="checkbox" class="me-2 timepoint-checkbox" value="donor" checked> Donor</label></li>
+                                <li><label class="dropdown-item"><input type="checkbox" class="me-2 timepoint-checkbox" value="pre" checked> Pre-FMT</label></li>
+                                <li><label class="dropdown-item"><input type="checkbox" class="me-2 timepoint-checkbox" value="post1" checked> Post-FMT (1–30 d)</label></li>
+                                <li><label class="dropdown-item"><input type="checkbox" class="me-2 timepoint-checkbox" value="post2" checked> Post-FMT (31–60 d)</label></li>
+                                <li><label class="dropdown-item"><input type="checkbox" class="me-2 timepoint-checkbox" value="post3" checked> Post-FMT (61+ d)</label></li>
+                            </ul>
+                            </div>
+                            <!-- Hidden input for D3 logic -->
+                            <input type="hidden" id="timepointFilterHidden" value="all">
+                        </div>
+
+                        <!-- Search -->
+                        <div class="col-md-3">
+                            <label class="form-label"><strong>Search ARGs</strong></label>
+                            <input type="text" id="argSearch" class="form-control">
+                        </div>
+
+                        <div class="col-md-3">
+                            <label class="form-label"><strong>Search MGEs</strong></label>
+                            <input type="text" id="mgeSearch" class="form-control">
+                        </div>
+
+                        <!-- Reset Button -->
+                        <div class="col-md-2 d-flex align-items-end">
+                            <button id="resetBtn" class="btn btn-outline-dark w-100">Reset Filters</button>
+                        </div>
+                    </div>
                 </div>
-
-            <!-- Search by Label -->
-            <div class="col-md-4 col-lg-1">
-                <label for="argSearch" class="form-label"><strong>Search ARGs</strong></label>
-                <input type="text" id="argSearch" class="form-control" placeholder="">
             </div>
 
-            <div class="col-md-4 col-lg-1">
-                <label for="mgeSearch" class="form-label"><strong>Search MGEs</strong></label>
-                <input type="text" id="mgeSearch" class="form-control" placeholder="">
-            </div>
-            
-            <div class="col-md-4 col-lg-1">
-                <button type="button" class="btn btn-outline-dark" type="button" id="resetBtn">Reset</button>
-            </div>
-            
-             <!-- Display Toggles -->
-            <div class="col-12">
-                <div class="d-flex align-items-center gap-3 mt-2">
-                    <strong>Display Toggles:</strong>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="toggleLabels" checked>
-                        <label class="form-check-label" for="toggleLabels">Labels</label>
+            <!-- RIGHT SIDE: TOGGLES CARD -->
+            <div class="col-lg-4">
+                <div class="card p-3 h-100 shadow-sm">
+                    <div class="row g-2">
+                    <!-- Column 1 -->
+                    <div class="col-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="toggleLabels" checked>
+                            <label class="form-check-label" for="toggleLabels">Node Labels</label>
+                        </div>
+
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="checkbox" id="toggleTemporal" checked>
+                            <label class="form-check-label" for="toggleTemporal">Temporal Links</label>
+                        </div>
                     </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="toggleColo" checked>
-                        <label class="form-check-label" for="toggleColo">Colocalization Links</label>
+
+                    <!-- Column 2 -->
+                    <div class="col-6">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="toggleColo" checked>
+                            <label class="form-check-label" for="toggleColo">Colocalization Links</label>
+                        </div>
+
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="checkbox" id="toggleLegend">
+                            <label class="form-check-label" for="toggleLegend">Legend</label>
+                        </div>
                     </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="toggleTemporal" checked>
-                        <label class="form-check-label" for="toggleTemporal">Temporal Links</label>
-                    </div>
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" id="toggleLegend">
-                        <label class="form-check-label" for="toggleLegend">Legend</label>
-                    </div>
-                    <div class="col-md-4 col-lg-2 d-flex align-items-end">
-                        <button class="btn btn-outline-dark" type="button" id="downloadSvgBtn">
-                         Download
+
+                    <!-- Download Button -->
+                    <div class="col-12 mt-3">
+                        <button class="btn btn-outline-dark" id="downloadSvgBtn">
+                            Download SVG
                         </button>
                     </div>
+
+                </div>
                 </div>
             </div>
+
         </div>
     </div>
+
     
     <div id="graph-container">
         <svg id="graph" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid meet"></svg>
@@ -185,9 +244,20 @@
     </div>
 
 
-    
-    <div id="tooltip" style="position:absolute; background:rgba(255,255,255,0.9); border:1px solid #ccc; padding:4px 8px; border-radius:4px; pointer-events:none; font-size:12px; display:none;"></div>
-</div>
+<div id="tooltip"
+     style="
+        position:absolute;
+        background:rgba(255,255,255,0.95);
+        border:1px solid #ccc;
+        padding:6px 10px;
+        border-radius:4px;
+        pointer-events:none;
+        font-size:12px;
+        opacity:0;
+        transition: opacity 0.12s ease-in-out;
+        z-index:9999;
+     ">
+</div></div>
 
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>

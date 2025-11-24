@@ -4,8 +4,9 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/site.css">
-    <title>AMR-GraphNet </title>
+    <title>RMOBI </title>
     <!-- <link rel="apple-touch-icon" sizes="180x180" href="./assets/img/apple-touch-icon.png"> -->
     <!-- <link rel="icon" type="image/png" sizes="32x32" href="./assets/img/favicon-32x32.png"> -->
     <!-- <link rel="icon" type="image/png" sizes="16x16" href="./assets/img/favicon-16x16.png"> -->
@@ -13,154 +14,127 @@
 </head>
 
 <body>
-  <div class="col-md-8 mx-auto">
+  <div class="container-fluid">
 
-    <header
-    class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-    <a href="index.html" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-        <img src="assets/img/Logo.svg" alt="" width="35" height="35" class="d-inline-block align-text-middle">
-        <span class="fs-4 ms-2"> AMR-GraphNet </span>
-    </a>
-    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 about">
-        <li><a href="./index.html" class="nav-link px-2 link-dark nav-about">About</a></li>
-        <li><a href="./tool.html" class="nav-link px-2 link-dark nav-tool">Tool</a></li>
-        <li><a href="./analysis.html" class="nav-link px-2 link-dark nav-analysis">Analysis</a></li>
-        <li><a href="./downloads.html" class="nav-link px-2 link-dark nav-downloads">Downloads</a></li>
-        <li><a href="./contact.html" class="nav-link px-2 link-dark nav-contact">Contact</a></li>
+  <header
+  class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+      <a href="index.html" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+          <img src="assets/img/Logo.svg" alt="" width="35" height="35" class="d-inline-block align-text-middle">
+          <span class="nav-brand-title"> RMOBI </span>
+      </a>
+      <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0 about">
+          <li><a href="./index.html" class="nav-link px-2 link-dark nav-about">About</a></li>
+          <li><a href="./tool.html" class="nav-link px-2 link-dark nav-tool">Tool</a></li>
+          <li><a href="./analysis.html" class="nav-link px-2 link-dark nav-analysis">Analysis</a></li>
+          <li><a href="./downloads.html" class="nav-link px-2 link-dark nav-downloads">Downloads</a></li>
+          <li><a href="./contact.html" class="nav-link px-2 link-dark nav-contact">Contact</a></li>
+      </ul>
+  </header>
+
+  <!-- CARD 1 : Overview -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <h5> A Network Framework for Tracking Resistome-Mobilome Colocalization Across Fecal Microbiota Transplantation Cohorts</h5>
+      <!-- <h2 class="h4 fw-light text-muted">Suhashi Nihara De Silva, Sakesh Andhavarapu, Alejandro Dale Kimball,
+        Christina Boucher, Ilya B Slizovskiy</h2> -->
+
+      <p>
+        Antimicrobial resistance (AMR) transfer during fecal microbiota transplantation (FMT) is an important factor for both 
+        treatment safety and therapeutic outcomes. This visualization framework enables interactive exploration of how antimicrobial 
+        resistance genes (ARGs) and mobile genetic elements (MGEs) are colocalized before and after FMT.
+        The network model tracks ARG–MGE colocalizations and their temporal transitions, allowing users to examine how resistome–mobilome 
+        structures evolve across treatment phases. Through an interactive interface, users can filter the network by disease type, MGE group, and 
+        patient stage (donor, pre-FMT, post-FMT) to perform disease-specific or patient-level comparisons.
+      </p>
+
+      <a type="button" class="btn btn-outline-primary" href="tool.html">View Visualization</a>
+    </div>
+  </div>
+
+  <!-- CARD 2 : Data & Input -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <h2>Data & Input</h2>
+      <p>
+        Patient data was collected from multiple studies covering three different disease groups — Melanoma, MDRB, and rCDI. 
+        These datasets provide paired donor, pre-FMT, and post-FMT samples, enabling tracking of AMR dynamics.
+      </p>
+
+      <h4>CSV Structure</h4>
+      <pre><code>
+  Patient ID, Disease type, AMR ID, MGE ID, Donor, PreFMT, PostFMT(timepoints)
+      </code></pre>
+
+    <ul class="clean-list">
+      <li><strong>Patient ID:</strong> Unique patient identifier.</li>
+      <li><strong>Disease type:</strong> Melanoma, MDRB, or rCDI.</li>
+      <li><strong>AMR ID:</strong> Classification of the antimicrobial resistance gene.</li>
+      <li><strong>MGE ID:</strong> The mobile genetic element associated with the AMR gene.</li>
+      <li><strong>Donor:</strong> 1 if the colocalization is present in the donor sample; 0 if absent.</li>
+      <li><strong>PreFMT:</strong> 1 if the colocalization is present before FMT; 0 if absent.</li>
+      <li><strong>PostFMT:</strong> 1 if the colocalization is present in any post-FMT timepoint; 0 if absent.</li>
     </ul>
 
-</header>
-
-    <h1 class="h2 fw-light">AMR-GraphNet : AMR Engraftment Network for FMT</h1>
-    <h2 class="h4 fw-light text-muted"> Suhashi Nihara De Silva, Sakesh Andhavarapu, Alejandro Dale Kimball, Christina Boucher,
-      Ilya B Slizovskiy</h2>
-    <p>Antimicrobial resistance (AMR) transfer during fecal microbiota transplantation (FMT) is an important consideration for both safety and therapeutic effectiveness. 
-    Our AMR-FMT analysis investigates how resistance genes are distributed and colocalized before and after FMT. The study is based on curated datasets that capture antimicrobial resistance (AMR) genes and mobile genetic element (MGE) associations across donors, pre-FMT, and multiple post-FMT timepoints and includes data from three patient groups: Melanoma, multidrug-resistant bacteria (MDRB), and recurrent Clostridioides difficile infection (rCDI) along with matched donor samples.
-    The analysis compares donor, pre-FMT, and post-FMT samples, highlighting how AMR gene abundance, diversity, and gene colocalization patterns shift across conditions and over time.
-    Results show that ..... <!-- while FMT can successfully restructure microbial communities, the transfer and persistence of resistance genes — particularly when colocalized with other mobile elements vary across patient groups and donor inputs. -->
-    The AMR-FMT tool provides an interactive way to explore these dynamics, allowing users to filter by disease type, MGE group, and timepoints.
-    This structured approach allows systematic comparison of AMR dynamics across diseases and patients, highlighting how donor selection and patient background can influence the persistence or loss of resistance genes after FMT.  
-    </p>
-    <a type="button" class="btn btn-outline-primary ml-3" href="tool.html">View Visualization</a>
-    
-    <!-- <div class="row mt-1 mt-md-4 gx-5">
-      <h2>Key Findings</h2>
-      <p></p>
-        <ul>
-          <li>In point form</li>
-        </ul>
-    </div> -->
-
-    <div class="row mt-1 mt-md-4 gx-5">
-      <div class="col-md-6">
-        <h2>Data & Input</h2>
-        <p>Patient data was collected from multiple studies covering three different disease groups Melanoma, multidrug-resistant bacteria (MDRB), and recurrent Clostridioides difficile infection (rCDI). These datasets provide paired donor, pre-FMT, and post-FMT samples, enabling tracking of antimicrobial resistance (AMR) dynamics.
-        The input to the AMR-FMT tool is provided as a CSV file with the following structure:</p>
-        <h4> CSV structure</h4>
-        <pre><code>
-          Patient ID, Disease type, AMR ID, MGE ID, Donor, PreFMT, PostFMT(timepoints)
-        </code></pre>
-        <table>
-          <tr>
-            <th>Header</th>
-            <th>Description</th>
-          </tr>
-          <tr>
-            <td>Patient ID</td>
-            <td>Unique patient identifier</td>
-          </tr>
-          <tr>
-            <td>Disease type</td>
-            <td>Type of disease (e.g., Melanoma, MDRB, rCDI)</td>
-          </tr>
-          <tr>
-            <td>AMR ID</td>
-            <td>Classification of AMR genes</td>
-          </tr>
-          <tr>
-            <td>MGE ID</td>
-            <td>Specific mobile genetic element associated with AMR</td>
-          </tr>
-          <tr>
-            <td>Donor</td>
-            <td>1 if the colocalization (gene and MGE combination in the row) is present in the donor sample, 0 if absent</td>
-          </tr>
-          <tr>
-            <td>PreFMT</td>
-            <td>1 if the colocalization is present in the pre-FMT sample, 0 if absent</td>
-          </tr>
-          <tr>
-            <td>PostFMT (timepoints)</td>
-            <td>1 if the colocalization is present in post-FMT samples at various timepoints, 0 if absent</td>
-          </tr>   
-        </table>
-        <p></p>
-      </div>
-
-      <div class="col-md-6">
-        <h2>Output</h2>
-        <p>We provide a comprehensive output of the analysis, including both interactive visualizations and data summaries. The output highlights the frequency of antimicrobial resistance gene (ARG) and mobile genetic element (MGE) combinations across different phases of FMT.
-        Specifically, the results include the number of patients in which each ARG–MGE colocalization is observed in the donor, pre-FMT, and post-FMT stages.</p>
-        <h4> Directory structure</h4>
-        <pre><code>
-        ├── Disease_Group 
-        │   ├── Melanoma.csv
-        │   ├── MDRB.csv
-        │   └── RCDI.csv
-        ├── MGE_Group 
-        |   ├── Colicin_plasmid.csv
-        |   ├── gene:plasmind:30991.csv
-        |   ├── gene:plasmind:77695.csv
-        |   ├── gene:plasmind:151429.csv
-        |   ├── ICE.csv
-        |   ├── Inc_plasmind.csv
-        |   ├── plasmid.csv
-        |   ├── prophage.csv
-        |   ├── replicon.csv
-        |   ├── Unclassified.csv
-        |   └── virus.csv
-        └── Temporal_Dynamics
-            ├── Dissappear.csv
-            ├── Emerge.csv
-            ├── Persist.csv
-            └── Transfer.csv
-        
-
-        </code></pre>
-
-        <ul>
-          <!-- <li>We construct a frequency-based mobile network showing genus-genus conjugation features and cargo genes
-            from >200,000
-            publicly available bacterial genomes, representing 1,345 different genera.</li>
-          <li>We make the resulting computational method which allows the network to be queried and visualized publicly
-            available under the <a href="https://choosealicense.com/licenses/gpl-3.0/" target="_blank">GNU v3
-              license</a>: . We refer to our method as (ggMOB-Net).</li>
-          <li>We show how ggMOB-Net can be used to provide insight into conjugative mobilization between unculturable
-            bacteria spanning multiple genera.</li>
-          <li>In particular, we observe that the ratio of AMR gene representation in conjugative versus non-conjugative
-            genomes exceeded 5:1, confirming that conjugation is a critical force for antimicrobial resistance spread
-            across genera.</li> -->
-        </ul>
-      </div>
-
-      <div class="col-md-6">
-        <h2>Citation</h2>
-        <!-- Nayar G, Terrizzano I, Seabolt E,
-Agarwal A, Boucher C, Ruiz J,
-Slizovskiy IB, Kaufman JH and Noyes N
-(2022), ggMOB: Elucidation of genomic
-conjugative features and associated
-cargo genes across bacterial genera
-using genus-genus
-mobilization networks.
-<i>Front. Genet.</i> 13:1024577.
-doi: <a href="https://doi.org/10.3389/fgene.2022.1024577">10.3389/fgene.2022.1024577</a> -->
-      </div>
     </div>
-
-    <hr class="my-5" />
-    <!-- <p class="text-muted">&copy;2021 Nayar et al. Licensed GPL.</p> -->
   </div>
+
+  <!-- CARD 3 : Output -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+      <h2>Results & Output</h2>
+      
+
+AMRGraphNet produces structured outputs that summarize how antimicrobial resistance genes (ARGs) and mobile genetic elements (MGEs) colocalize and change across donor, pre-FMT, and post-FMT samples. The results include:
+
+<h5> Disease-specific summaries</h5>
+
+CSV files report each ARG–MGE colocalization and the number of patients in which it appears across the Melanoma, MDRB, and rCDI cohorts, along with phase-specific presence (Donor / Pre / Post).
+
+<h5> MGE-group summaries</h5>
+
+Colocalizations are organized by MGE family (e.g., plasmid, prophage, ICE), enabling identification of high-mobility MGEs and major ARG carriers.
+
+<h5> Temporal dynamics</h5>
+
+Each ARG–MGE pair is classified as Persist, Emerge, Disappear, or Transfer, indicating how interactions change across FMT treatment phases.
+
+<h5> Interactive network visualization</h5>
+
+All outputs can be visualized through an interactive D3.js network interface, allowing users to explore ARG–MGE relationships with filtering by disease group, MGE type, and timepoint.
+
+<h4>Output Directory Structure</h4>
+      <pre><code>
+  ├── Disease_Group 
+  │   ├── Melanoma.csv
+  │   ├── MDRB.csv
+  │   └── RCDI.csv
+  ├── MGE_Group 
+  │   ├── Colicin_plasmid.csv
+  │   ├── plasmid.csv
+  │   ├── ICE.csv
+  │   ├── virus.csv
+  │   └── ...
+  └── Temporal_Dynamics
+      ├── Disappear.csv
+      ├── Emerge.csv
+      ├── Persist.csv
+      └── Transfer.csv
+      </code></pre>
+    </div>
+  </div>
+
+  <!-- CARD 4 : Citation -->
+  <div class="card mb-4 shadow-sm">
+    <div class="card-body">
+        <h2>Citation</h2>
+        <p>Include citation details here when ready.</p>
+    </div>
+  </div>
+
+  <hr class="my-4" />
+
+  </div>
+
   <script type="module" src="./assets/js/site.js"></script>
 </body>
 

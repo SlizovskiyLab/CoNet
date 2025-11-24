@@ -73,7 +73,7 @@ int main() {
     exportColocalizationsToJSONByDisease(colocalizationByIndividual, patientToDiseaseMap, temporal_dynamics_json_path.string());
 
     
-   
+   getTopARGMGEPairsByFrequencyWODonor(colocalizationByIndividual, 10, patientToDiseaseMap);
     
     // exportToDot(coNet, "conet.dot");
     // exportParentTemporalGraphDot(coNet, "conet_parent_temporal.dot", true);

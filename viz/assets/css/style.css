@@ -443,3 +443,100 @@ table {
   flex-direction: column;
   justify-content: flex-end;
 }
+
+.form-select,
+.form-control,
+.btn.dropdown-toggle {
+    background-color: #fff;
+    border: 1px solid #d7d7d7 !important;
+    border-radius: 8px !important;
+    padding: 10px 14px !important;
+    height: 40px;
+    font-size: 0.95rem;
+    font-weight: 450;
+    color: #333 !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+
+.btn.dropdown-toggle {
+    width: 100% !important;
+}
+
+/* Ensure dropdown menu matches button width exactly */
+.dropdown .dropdown-menu {
+    width: 100% !important;
+    min-width: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    box-sizing: border-box;
+    border-radius: 12px;
+}
+
+.form-select-like {
+    background-color: #fff;
+    border: 1px solid #d7d7d7 !important;
+    border-radius: 12px !important;
+    padding: 10px 14px !important;
+    height: 48px !important;
+    font-size: 0.95rem !important;
+    font-weight: 500 !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+
+/* Closed dropdown button */
+.dropdown-btn {
+    background-color: #fff;
+    border: 1px solid #d7d7d7 !important;
+    border-radius: 8px !important;
+    padding: 10px 14px !important;
+    height: 40px;
+    font-size: 0.95rem;
+    font-weight: 450;
+    color: #333 !important;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+    position: relative;
+    padding-right: 2rem !important; /* space for arrow */
+}
+
+/* Insert a ▼ arrow and place it on the far right */
+.dropdown-btn::after {
+    content: "▾";
+    position: absolute;
+    right: 12px;
+    font-weight: 700;
+    margin-left: 8px;
+    opacity: 0.8;
+    top: 50%;
+    transform: translateY(-50%);
+    /* font-size: 0.9rem; */
+    color: #333;
+    pointer-events: none;
+}
+
+/* Open menu styling */
+.dropdown-menu.dropdown-select {
+  width: 100%;
+  border-radius: 14px;
+  padding: 6px 0;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+}
+
+/* Items inside */
+.dropdown-select .dropdown-item {
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  line-height: 1.1;
+}
+
+.dropdown-select .dropdown-item.active,
+.dropdown-select .dropdown-item:hover {
+  background-color: #f1f5ff;
+  color: #003da5;
+}
+
+
+
