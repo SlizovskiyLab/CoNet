@@ -26,7 +26,7 @@ void getPatientwiseColocalizationsByCriteria(
 
 void getTopARGMGEPairsByFrequency(const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizations, int topN = -1);
 void getTopARGMGEPairsByFrequencyWODonor(const std::map<std::tuple<int, int, int>, std::set<Timepoint>>& colocalizations, int topN = -1, 
-    const std::map<int, std::string>& patientToDiseaseMap = {});
+    const std::map<int, std::string>& patientToDiseaseMap = {}, const std::string& top_colocalizations_output = {});
 void getConnectedMGE(const Graph& graph, const std::set<Edge>& edges, int mgeId, const std::string& mgeName);
 
 void getColocalizationsByCriteria(
@@ -68,5 +68,27 @@ void exportColocalizations(const Graph& g,
     const std::map<std::tuple<int,int,int>, std::set<Timepoint>>& colocalizationByIndividual
 );
 
+
+void writeGraphStatisticsCSV(
+    const Graph& g,
+    const std::unordered_map<Node, std::unordered_set<Node>>& adjacency,
+    const std::string& filename
+);
+
+void analyzeColocalizations(const Graph& g, 
+                             const std::unordered_map<Node, std::unordered_set<Node>>& adjacency);
+
+void analyzeColocalizationsCollectively(const Graph& g, 
+                                          const std::unordered_map<Node, std::unordered_set<Node>>& adjacency);
+
+void mostProminentEntities(const Graph& g);
+
+void writeTopEntitiesToCSV(const std::string& filename, const std::vector<std::pair<int, int>>& entities, bool isARG);
+
+void writeCSV(
+    const std::string& filename,
+    const std::vector<std::string>& header,
+    const std::vector<std::vector<std::string>>& rows, bool append = false
+);
 
 #endif

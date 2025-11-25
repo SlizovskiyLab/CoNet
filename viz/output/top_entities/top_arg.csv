@@ -1,0 +1,11 @@
+ARG_ID,ARG_Name,ARG_Group,Count
+53,CTX,betalactams,396
+48,CORA,Multi-metal_resistance,277
+161,NFSA,Chromium_resistance,275
+158,MVRC,Drug_and_biocide_resistance,262
+128,MARR,Drug_and_biocide_resistance,251
+26,ARSRM,Multi-metal_resistance,198
+28,ASR,Acid_resistance,174
+46,COMR,Copper_resistance,170
+12,ANT3-DPRIME,Aminoglycosides,164
+151,MODA,Multi-metal_resistance,162

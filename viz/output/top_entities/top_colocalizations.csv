@@ -1,0 +1,11 @@
+ARG_Name,ARG_Group,MGE_Name,TotalCount,MDRB,Melanoma,rCDI
+CFX,betalactams,gene:plasmid:141426,36,9,10,17
+CORA,Multi-metal_resistance,gene:plasmid:24561,35,4,5,26
+ZNTR,Zinc_resistance,gene:plasmid:151260,34,6,4,24
+FECD,Multi-metal_resistance,gene:plasmid:156052,27,7,3,17
+MNTH,Multi-metal_resistance,gene:plasmid:134726,25,6,3,16
+CORA,Multi-metal_resistance,gene:proph:159396,24,3,2,19
+CORB,Multi-metal_resistance,gene:proph:163976,23,3,1,19
+CRP,Drug_and_biocide_resistance,gene:plasmid:21818,19,1,1,17
+ARSRM,Multi-metal_resistance,gene:plasmid:88468,18,4,1,13
+MEFE,MLS,gene:plasmid:141426,17,3,3,11

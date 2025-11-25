@@ -225,8 +225,8 @@ std::vector<std::pair<int, int>> getTopKEntities(const Graph& graph, bool isARG,
 
     for (const Edge& edge : graph.edges) {
         if (!edge.isColo) continue;
-
-        const Node& node = edge.source;
+        const Node& node = isARG ? edge.source : edge.target;
+ 
         if (node.isARG == isARG && node.timepoint != Timepoint::Donor) {
             for (size_t i = 0; i < edge.individuals.size(); ++i) {
                 // Count occurrences of ARG or MGE by individual

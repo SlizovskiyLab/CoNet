@@ -11,7 +11,7 @@
 #include "../external/json.hpp"
 #include "../include/graph.h"
 #include "../include/Timepoint.h"
-#include "../include/query_engine.h"
+#include "../include/analysis.h"
 #include "../include/parser.h" 
 
 using nlohmann::json;

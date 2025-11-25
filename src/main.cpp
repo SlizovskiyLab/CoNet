@@ -5,10 +5,9 @@
 #include "../include/parser.h"
 #include "../include/id_maps.h"
 #include "../include/traversal.h"
-#include "../include/query_engine.h"
+#include "../include/analysis.h"
 #include "../include/export.h"
 #include "../include/graph_utils.h"
-#include "../include/graph_analysis.h"
 #include "../include/export_graph_json.h" 
 #include "../include/config_loader.h"  
 
@@ -20,6 +19,11 @@ fs::path data_file;
 fs::path interaction_json_path;
 fs::path parent_json_path;
 fs::path temporal_dynamics_json_path;
+fs::path top_entities_output_dir;
+fs::path top_colocalizations_output;
+fs::path disease_type_output;
+fs::path mge_group_output;
+
 
 
 int main() {
@@ -29,6 +33,9 @@ int main() {
         interaction_json_path = fs::path(cfg.viz_interaction);
         parent_json_path = fs::path(cfg.viz_parent);
         temporal_dynamics_json_path = fs::path(cfg.viz_temporal_dynamics);
+        top_entities_output_dir = fs::path(cfg.output_base);
+        top_colocalizations_output = fs::path(cfg.output_top_colocalizations);
+
 
     } catch (const std::exception& e) {
         std::cerr << "Config error: " << e.what() << "\n";
@@ -45,7 +52,7 @@ int main() {
     buildAdjacency(g, adjacency);
 
     /******************************** Graph Statistics  ************************************/
-    writeGraphStatisticsCSV(g, adjacency, "output/graph_statistics.csv");
+    writeGraphStatisticsCSV(g, adjacency, "viz/output/graph_statistics.csv");
 
     /******************************** Traversal of Graph  ************************************/
     std::map<std::pair<int, int>, std::multiset<Timepoint>> colocalizationTimeline;
@@ -60,51 +67,19 @@ int main() {
     /********************************* Colocalizations by Timepoints ************************************/
     writeAllDiseasesTemporalDynamicsCounts(colocalizationByIndividual, patientToDiseaseMap);
     writeTemporalDynamicsCountsForMGEGroup(colocalizationByIndividual);
+    mostProminentEntities(g);
+    getTopARGMGEPairsByFrequencyWODonor(colocalizationByIndividual, 10, patientToDiseaseMap, top_colocalizations_output.string());
+    
 
     exportColocalizations(g, colocalizationByIndividual);
 
     // /************************************* Graph Visualization ***********************************/
 
     Graph amrGraphNet = g;
-    // exportGraphToJsonSimple(coNet, );
-    // exportParentGraphToJson(coNet, );
     exportGraphToJsonSimple(amrGraphNet, interaction_json_path.string(), patientToDiseaseMap);
     exportParentGraphToJson(amrGraphNet, parent_json_path.string(), patientToDiseaseMap, true);
     exportColocalizationsToJSONByDisease(colocalizationByIndividual, patientToDiseaseMap, temporal_dynamics_json_path.string());
 
-    
-   getTopARGMGEPairsByFrequencyWODonor(colocalizationByIndividual, 10, patientToDiseaseMap);
-    
-    // exportToDot(coNet, "conet.dot");
-    // exportParentTemporalGraphDot(coNet, "conet_parent_temporal.dot", true);
-
-    // Graph rCDI = filterGraphByDisease(g, "rCDI", patientToDiseaseMap);
-    // exportToDot(rCDI, "rcdi.dot");
-    // exportParentTemporalGraphDot(rCDI, "rcdi_parent_temporal.dot", true);
-    
-    // Graph melanoma = filterGraphByDisease(g, "Melanoma", patientToDiseaseMap);
-    // exportToDot(melanoma, "melanoma.dot", false);
-    // exportParentTemporalGraphDot(melanoma, "melanoma_parent_temporal.dot", true);
-
-    // Graph mdrb = filterGraphByDisease(g, "MDRB", patientToDiseaseMap);
-    // exportToDot(mdrb, "mdrb.dot", false);
-    // exportParentTemporalGraphDot(mdrb, "mdrb_temporal.dot", true);
-
-    // Graph sub = filterGraphByARGName(g, "A16S");
-    // exportToDot(sub, "A16S_subgraph.dot");
-    // exportParentTemporalGraphDot(sub, "A16S_subgraph_parent_temporal.dot", true);
-
-    // Graph sub2 = filterGraphByARGName(g, "ERMB");
-    // exportToDot(sub2, "ERMB.dot", false);
-    // exportParentTemporalGraphDot(sub2, "CFX_parent_temporal.dot", false);
-
-    // Graph sub3 = filterGraphByMGEGroup(g, "virus");
-    // exportToDot(sub3, "virus.dot");
-    // exportParentTemporalGraphDot(sub3, "virus_parent_temporal.dot", true);
-
-    // Graph sub4 = filterGraphByTimepoint(g, "donor");
-    // exportToDot(sub4, "donor.dot");
-    // exportParentTemporalGraphDot(sub4, "donor_parent_temporal.dot", true);
 
     return 0;
 
